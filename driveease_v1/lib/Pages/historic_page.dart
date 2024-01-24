@@ -1,5 +1,7 @@
-import 'package:driveease_v1/Widgets/bottomNavigationBarCustom.dart';
+import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
+
+Utils utils = Utils();
 
 class HistoricPage extends StatelessWidget {
   const HistoricPage({super.key});
@@ -9,7 +11,7 @@ class HistoricPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Histórico'),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Utils.corPrimaria,
       ),
       body: Container(
         color: Colors.green[100],
@@ -20,7 +22,6 @@ class HistoricPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavigationBarCustom(),
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:driveease_v1/Widgets/bottomNavigationBarCustom.dart';
+import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Homepage'),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Utils.corPrimaria,
       ),
       body: Container(
         color: Colors.green[100],
@@ -20,7 +20,6 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarCustom(),
     );
   }
 }
