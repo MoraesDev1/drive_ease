@@ -1,4 +1,4 @@
-import 'package:driveease_v1/Pages/home_page.dart';
+import 'package:driveease_v1/Pages/layout_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomePage(),
+                              builder: (context) => LayoutPage(),
                             ),
                           );
                         } else {
