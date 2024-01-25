@@ -42,9 +42,6 @@ class _LayoutPageState extends State<LayoutPage> {
         selectedItemColor: Colors.orange,
         currentIndex: selectedIcon,
         onTap: (value) {
-          // Use o PageController para ir para a página desejada
-          // mantendo o efeito de transição
-          // int direction = value > selectedIcon ? 1 : -1;
           pageController.animateToPage(
             value,
             duration: const Duration(milliseconds: 500),
