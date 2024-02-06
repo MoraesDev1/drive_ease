@@ -11,8 +11,8 @@ class GraphicMain extends StatefulWidget {
 
 class _GraphicMainState extends State<GraphicMain> {
   List<Color> gradientColors = [
-    Utils.corFundo,
-    Utils.corPrimaria,
+    Colors.pink,
+    Colors.orange,
   ];
 
   bool showAvg = false;
@@ -22,7 +22,7 @@ class _GraphicMainState extends State<GraphicMain> {
     return Stack(
       children: <Widget>[
         AspectRatio(
-          aspectRatio: 1.70,
+          aspectRatio: 3,
           child: Padding(
             padding: const EdgeInsets.only(
               right: 18,
@@ -35,43 +35,43 @@ class _GraphicMainState extends State<GraphicMain> {
             ),
           ),
         ),
-        SizedBox(
-          width: 60,
-          height: 34,
-          child: TextButton(
-            onPressed: () {
-              setState(() {
-                showAvg = !showAvg;
-              });
-            },
-            child: Text(
-              'avg',
-              style: TextStyle(
-                fontSize: 12,
-                color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
-              ),
-            ),
-          ),
-        ),
+        // SizedBox(
+        //   width: 60,
+        //   height: 34,
+        //   child: TextButton(
+        //     onPressed: () {
+        //       setState(() {
+        //         showAvg = !showAvg;
+        //       });
+        //     },
+        //     child: Text(
+        //       'avg',
+        //       style: TextStyle(
+        //         fontSize: 12,
+        //         color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
 
-  Widget bottomTitleWidgets(double value, TitleMeta meta) {
+  Widget legendaHorizontal(double mes, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
     Widget text;
-    switch (value.toInt()) {
-      case 2:
-        text = const Text('MAR', style: style);
+    switch (mes.toInt()) {
+      case 1:
+        text = const Text('FEV', style: style);
         break;
-      case 5:
-        text = const Text('JUN', style: style);
+      case 4:
+        text = const Text('MAI', style: style);
         break;
-      case 8:
-        text = const Text('SEP', style: style);
+      case 7:
+        text = const Text('AGO', style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -84,7 +84,7 @@ class _GraphicMainState extends State<GraphicMain> {
     );
   }
 
-  Widget leftTitleWidgets(double value, TitleMeta meta) {
+  Widget legendaVertical(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 15,
@@ -92,16 +92,17 @@ class _GraphicMainState extends State<GraphicMain> {
     String text;
     switch (value.toInt()) {
       case 1:
-        text = '10K';
+        text = '1K';
         break;
       case 3:
-        text = '30k';
+        text = '3k';
         break;
       case 5:
-        text = '50k';
+        text = '5k';
         break;
       default:
-        return Container();
+        text = '';
+        break;
     }
 
     return Text(text, style: style, textAlign: TextAlign.left);
@@ -109,6 +110,7 @@ class _GraphicMainState extends State<GraphicMain> {
 
   LineChartData mainData() {
     return LineChartData(
+      backgroundColor: Colors.blue.shade100,
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
@@ -116,14 +118,14 @@ class _GraphicMainState extends State<GraphicMain> {
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
-            color: Colors.amber,
-            strokeWidth: 1,
+            color: Colors.blue,
+            strokeWidth: 0.3,
           );
         },
         getDrawingVerticalLine: (value) {
           return const FlLine(
-            color: Colors.purple,
-            strokeWidth: 1,
+            color: Colors.blue,
+            strokeWidth: 0.3,
           );
         },
       ),
@@ -140,45 +142,50 @@ class _GraphicMainState extends State<GraphicMain> {
             showTitles: true,
             reservedSize: 30,
             interval: 1,
-            getTitlesWidget: bottomTitleWidgets,
+            getTitlesWidget: legendaHorizontal,
           ),
         ),
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
             interval: 1,
-            getTitlesWidget: leftTitleWidgets,
+            getTitlesWidget: legendaVertical,
             reservedSize: 42,
           ),
         ),
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: const Color(0xff37434d)),
+        border: Border.all(color: const Color.fromARGB(255, 0, 40, 73)),
       ),
       minX: 0,
       maxX: 11,
       minY: 0,
-      maxY: 6,
+      maxY: 5,
       lineBarsData: [
         LineChartBarData(
           spots: const [
-            FlSpot(0, 3),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 8),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
+            FlSpot(0, 1.9),
+            FlSpot(1, 2),
+            FlSpot(2, 2),
+            FlSpot(3, 2),
+            FlSpot(4, 5),
+            FlSpot(5, 1.9),
+            FlSpot(6, 3.1),
+            FlSpot(7, 1.9),
+            FlSpot(8, 4.1),
+            FlSpot(9, 3.7),
+            FlSpot(10, 1.9),
+            FlSpot(11, 4.7),
           ],
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 5,
+          barWidth: 4,
           isStrokeCapRound: true,
           dotData: const FlDotData(
-            show: false,
+            show: true,
           ),
           belowBarData: BarAreaData(
             show: true,
@@ -220,14 +227,14 @@ class _GraphicMainState extends State<GraphicMain> {
           sideTitles: SideTitles(
             showTitles: true,
             reservedSize: 30,
-            getTitlesWidget: bottomTitleWidgets,
+            getTitlesWidget: legendaHorizontal,
             interval: 1,
           ),
         ),
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            getTitlesWidget: leftTitleWidgets,
+            getTitlesWidget: legendaVertical,
             reservedSize: 42,
             interval: 1,
           ),
@@ -251,14 +258,13 @@ class _GraphicMainState extends State<GraphicMain> {
         LineChartBarData(
           spots: const [
             FlSpot(0, 3.44),
-            FlSpot(2.6, 3.44),
             FlSpot(4.9, 3.44),
             FlSpot(6.8, 3.44),
             FlSpot(8, 3.44),
             FlSpot(9.5, 3.44),
             FlSpot(11, 3.44),
           ],
-          isCurved: true,
+          isCurved: false,
           gradient: LinearGradient(
             colors: [
               ColorTween(begin: gradientColors[0], end: gradientColors[1])

@@ -14,8 +14,15 @@ class HomePage extends StatelessWidget {
       ),
       body: Container(
         color: Utils.corFundo,
-        child: const Center(
-          child: GraphicMain(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              'Resumo Geral',
+              style: TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            GraphicMain(),
+          ],
         ),
       ),
     );
