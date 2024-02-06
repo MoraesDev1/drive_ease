@@ -1,4 +1,5 @@
 import 'package:driveease_v1/Pages/layout_page.dart';
+import 'package:driveease_v1/Pages/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -81,12 +82,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => RegisterPage(),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CadastroPage(),
+                        ),
+                      );
                     },
                     child: Text('Criar cadastro'),
                     textColor: Colors.blue,
