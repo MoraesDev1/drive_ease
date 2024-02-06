@@ -20,10 +20,13 @@ class Day {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'data': dataHoraStart,
+      'id_carro': idCarro,
+      'datahora_start': dataHoraStart,
       'start_km': startKm,
+      'datahora_stop': dataHoraStop,
       'stop_km': stopKm,
       'ganhos': ganhos,
+
     };
   }
 }
