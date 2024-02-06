@@ -1,5 +1,6 @@
 import 'package:driveease_v1/Pages/layout_page.dart';
 import 'package:driveease_v1/Pages/signup_page.dart';
+import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,7 +21,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Utils.corFundo,
       appBar: AppBar(
+        backgroundColor: Utils.corPrimaria,
         title: Text('Login'),
       ),
       body: Form(
@@ -33,8 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               TextFormField(
                 controller: _usernameController,
                 decoration: InputDecoration(
-                  labelText: 'Usuário',
-                ),
+                    labelText: 'Usuário', prefixIcon: Icon(Icons.person)),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Informe o usuário';
@@ -47,8 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                 controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Senha',
-                ),
+                    labelText: 'Senha', prefixIcon: Icon(Icons.lock)),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Informe a senha';
@@ -78,9 +79,10 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text('Entrar'),
                     color: Colors.blue,
-                    textColor: Colors.white,
+                    textColor: Utils.corFundo,
                   ),
                   MaterialButton(
+                    color: Utils.corPrimaria,
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -90,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     },
                     child: Text('Criar cadastro'),
-                    textColor: Colors.blue,
+                    textColor: Utils.corFundo,
                   ),
                   MaterialButton(
                     onPressed: () {

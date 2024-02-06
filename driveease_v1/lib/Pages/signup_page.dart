@@ -22,7 +22,6 @@ class _CadastroPageState extends State<CadastroPage> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pop();
               },
               child: Text('OK'),
             ),
@@ -35,8 +34,9 @@ class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade200,
+      backgroundColor: Utils.corFundo,
       appBar: AppBar(
+        backgroundColor: Utils.corPrimaria,
         title: Text('Cadastro'),
       ),
       body: SingleChildScrollView(
@@ -47,7 +47,10 @@ class _CadastroPageState extends State<CadastroPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Nome Completo'),
+                decoration: InputDecoration(
+                  labelText: 'Nome Completo',
+                  prefixIcon: Icon(Icons.person),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira seu nome completo';
@@ -57,7 +60,10 @@ class _CadastroPageState extends State<CadastroPage> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  prefixIcon: Icon(Icons.email),
+                ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -68,7 +74,10 @@ class _CadastroPageState extends State<CadastroPage> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Senha'),
+                decoration: InputDecoration(
+                  labelText: 'Senha',
+                  prefixIcon: Icon(Icons.lock),
+                ),
                 obscureText: true,
                 controller: _senhaController,
                 validator: (value) {
@@ -80,7 +89,10 @@ class _CadastroPageState extends State<CadastroPage> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Confirmação de Senha'),
+                decoration: InputDecoration(
+                  labelText: 'Confirmação de Senha',
+                  prefixIcon: Icon(Icons.lock),
+                ),
                 obscureText: true,
                 controller: _confirmacaoSenhaController,
                 validator: (value) {
@@ -95,15 +107,17 @@ class _CadastroPageState extends State<CadastroPage> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll(Utils.corPrimaria)),
+                  backgroundColor: MaterialStatePropertyAll(Utils.corPrimaria),
+                ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    _showCadastroConfirmadoDialog();
                     // Se todas as validações passarem, o formulário é válido.
                     // Implemente aqui a lógica para enviar os dados do formulário.
                     // Exemplo: enviar os dados para um servidor, salvar localmente, etc.
                     // Neste ponto, os campos do formulário foram validados.
+
+                    // Exibir alerta de cadastro confirmado
+                    _showCadastroConfirmadoDialog();
                   }
                 },
                 child: Text('Cadastrar'),
