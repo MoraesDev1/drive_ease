@@ -1,4 +1,5 @@
 import 'package:driveease_v1/Utils/colors_utils.dart';
+import 'package:driveease_v1/Widgets/Graphics/graphic_main.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,12 +13,9 @@ class HomePage extends StatelessWidget {
         backgroundColor: Utils.corPrimaria,
       ),
       body: Container(
-        color: Colors.green[100],
+        color: Utils.corFundo,
         child: const Center(
-          child: Text(
-            'Home',
-            style: TextStyle(fontSize: 20),
-          ),
+          child: GraphicMain(),
         ),
       ),
     );
