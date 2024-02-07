@@ -1,7 +1,5 @@
-import 'package:driveease_v1/Database/dao1.dart';
-import 'package:driveease_v1/Model/day.dart';
-import 'package:driveease_v1/Model/service.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
+import 'package:driveease_v1/Widgets/Button/star_stop_button.dart';
 import 'package:driveease_v1/Widgets/Graphics/graphic_main.dart';
 import 'package:flutter/material.dart';
 
@@ -13,45 +11,45 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Day> _listDay = [];
+  // List<Day> _listDay = [];
 
-  late BancoDeDados _dao;
+  // late BancoDeDados _dao;
 
-  List<Service> _listService = [];
+  // List<Service> _listService = [];
 
-  bool _carregando = true;
+  // bool _carregando = true;
 
-  @override
-  initState() {
-    _dao.initializeDatabase().then((_) async {
-      _listDay = await _dao.getDays();
-      _listService = await _dao.getServices();
-    }).catchError((e) {
-      print(e);
-    });
-  }
+  // @override
+  // initState() {
+  //   _dao.initializeDatabase().then((_) async {
+  //     _listDay = await _dao.getDays();
+  //     _listService = await _dao.getServices();
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
 
-  _insertDay(Day day) {
-    setState(() {
-      _carregando = true;
-    });
-    _dao.insertDay(day).then((daySalvo) {
-      _listDay.add(daySalvo);
-    }).catchError((e) {
-      print(e);
-    });
-  }
+  // _insertDay(Day day) {
+  //   setState(() {
+  //     _carregando = true;
+  //   });
+  //   _dao.insertDay(day).then((daySalvo) {
+  //     _listDay.add(daySalvo);
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
 
-  _insertService(Service service) {
-    setState(() {
-      _carregando = true;
-    });
-    _dao.insertService(service).then((Service) {
-      _listService.add(service);
-    }).catchError((e) {
-      print(e);
-    });
-  }
+  // _insertService(Service service) {
+  //   setState(() {
+  //     _carregando = true;
+  //   });
+  //   _dao.insertService(service).then((Service) {
+  //     _listService.add(service);
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +60,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         color: Utils.corFundo,
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -70,6 +68,8 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(color: Colors.black, fontSize: 15),
             ),
             GraphicMain(),
+            Spacer(),
+            StartStopButton(),
           ],
         ),
       ),
