@@ -2,6 +2,7 @@ import 'package:driveease_v1/Database/dao1.dart';
 import 'package:driveease_v1/Model/day.dart';
 import 'package:driveease_v1/Model/service.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
+import 'package:driveease_v1/Widgets/Graphics/graphic_main.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -60,12 +61,16 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Utils.corPrimaria,
       ),
       body: Container(
-        color: Colors.green[100],
-        child: const Center(
-          child: Text(
-            'Home',
-            style: TextStyle(fontSize: 20),
-          ),
+        color: Utils.corFundo,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              'Resumo Geral',
+              style: TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            GraphicMain(),
+          ],
         ),
       ),
     );
