@@ -17,7 +17,7 @@ class _LayoutPageState extends State<LayoutPage> {
   PageController pageController = PageController();
 
   final List<Widget> pages = [
-    const HomePage(),
+    HomePage(),
     const ReportPage(),
     const HistoricPage(),
     const OptionsPage(),

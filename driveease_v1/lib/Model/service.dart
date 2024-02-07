@@ -1,9 +1,9 @@
 class Service {
   int? id;
-  String data;
-  double km;
-  String servico;
-  double valor;
+  late String data;
+  late double km;
+  late String servico;
+  late double valor;
 
   Service({
     this.id,
@@ -21,5 +21,15 @@ class Service {
       'servico': servico,
       'valor': valor,
     };
+  }
+
+  static Service fromMap(Map<String, dynamic> map) {
+    return Service(
+      id: map['id'],
+      data: map['data'],
+      km: map['km'],
+      servico: map['servico'],
+      valor: map['valor'],
+    );
   }
 }

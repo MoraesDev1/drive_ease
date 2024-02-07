@@ -1,6 +1,6 @@
 class Car {
   int? idCarro;
-  String descricao;
+  late String descricao;
 
   Car({
     this.idCarro,
@@ -12,5 +12,12 @@ class Car {
       'id_carro': idCarro,
       'descricao': descricao,
     };
+  }
+
+  static Car fromMap(Map<String, dynamic> map) {
+    return Car(
+      idCarro: map['id_carro'],
+      descricao: map['descricao'],
+    );
   }
 }
