@@ -19,7 +19,7 @@ class _LayoutPageState extends State<LayoutPage> {
   final List<Widget> pages = [
     HomePage(),
     const ReportPage(),
-    const HistoricPage(),
+    HistoricPage(),
     const OptionsPage(),
   ];
 

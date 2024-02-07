@@ -13,10 +13,14 @@ class ReportPage extends StatelessWidget {
       ),
       body: Container(
         color: Colors.green[100],
-        child: const Center(
-          child: Text(
-            'Relatórios',
-            style: TextStyle(fontSize: 20),
+        child: Center(
+          child: Column(
+            children: [
+              const Text(
+                'Relatórios',
+                style: TextStyle(fontSize: 20),
+              ),
+            ],
           ),
         ),
       ),
