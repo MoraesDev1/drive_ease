@@ -10,13 +10,6 @@ class GetInfoPage extends StatefulWidget {
 class _GetInfoPageState extends State<GetInfoPage> {
   @override
   Widget build(BuildContext context) {
-    // return Card(
-    //   shape: BeveledRectangleBorder(
-    //     borderRadius: BorderRadius.circular(20),
-    //     side: BorderSide(width: 100),
-    //   ),
-    //   child: Text('Teste'),
-    // );
     return AlertDialog(
       title: const Text('AlertDialog Title'),
       content: const SingleChildScrollView(

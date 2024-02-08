@@ -1,6 +1,6 @@
 import 'package:driveease_v1/Utils/colors_utils.dart';
-import 'package:driveease_v1/Widgets/Button/star_stop_button.dart';
-import 'package:driveease_v1/Widgets/Graphics/graphic_main.dart';
+import 'package:driveease_v1/Widgets/Button/star_stop_button_widget.dart';
+import 'package:driveease_v1/Widgets/Graphics/main_graphic_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

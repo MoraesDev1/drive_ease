@@ -44,10 +44,9 @@ class Corrida {
     );
   }
 
-  static Corrida fromMapStop(Map<String, dynamic> map) {
+  static Corrida fromMap(Map<String, dynamic> map) {
     return Corrida.stop(
       id: map['id'],
-      // idCarro: map['id_carro'],
       dataHoraStart: map['datahora_start'],
       startKm: map['start_km'],
       dataHoraStop: map['datahora_start'],

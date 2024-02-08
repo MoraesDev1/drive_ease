@@ -1,7 +1,7 @@
-import 'package:driveease_v1/Pages/historic_page.dart';
-import 'package:driveease_v1/Pages/home_page.dart';
-import 'package:driveease_v1/Pages/options_page.dart';
-import 'package:driveease_v1/Pages/report_page.dart';
+import 'package:driveease_v1/Pages/MainPages/historic_page.dart';
+import 'package:driveease_v1/Pages/MainPages/home_page.dart';
+import 'package:driveease_v1/Pages/MainPages/options_page.dart';
+import 'package:driveease_v1/Pages/MainPages/report_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +39,7 @@ class _LayoutPageState extends State<LayoutPage> {
         type: BottomNavigationBarType.fixed,
         backgroundColor: Utils.corPrimaria,
         unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.orange,
+        selectedItemColor: Utils.corSecundaria,
         currentIndex: selectedIcon,
         onTap: (value) {
           pageController.animateToPage(
