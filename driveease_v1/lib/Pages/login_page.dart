@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               TextFormField(
                 controller: _usernameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: 'Usuário', prefixIcon: Icon(Icons.person)),
                 validator: (value) {
                   if (value == null || value.isEmpty) {

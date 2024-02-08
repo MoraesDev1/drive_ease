@@ -2,14 +2,14 @@ class Service {
   int? id;
   late String data;
   late double km;
-  late String servico;
+  late String descricao;
   late double valor;
 
   Service({
     this.id,
     required this.data,
     required this.km,
-    required this.servico,
+    required this.descricao,
     required this.valor,
   });
 
@@ -18,7 +18,7 @@ class Service {
       'id': id,
       'data': data,
       'km': km,
-      'servico': servico,
+      'descricao': descricao,
       'valor': valor,
     };
   }
@@ -28,7 +28,7 @@ class Service {
       id: map['id'],
       data: map['data'],
       km: map['km'],
-      servico: map['servico'],
+      descricao: map['descricao'],
       valor: map['valor'],
     );
   }

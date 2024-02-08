@@ -12,10 +12,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // List<Day> _listDay = [];
-
-  // late BancoDeDados _dao;
-
   // List<Service> _listService = [];
+  // late BancoDeDados _dao;
 
   // bool _carregando = true;
 
