@@ -1,5 +1,5 @@
-import 'dart:developer';
 import 'package:driveease_v1/Model/corrida.dart';
+import 'package:driveease_v1/Model/service.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/card_corrida.dart';
 import 'package:flutter/material.dart';
