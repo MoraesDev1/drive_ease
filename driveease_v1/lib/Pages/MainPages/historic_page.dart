@@ -1,5 +1,5 @@
 import 'package:driveease_v1/Model/corrida.dart';
-import 'package:driveease_v1/Model/service.dart';
+import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/card_corrida.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +98,7 @@ class _HistoricPageState extends State<HistoricPage> {
         stopKm: 28,
         ganhos: 500),
   ];
-  final List<Service> _listDeServices = [];
+  final List<Servico> _listDeServices = [];
 
   _clickEdit(Corrida corrida) {}
   _clickRemover(Corrida corrida) {}

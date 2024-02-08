@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 enum MyItem { itemEdit, itemDelete, itemTap, itemLongPress }
 
+// ignore: must_be_immutable
 class CardCorrida extends StatelessWidget {
   CardCorrida({super.key, required this.corrida, required this.onMenuClick});
 
@@ -52,13 +53,14 @@ class CardCorrida extends StatelessWidget {
                   Text('Stop: ${corrida.dataHoraStop}')
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Column(
                 children: [
                   Text('Km Inicio: ${corrida.startKm.toString()}'),
                   Text('Km Fim: ${corrida.stopKm.toString()}')
                 ],
               ),
+              _getPopupMenuItem(),
             ],
           ),
           onTap: () {

@@ -1,11 +1,11 @@
-class Service {
+class Servico {
   int? id;
   late String data;
   late double km;
   late String descricao;
   late double valor;
 
-  Service({
+  Servico({
     this.id,
     required this.data,
     required this.km,
@@ -23,8 +23,8 @@ class Service {
     };
   }
 
-  static Service fromMap(Map<String, dynamic> map) {
-    return Service(
+  static Servico fromMap(Map<String, dynamic> map) {
+    return Servico(
       id: map['id'],
       data: map['data'],
       km: map['km'],

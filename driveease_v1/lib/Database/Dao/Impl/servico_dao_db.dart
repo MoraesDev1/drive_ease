@@ -1,27 +1,27 @@
-import 'package:driveease_v1/Database/Dao/service_dao.dart';
-import 'package:driveease_v1/Model/service.dart';
+import 'package:driveease_v1/Database/Dao/servico_dao.dart';
+import 'package:driveease_v1/Model/servico.dart';
 
-class ServiceDaoDb implements ServiceDao {
+class ServicoDaoDb implements ServicoDao {
   @override
-  Future atualizar(Service service) {
+  Future atualizar(Servico servico) {
     // TODO: implement atualizar
     throw UnimplementedError();
   }
 
   @override
-  Future excluir(Service service) {
+  Future excluir(Servico servico) {
     // TODO: implement excluir
     throw UnimplementedError();
   }
 
   @override
-  Future<List<Service>> listar() {
+  Future<List<Servico>> listar() {
     // TODO: implement listar
     throw UnimplementedError();
   }
 
   @override
-  Future<Service> salvar(Service service) {
+  Future<Servico> salvar(Servico servico) {
     // TODO: implement salvar
     throw UnimplementedError();
   }

@@ -6,7 +6,7 @@ class LocalDatabase {
     1: [
       '''
       CREATE TABLE corrida (
-        id INTEGER AUTOINCREMENT,
+        id INTEGER AUTO_INCREMENT,
         datahora_start TEXT(50),
         start_km REAL,
         datahora_stop TEXT(50),
@@ -17,7 +17,7 @@ class LocalDatabase {
     ''',
       '''
       CREATE TABLE servicos (
-        id INTEGER AUTOINCREMENT,
+        id INTEGER AUTO_INCREMENT,
         data TEXT,
         km REAL,
         descricao TEXT,

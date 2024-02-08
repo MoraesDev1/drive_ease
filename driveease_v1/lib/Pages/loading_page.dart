@@ -14,9 +14,10 @@ class LoadingPage extends StatefulWidget {
 class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
-    LocalDatabase.initDatabase('driveease_v1.db')
-        .then((value) => ConexaoDb().db = value);
-    Future.delayed(const Duration(seconds: 5), () {
+    LocalDatabase.initDatabase('driveease_v1.db').then((value) async {
+      ConexaoDb().db = value;
+      await Future.delayed(const Duration(seconds: 5));
+      if (!context.mounted) return;
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const LayoutPage()));
     });
