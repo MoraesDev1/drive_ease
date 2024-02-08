@@ -1,4 +1,6 @@
 import 'package:driveease_v1/Pages/get_info_page.dart';
+
+import 'package:driveease_v1/Pages/historico_corrida.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -71,7 +73,14 @@ class _HistoricPageState extends State<HistoricPage> {
                   flex: 2,
                   child: TextButton(
                     child: Text('Corridas'),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HistoricoCorrida(),
+                        ),
+                      );
+                    },
                     style: TextButton.styleFrom(),
                   ),
                 ),
