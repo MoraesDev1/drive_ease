@@ -12,7 +12,23 @@ class StartStopButton extends StatefulWidget {
 class _StartStopButtonState extends State<StartStopButton> {
   bool start = true;
   double sizeButton = 90;
-  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _controllerQuilometragemStart =
+      TextEditingController();
+  final _formKeyStart = GlobalKey<FormState>();
+  final _formKeyStop = GlobalKey<FormState>();
+  final TextEditingController _controllerQuilometragem =
+      TextEditingController();
+  final TextEditingController _controllerGanhos = TextEditingController();
+
+  String completarZeros(String numero, int comprimento) {
+    int zerosNecessarios = comprimento - numero.length;
+
+    if (zerosNecessarios <= 0) {
+      return '';
+    } else {
+      return '0' * zerosNecessarios + numero;
+    }
+  }
 
   String? _validaQuilometragem(String? value) {
     if (value != null && value.isEmpty) {
@@ -25,15 +41,16 @@ class _StartStopButtonState extends State<StartStopButton> {
   }
 
   var maskFormatter = MaskTextInputFormatter(
-      filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
+    mask: '######.#',
+    filter: {"#": RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.lazy,
+  );
 
   _getInfoStart() {
-    final TextEditingController _controllerQuilometragem =
-        TextEditingController();
     return AlertDialog(
       content: SizedBox(
         child: Form(
-          key: _formKey,
+          key: _formKeyStart,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -44,10 +61,19 @@ class _StartStopButtonState extends State<StartStopButton> {
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextFormField(
+                  onChanged: (value) {
+                    String stringAlterada = completarZeros(value, 7);
+                    if (stringAlterada != '') {
+                      setState(() {
+                        _controllerQuilometragemStart.text = stringAlterada;
+                      });
+                    }
+                  },
+                  textDirection: TextDirection.rtl,
                   validator: _validaQuilometragem,
                   cursorColor: Colors.black,
                   keyboardType: TextInputType.number,
-                  controller: _controllerQuilometragem,
+                  controller: _controllerQuilometragemStart,
                   inputFormatters: [maskFormatter],
                   decoration: const InputDecoration(
                     label: Text(
@@ -78,10 +104,13 @@ class _StartStopButtonState extends State<StartStopButton> {
                         ),
                         child: const Text('Iniciar'),
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            _criaCorrida(_controllerQuilometragem.text);
+                          if (_formKeyStart.currentState!.validate()) {
+                            _formKeyStart.currentState!.save();
+                            _criaCorrida(_controllerQuilometragemStart.text);
                             Navigator.of(context).pop();
+                            setState(() {
+                              start = !start;
+                            });
                           }
                         },
                       ),
@@ -97,13 +126,10 @@ class _StartStopButtonState extends State<StartStopButton> {
   }
 
   _getInfoStop() {
-    final TextEditingController _controllerQuilometragem =
-        TextEditingController();
-
     return AlertDialog(
       content: SizedBox(
         child: Form(
-          key: _formKey,
+          key: _formKeyStop,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -114,6 +140,7 @@ class _StartStopButtonState extends State<StartStopButton> {
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextFormField(
+                  inputFormatters: [maskFormatter],
                   cursorColor: Colors.black,
                   keyboardType: TextInputType.number,
                   controller: _controllerQuilometragem,
@@ -140,7 +167,7 @@ class _StartStopButtonState extends State<StartStopButton> {
                 child: TextFormField(
                   cursorColor: Colors.black,
                   keyboardType: TextInputType.number,
-                  controller: _controllerQuilometragem,
+                  controller: _controllerGanhos,
                   decoration: const InputDecoration(
                     label: Text(
                       'Ganhos',
@@ -153,7 +180,7 @@ class _StartStopButtonState extends State<StartStopButton> {
                       ),
                     ),
                     prefixText: 'R\$',
-                    suffixStyle: TextStyle(
+                    prefixStyle: TextStyle(
                       color: Colors.black,
                     ),
                   ),
@@ -168,10 +195,14 @@ class _StartStopButtonState extends State<StartStopButton> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Utils.corPrimaria,
                         ),
-                        child: const Text('Iniciar'),
+                        child: const Text('Encerrar'),
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
+                          if (_formKeyStop.currentState!.validate()) {
+                            _formKeyStop.currentState!.save();
+                            Navigator.of(context).pop();
+                            setState(() {
+                              start = !start;
+                            });
                           }
                         },
                       ),
@@ -199,11 +230,8 @@ class _StartStopButtonState extends State<StartStopButton> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) => _getInfoStart(),
+            builder: (context) => start ? _getInfoStart() : _getInfoStop(),
           );
-          setState(() {
-            start = !start;
-          });
         },
         child: Text(start ? 'Start' : 'Stop'),
       ),
