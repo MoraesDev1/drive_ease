@@ -8,7 +8,6 @@ class Corrida {
   late double ganhos;
 
   Corrida.start({
-    this.id,
     required this.dataHoraStart,
     required this.startKm,
   });
@@ -37,8 +36,6 @@ class Corrida {
 
   static Corrida fromMapStart(Map<String, dynamic> map) {
     return Corrida.start(
-      id: map['id'],
-      // idCarro: map['id_carro'],
       dataHoraStart: map['datahora_start'],
       startKm: map['start_km'],
     );

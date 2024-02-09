@@ -1,3 +1,5 @@
+import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
+import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
@@ -12,93 +14,26 @@ class HistoricPage extends StatefulWidget {
 }
 
 class _HistoricPageState extends State<HistoricPage> {
-  final List<Corrida> _listDeCorridas = [
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-    Corrida.stop(
-        dataHoraStart: '15/05/2024',
-        startKm: 15,
-        dataHoraStop: '15/05/2024',
-        stopKm: 28,
-        ganhos: 500),
-  ];
+  final CorridaDaoDb _corridaDaoDb = CorridaDaoDb();
+  final ServicoDaoDb _servicoDaoDb = ServicoDaoDb();
+  final List<Corrida> _listDeCorridas = [];
   final List<Servico> _listDeServices = [];
+
+  Future<void> _loadCorridas() async {
+    final List<Corrida> corridas = await _corridaDaoDb.listar();
+    setState(() {
+      _listDeCorridas.clear();
+      _listDeCorridas.addAll(corridas);
+    });
+  }
+
+  Future<void> _loadServicos() async {
+    final List<Servico> servicos = await _servicoDaoDb.listar();
+    setState(() {
+      _listDeServices.clear();
+      _listDeServices.addAll(servicos);
+    });
+  }
 
   _clickEdit(Corrida corrida) {}
   _clickRemover(Corrida corrida) {}
