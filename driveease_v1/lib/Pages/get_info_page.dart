@@ -8,26 +8,68 @@ class GetInfoPage extends StatefulWidget {
 }
 
 class _GetInfoPageState extends State<GetInfoPage> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('AlertDialog Title'),
-      content: const SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            Text('This is a demo alert dialog.'),
-            Text('Would you like to approve of this message?'),
-          ],
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter'),
         ),
-      ),
-      actions: <Widget>[
-        TextButton(
-          child: const Text('Approve'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () async {
+              await showDialog<void>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        content: Stack(
+                          clipBehavior: Clip.none,
+                          children: <Widget>[
+                            Positioned(
+                              right: -40,
+                              top: -40,
+                              child: InkResponse(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  child: Icon(Icons.close),
+                                ),
+                              ),
+                            ),
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: TextFormField(),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: TextFormField(),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: ElevatedButton(
+                                      child: const Text('Submitß'),
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          _formKey.currentState!.save();
+                                        }
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ));
+            },
+            child: const Text('Open Popup'),
+          ),
         ),
-      ],
-    );
-  }
+      );
 }

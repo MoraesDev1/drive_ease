@@ -1,6 +1,5 @@
 class Corrida {
   int? id;
-  // late int idCarro;
   late String dataHoraStart;
   late double startKm;
   late String dataHoraStop;
@@ -15,7 +14,6 @@ class Corrida {
 
   Corrida.stop({
     this.id,
-    // required this.idCarro,
     required this.dataHoraStart,
     required this.startKm,
     required this.dataHoraStop,
@@ -26,7 +24,6 @@ class Corrida {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      // 'id_carro': idCarro,
       'datahora_start': dataHoraStart,
       'start_km': startKm,
       'datahora_stop': dataHoraStop,
@@ -38,7 +35,6 @@ class Corrida {
   static Corrida fromMapStart(Map<String, dynamic> map) {
     return Corrida.start(
       id: map['id'],
-      // idCarro: map['id_carro'],
       dataHoraStart: map['datahora_start'],
       startKm: map['start_km'],
     );

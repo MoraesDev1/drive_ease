@@ -23,15 +23,15 @@ class CorridaDaoDb implements CorridaDao {
   }
 
   @override
-  Future<Corrida> start(Corrida corrida) {
-    // TODO: implement start
-    throw UnimplementedError();
+  Future<Corrida> start(Corrida corrida) async {
+    await conexao.db.insert('start', corrida.toMap());
+    return corrida;
   }
 
   @override
-  Future<Corrida> stop(Corrida corrida) {
-    // TODO: implement stop
-    throw UnimplementedError();
+  Future<Corrida> stop(Corrida corrida) async {
+    corrida.id = await conexao.db.insert('corrida', corrida.toMap());
+    return corrida;
   }
 
   @override

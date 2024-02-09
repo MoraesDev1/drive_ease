@@ -11,44 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // List<Day> _listDay = [];
-  // List<Service> _listService = [];
-  // late BancoDeDados _dao;
-
-  // bool _carregando = true;
-
-  // @override
-  // initState() {
-  //   _dao.initializeDatabase().then((_) async {
-  //     _listDay = await _dao.getDays();
-  //     _listService = await _dao.getServices();
-  //   }).catchError((e) {
-  //     print(e);
-  //   });
-  // }
-
-  // _insertDay(Day day) {
-  //   setState(() {
-  //     _carregando = true;
-  //   });
-  //   _dao.insertDay(day).then((daySalvo) {
-  //     _listDay.add(daySalvo);
-  //   }).catchError((e) {
-  //     print(e);
-  //   });
-  // }
-
-  // _insertService(Service service) {
-  //   setState(() {
-  //     _carregando = true;
-  //   });
-  //   _dao.insertService(service).then((Service) {
-  //     _listService.add(service);
-  //   }).catchError((e) {
-  //     print(e);
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
