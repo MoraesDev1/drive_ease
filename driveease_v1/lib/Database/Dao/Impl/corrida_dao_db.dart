@@ -25,27 +25,8 @@ class CorridaDaoDb implements CorridaDao {
 
   @override
   Future<Corrida> inserirStop(Corrida corrida, Corrida start) async {
-    final List<Map<String, dynamic>> startResults = await conexao.db.query(
-      'start',
-      limit: 1,
-    );
-    if (startResults.isNotEmpty) {
-      final Map<String, dynamic> startCorrida = startResults.first;
-      start.id = startCorrida['id'];
-      start.dataHoraStart = startCorrida['datahora_start'];
-      start.startKm = startCorrida['start_km'];
-
-      corrida.dataHoraStart = start.dataHoraStart;
-      corrida.id = await conexao.db.insert('corrida', corrida.toMap());
-      await conexao.db.delete(
-        'start',
-        where: 'id = ?',
-        whereArgs: [start.id],
-      );
-      return corrida;
-    } else {
-      throw Exception('Nenhuma corrida iniciada para parar.');
-    }
+    await conexao.db.insert('corrida', corrida.toMap());
+    return corrida;
   }
 
   @override
@@ -99,5 +80,33 @@ class CorridaDaoDb implements CorridaDao {
       ],
     );
     return result.map((e) => Corrida.fromMap(e)).toList();
+  }
+
+  Future<Corrida> verificaStart(Corrida start) async {
+    final List<Map<String, dynamic>> startResults = await conexao.db.query(
+      'start',
+      limit: 1,
+    );
+    if (startResults.isNotEmpty) {
+      final Map<String, dynamic> startCorrida = startResults.first;
+      start.id = startCorrida['id'];
+      start.dataHoraStart = startCorrida['datahora_start'];
+      start.startKm = startCorrida['start_km'];
+
+      return start;
+    } else {
+      throw Exception('Nenhuma corrida iniciada para parar.');
+    }
+  }
+
+  Future<Corrida> montaStop(Corrida corrida, Corrida start) async {
+    await verificaStart(start).then((value) => start = value);
+    corrida.dataHoraStart = start.dataHoraStart;
+    await conexao.db.delete(
+      'start',
+      where: 'id = ?',
+      whereArgs: [start.id],
+    );
+    return corrida;
   }
 }
