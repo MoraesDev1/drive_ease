@@ -13,6 +13,7 @@ dependencies:
   fl_chart: ^0.66.1
   path: ^1.8.3
   table_calendar: ^3.0.9
+  mask_text_input_formatter: ^2.8.0
 
 
 dev_dependencies:

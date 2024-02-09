@@ -1,7 +1,10 @@
 import 'package:driveease_v1/Database/Dao/servico_dao.dart';
+import 'package:driveease_v1/Database/conexao_db.dart';
 import 'package:driveease_v1/Model/servico.dart';
 
 class ServicoDaoDb implements ServicoDao {
+  final ConexaoDb conexao = ConexaoDb();
+
   @override
   Future atualizar(Servico servico) {
     // TODO: implement atualizar
@@ -15,14 +18,15 @@ class ServicoDaoDb implements ServicoDao {
   }
 
   @override
-  Future<List<Servico>> listar() {
-    // TODO: implement listar
-    throw UnimplementedError();
+  Future<List<Servico>> listar() async {
+    final List<Map<String, dynamic>> result =
+        await conexao.db.query('servicos');
+    return result.map((e) => Servico.fromMap(e)).toList();
   }
 
   @override
-  Future<Servico> salvar(Servico servico) {
-    // TODO: implement salvar
-    throw UnimplementedError();
+  Future<Servico> inserir(Servico servico) async {
+    servico.id = await conexao.db.insert('servico', servico.toMap());
+    return servico;
   }
 }
