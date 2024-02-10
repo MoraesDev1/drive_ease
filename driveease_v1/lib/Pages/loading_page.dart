@@ -21,7 +21,6 @@ class _LoadingPageState extends State<LoadingPage> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const LayoutPage()));
     });
-    super.initState();
   }
 
   @override

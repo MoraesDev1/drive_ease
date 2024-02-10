@@ -16,7 +16,7 @@ class LocalDatabase {
       );
     ''',
       '''
-      CREATE TABLE servicos (
+      CREATE TABLE servico (
         id INTEGER AUTO_INCREMENT,
         data TEXT,
         km REAL,

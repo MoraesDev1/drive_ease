@@ -19,8 +19,7 @@ class ServicoDaoDb implements ServicoDao {
 
   @override
   Future<List<Servico>> listar() async {
-    final List<Map<String, dynamic>> result =
-        await conexao.db.query('servicos');
+    final List<Map<String, dynamic>> result = await conexao.db.query('servico');
     return result.map((e) => Servico.fromMap(e)).toList();
   }
 

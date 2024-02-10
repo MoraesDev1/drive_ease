@@ -19,20 +19,20 @@ class CorridaDaoDb implements CorridaDao {
 
   @override
   Future<Corrida> inserirStart(Corrida corrida) async {
-    await conexao.db.insert('start', corrida.toMap());
+    await conexao.db.insert('start', corrida.toMapStart());
     return corrida;
   }
 
   @override
   Future<Corrida> inserirStop(Corrida corrida, Corrida start) async {
-    await conexao.db.insert('corrida', corrida.toMap());
+    await conexao.db.insert('corrida', corrida.toMapStop());
     return corrida;
   }
 
   @override
   Future<List<Corrida>> listar() async {
     final List<Map<String, dynamic>> result = await conexao.db.query('corrida');
-    return result.map((e) => Corrida.fromMap(e)).toList();
+    return result.map((e) => Corrida.fromMapStop(e)).toList();
   }
 
   @override
@@ -45,7 +45,7 @@ class CorridaDaoDb implements CorridaDao {
       where: 'datahora_start BETWEEN ? AND ?',
       whereArgs: [lastWeek.toIso8601String(), now.toIso8601String()],
     );
-    return result.map((e) => Corrida.fromMap(e)).toList();
+    return result.map((e) => Corrida.fromMapStop(e)).toList();
   }
 
   @override
@@ -62,7 +62,7 @@ class CorridaDaoDb implements CorridaDao {
         lastDayOfMonth.toIso8601String(),
       ],
     );
-    return result.map((e) => Corrida.fromMap(e)).toList();
+    return result.map((e) => Corrida.fromMapStop(e)).toList();
   }
 
   @override
@@ -79,7 +79,7 @@ class CorridaDaoDb implements CorridaDao {
         lastDayOfYear.toIso8601String(),
       ],
     );
-    return result.map((e) => Corrida.fromMap(e)).toList();
+    return result.map((e) => Corrida.fromMapStop(e)).toList();
   }
 
   Future<Corrida> verificaStart(Corrida start) async {

@@ -4,6 +4,7 @@ import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/card_corrida.dart';
+import 'package:driveease_v1/Widgets/card_servico.dart';
 import 'package:flutter/material.dart';
 
 class HistoricPage extends StatefulWidget {
@@ -14,29 +15,30 @@ class HistoricPage extends StatefulWidget {
 }
 
 class _HistoricPageState extends State<HistoricPage> {
-  final CorridaDaoDb _corridaDaoDb = CorridaDaoDb();
-  final ServicoDaoDb _servicoDaoDb = ServicoDaoDb();
-  final List<Corrida> _listDeCorridas = [];
-  final List<Servico> _listDeServices = [];
+  late CorridaDaoDb _corridaDaoDb;
+  late ServicoDaoDb _servicoDaoDb;
+  List<Corrida> _listDeCorridas = [];
+  List<Servico> _listDeServicos = [
+    Servico(data: 'data', km: 5, descricao: 'descricao', valor: 522)
+  ];
 
-  Future<void> _loadCorridas() async {
-    final List<Corrida> corridas = await _corridaDaoDb.listar();
-    setState(() {
-      _listDeCorridas.clear();
-      _listDeCorridas.addAll(corridas);
-    });
+  _carregaListas() async {
+    _listDeCorridas = await _corridaDaoDb.listar();
+    // _listDeServicos = await _servicoDaoDb.listar();
+    setState(() {});
   }
 
-  Future<void> _loadServicos() async {
-    final List<Servico> servicos = await _servicoDaoDb.listar();
-    setState(() {
-      _listDeServices.clear();
-      _listDeServices.addAll(servicos);
-    });
+  @override
+  initState() {
+    _corridaDaoDb = CorridaDaoDb();
+    _servicoDaoDb = ServicoDaoDb();
+    _carregaListas();
   }
 
-  _clickEdit(Corrida corrida) {}
-  _clickRemover(Corrida corrida) {}
+  _clickEditCorrida(Corrida corrida) {}
+  _clickRemoverCorrida(Corrida corrida) {}
+  _clickEditServico(Servico servico) {}
+  _clickRemoverServico(Servico servico) {}
 
   @override
   Widget build(BuildContext context) {
@@ -81,11 +83,11 @@ class _HistoricPageState extends State<HistoricPage> {
                       switch (item) {
                         case MyItem.itemTap:
                         case MyItem.itemEdit:
-                          _clickEdit(corrida);
+                          _clickEditCorrida(corrida);
                           break;
                         case MyItem.itemLongPress:
                         case MyItem.itemDelete:
-                          _clickRemover(corrida);
+                          _clickRemoverCorrida(corrida);
                           break;
                       }
                     },
@@ -93,8 +95,29 @@ class _HistoricPageState extends State<HistoricPage> {
                 },
               ),
             ),
-            const Center(
-              child: Text("Serviços aqui"),
+            Center(
+              child: ListView.builder(
+                padding: const EdgeInsets.only(top: 10.0),
+                itemCount: _listDeServicos.length,
+                itemBuilder: (context, index) {
+                  Servico servico = _listDeServicos[index];
+                  return CardServico(
+                    servico: servico,
+                    onMenuClick: (MyItemServico item) {
+                      switch (item) {
+                        case MyItemServico.itemTap:
+                        case MyItemServico.itemEdit:
+                          _clickEditServico(servico);
+                          break;
+                        case MyItemServico.itemLongPress:
+                        case MyItemServico.itemDelete:
+                          _clickRemoverServico(servico);
+                          break;
+                      }
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
