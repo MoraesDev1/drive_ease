@@ -29,7 +29,7 @@ class CorridaDaoDb implements CorridaDao {
   }
 
   Future<int> limpaStart() async {
-    final int result = await conexao.db.delete('start');
+    final int result = await conexao.db.delete('start', where: null);
     return result;
   }
 

@@ -50,16 +50,12 @@ class CardCorrida extends StatelessWidget {
               Column(
                 children: [
                   Text('Start: ${corrida.dataHoraStart}'),
-                  Text('Stop: ${corrida.dataHoraStop}')
+                  Text('Km Inicio: ${corrida.startKm.toString()}'),
+                  Text('Stop: ${corrida.dataHoraStop}'),
+                  Text('Km Fim: ${corrida.stopKm.toString()}'),
                 ],
               ),
               const Spacer(),
-              Column(
-                children: [
-                  Text('Km Inicio: ${corrida.startKm.toString()}'),
-                  Text('Km Fim: ${corrida.stopKm.toString()}')
-                ],
-              ),
               _getPopupMenuItem(),
             ],
           ),

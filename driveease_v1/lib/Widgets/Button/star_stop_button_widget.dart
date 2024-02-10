@@ -24,17 +24,21 @@ class _StartStopButtonState extends State<StartStopButton> {
   final TextEditingController _controllerGanhos = TextEditingController();
   List<Corrida> listaCorridaStart = [];
 
-  _buscaCorridaEmStart() async {
-    listaCorridaStart = await corridaDaoDb
+  _buscaCorridaEmStart() {
+    corridaDaoDb
         .buscarCorridaStart()
         .then((value) => listaCorridaStart = value);
+  }
+
+  _limpaStart() {
+    corridaDaoDb.limpaStart().then((value) => listaCorridaStart.clear());
   }
 
   String? _validaQuilometragem(String? value) {
     RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
 
     if (value != null && value.isEmpty) {
-      return 'Campo inválido';
+      return 'Campo obrigatório';
     } else if (!regex.hasMatch(value!)) {
       return 'Preenchimento incorreto!\nA forma correta é 000000.0';
     }
@@ -42,11 +46,12 @@ class _StartStopButtonState extends State<StartStopButton> {
   }
 
   String? _validaGanhos(String? value) {
-    RegExp regex = RegExp(r'^[0-9]{0,3}\.*[0-9]*.[0-9]{1-2}$');
+    String? entrada = value!.replaceAll(',', '.');
+    RegExp regex = RegExp(r'^\d*\.?\d{2}$');
 
-    if (value != null && value.isEmpty) {
-      return 'Campo inválido';
-    } else if (!regex.hasMatch(value!)) {
+    if (value.isEmpty) {
+      return 'Campo obrigatório';
+    } else if (!regex.hasMatch(entrada)) {
       return 'Preenchimento incorreto!\nA forma correta é 0000,00';
     }
     return null;
@@ -64,7 +69,8 @@ class _StartStopButtonState extends State<StartStopButton> {
   }
 
   _criaCorridaStop(String stopKm, String ganhos) {
-    double? ganhosDouble = double.parse(ganhos);
+    String ganhosFormatada = ganhos.replaceAll(',', '.');
+    double? ganhosDouble = double.parse(ganhosFormatada);
     double? stopKmDouble = double.parse(stopKm);
     DateTime dataAtual = DateTime.now();
     String dataFormatada = DateFormat('dd/MM/yyyy HH:mm:ss').format(dataAtual);
@@ -76,6 +82,7 @@ class _StartStopButtonState extends State<StartStopButton> {
       ganhos: ganhosDouble,
     );
     corridaDaoDb.inserirStop(corridaStop);
+    _limpaStart();
   }
 
   _clickIniciar() {
@@ -89,6 +96,7 @@ class _StartStopButtonState extends State<StartStopButton> {
       setState(() {
         start = !start;
         _controllerQuilometragemStart.clear();
+        _buscaCorridaEmStart();
       });
     }
   }
@@ -96,11 +104,9 @@ class _StartStopButtonState extends State<StartStopButton> {
   _clickEncerrar() {
     if (_formKeyStop.currentState!.validate()) {
       _formKeyStop.currentState!.save();
-      _buscaCorridaEmStart();
+      Navigator.of(context).pop();
       _criaCorridaStop(
           _controllerQuilometragemStop.text, _controllerGanhos.text);
-      Navigator.of(context).pop();
-
       setState(() {
         start = !start;
         _controllerQuilometragemStop.clear();
@@ -215,11 +221,11 @@ class _StartStopButtonState extends State<StartStopButton> {
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextFormField(
+                  controller: _controllerGanhos,
                   validator: _validaGanhos,
                   onFieldSubmitted: (value) => _clickEncerrar(),
                   cursorColor: Colors.black,
                   keyboardType: TextInputType.number,
-                  controller: _controllerGanhos,
                   decoration: const InputDecoration(
                     label: Text(
                       'Ganhos',

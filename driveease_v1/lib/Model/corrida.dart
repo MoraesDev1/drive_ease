@@ -49,7 +49,7 @@ class Corrida {
       id: map['id'],
       dataHoraStart: map['datahora_start'],
       startKm: map['start_km'],
-      dataHoraStop: map['datahora_start'],
+      dataHoraStop: map['datahora_stop'],
       stopKm: map['stop_km'],
       ganhos: map['ganhos'],
     );
