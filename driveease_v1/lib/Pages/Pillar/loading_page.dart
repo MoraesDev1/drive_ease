@@ -14,6 +14,7 @@ class LoadingPage extends StatefulWidget {
 class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
+    super.initState();
     LocalDatabase.initDatabase('driveease_v1.db').then((value) async {
       ConexaoDb().db = value;
       await Future.delayed(const Duration(seconds: 5));

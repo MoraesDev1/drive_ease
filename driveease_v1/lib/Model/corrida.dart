@@ -29,7 +29,6 @@ class Corrida {
 
   Map<String, dynamic> toMapStop() {
     return {
-      'id': id,
       'datahora_start': dataHoraStart,
       'start_km': startKm,
       'datahora_stop': dataHoraStop,

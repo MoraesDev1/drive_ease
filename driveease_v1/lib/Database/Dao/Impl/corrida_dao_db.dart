@@ -23,9 +23,19 @@ class CorridaDaoDb implements CorridaDao {
     return corrida;
   }
 
+  Future<List<Corrida>> buscarCorridaStart() async {
+    final List<Map<String, dynamic>> result = await conexao.db.query('start');
+    return result.map((e) => Corrida.fromMapStart(e)).toList();
+  }
+
+  Future<int> limpaStart() async {
+    final int result = await conexao.db.delete('start');
+    return result;
+  }
+
   @override
-  Future<Corrida> inserirStop(Corrida corrida, Corrida start) async {
-    await conexao.db.insert('corrida', corrida.toMapStop());
+  Future<Corrida> inserirStop(Corrida corrida) async {
+    corrida.id = await conexao.db.insert('corrida', corrida.toMapStop());
     return corrida;
   }
 

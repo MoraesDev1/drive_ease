@@ -19,9 +19,16 @@ class _StartStopButtonState extends State<StartStopButton> {
       TextEditingController();
   final _formKeyStart = GlobalKey<FormState>();
   final _formKeyStop = GlobalKey<FormState>();
-  final TextEditingController _controllerQuilometragem =
+  final TextEditingController _controllerQuilometragemStop =
       TextEditingController();
   final TextEditingController _controllerGanhos = TextEditingController();
+  List<Corrida> listaCorridaStart = [];
+
+  _buscaCorridaEmStart() async {
+    listaCorridaStart = await corridaDaoDb
+        .buscarCorridaStart()
+        .then((value) => listaCorridaStart = value);
+  }
 
   String? _validaQuilometragem(String? value) {
     RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
@@ -31,6 +38,18 @@ class _StartStopButtonState extends State<StartStopButton> {
     } else if (!regex.hasMatch(value!)) {
       return 'Preenchimento incorreto!\nA forma correta é 000000.0';
     }
+    return null;
+  }
+
+  String? _validaGanhos(String? value) {
+    RegExp regex = RegExp(r'^[0-9]{0,3}\.*[0-9]*.[0-9]{1-2}$');
+
+    if (value != null && value.isEmpty) {
+      return 'Campo inválido';
+    } else if (!regex.hasMatch(value!)) {
+      return 'Preenchimento incorreto!\nA forma correta é 0000,00';
+    }
+    return null;
   }
 
   _criaCorridaStart(String quilometragem) {
@@ -41,18 +60,32 @@ class _StartStopButtonState extends State<StartStopButton> {
       dataHoraStart: dataFormatada,
       startKm: quilometragemDouble,
     );
-
     corridaDaoDb.inserirStart(corridaStart);
   }
 
-  _criaCorridaStop(Corrida corridaStart) {}
+  _criaCorridaStop(String stopKm, String ganhos) {
+    double? ganhosDouble = double.parse(ganhos);
+    double? stopKmDouble = double.parse(stopKm);
+    DateTime dataAtual = DateTime.now();
+    String dataFormatada = DateFormat('dd/MM/yyyy HH:mm:ss').format(dataAtual);
+    Corrida corridaStop = Corrida.stop(
+      dataHoraStart: listaCorridaStart[0].dataHoraStart,
+      startKm: listaCorridaStart[0].startKm,
+      dataHoraStop: dataFormatada,
+      stopKm: stopKmDouble,
+      ganhos: ganhosDouble,
+    );
+    corridaDaoDb.inserirStop(corridaStop);
+  }
 
   _clickIniciar() {
     if (_formKeyStart.currentState!.validate()) {
       _formKeyStart.currentState!.save();
 
       _criaCorridaStart(_controllerQuilometragemStart.text);
+
       Navigator.of(context).pop();
+
       setState(() {
         start = !start;
         _controllerQuilometragemStart.clear();
@@ -63,11 +96,14 @@ class _StartStopButtonState extends State<StartStopButton> {
   _clickEncerrar() {
     if (_formKeyStop.currentState!.validate()) {
       _formKeyStop.currentState!.save();
-      _criaCorridaStart(_controllerQuilometragemStart.text);
+      _buscaCorridaEmStart();
+      _criaCorridaStop(
+          _controllerQuilometragemStop.text, _controllerGanhos.text);
       Navigator.of(context).pop();
+
       setState(() {
         start = !start;
-        _controllerQuilometragemStart.clear();
+        _controllerQuilometragemStop.clear();
       });
     }
   }
@@ -146,16 +182,17 @@ class _StartStopButtonState extends State<StartStopButton> {
             children: <Widget>[
               const Padding(
                 padding: EdgeInsets.all(8),
-                child: Text('Inicie sua corrida'),
+                child: Text('Encerre sua corrida'),
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextFormField(
                   maxLength: 8,
+                  validator: _validaQuilometragem,
                   onFieldSubmitted: (value) => _clickEncerrar(),
                   cursorColor: Colors.black,
                   keyboardType: TextInputType.number,
-                  controller: _controllerQuilometragem,
+                  controller: _controllerQuilometragemStop,
                   decoration: const InputDecoration(
                     counterText: '',
                     label: Text(
@@ -178,6 +215,7 @@ class _StartStopButtonState extends State<StartStopButton> {
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextFormField(
+                  validator: _validaGanhos,
                   onFieldSubmitted: (value) => _clickEncerrar(),
                   cursorColor: Colors.black,
                   keyboardType: TextInputType.number,

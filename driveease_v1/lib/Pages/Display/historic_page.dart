@@ -16,11 +16,10 @@ class HistoricPage extends StatefulWidget {
 
 class _HistoricPageState extends State<HistoricPage> {
   late CorridaDaoDb _corridaDaoDb;
+  // ignore: unused_field
   late ServicoDaoDb _servicoDaoDb;
   List<Corrida> _listDeCorridas = [];
-  List<Servico> _listDeServicos = [
-    Servico(data: 'data', km: 5, descricao: 'descricao', valor: 522)
-  ];
+  List<Servico> _listDeServicos = [];
 
   _carregaListas() async {
     _listDeCorridas = await _corridaDaoDb.listar();
@@ -30,6 +29,7 @@ class _HistoricPageState extends State<HistoricPage> {
 
   @override
   initState() {
+    super.initState();
     _corridaDaoDb = CorridaDaoDb();
     _servicoDaoDb = ServicoDaoDb();
     _carregaListas();

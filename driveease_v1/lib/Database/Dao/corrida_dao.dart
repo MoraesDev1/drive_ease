@@ -2,7 +2,7 @@ import 'package:driveease_v1/Model/corrida.dart';
 
 abstract class CorridaDao {
   Future<Corrida> inserirStart(Corrida corrida);
-  Future<Corrida> inserirStop(Corrida corrida, Corrida stop);
+  Future<Corrida> inserirStop(Corrida corrida);
   Future excluir(Corrida corrida);
   Future atualizar(Corrida corrida);
   Future<List<Corrida>> listar();
