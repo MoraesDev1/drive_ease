@@ -1,6 +1,6 @@
-import 'package:driveease_v1/Database/conexao_db.dart';
-import 'package:driveease_v1/Database/database.dart';
-import 'package:driveease_v1/Pages/MainPages/layout_page.dart';
+import 'package:driveease_v1/Database/LocalDatabase/conexao_db.dart';
+import 'package:driveease_v1/Database/LocalDatabase/database.dart';
+import 'package:driveease_v1/Pages/Pillar/layout_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 

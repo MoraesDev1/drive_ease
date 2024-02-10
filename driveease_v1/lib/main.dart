@@ -1,4 +1,4 @@
-import 'package:driveease_v1/Pages/loading_page.dart';
+import 'package:driveease_v1/Pages/Pillar/loading_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {

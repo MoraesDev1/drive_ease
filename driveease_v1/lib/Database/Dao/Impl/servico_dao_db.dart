@@ -1,5 +1,5 @@
 import 'package:driveease_v1/Database/Dao/servico_dao.dart';
-import 'package:driveease_v1/Database/conexao_db.dart';
+import 'package:driveease_v1/Database/LocalDatabase/conexao_db.dart';
 import 'package:driveease_v1/Model/servico.dart';
 
 class ServicoDaoDb implements ServicoDao {

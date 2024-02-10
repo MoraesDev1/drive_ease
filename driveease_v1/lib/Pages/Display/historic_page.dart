@@ -3,8 +3,8 @@ import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
-import 'package:driveease_v1/Widgets/card_corrida.dart';
-import 'package:driveease_v1/Widgets/card_servico.dart';
+import 'package:driveease_v1/Widgets/Cards/card_corrida.dart';
+import 'package:driveease_v1/Widgets/Cards/card_servico.dart';
 import 'package:flutter/material.dart';
 
 class HistoricPage extends StatefulWidget {

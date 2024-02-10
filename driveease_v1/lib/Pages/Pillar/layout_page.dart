@@ -1,7 +1,7 @@
-import 'package:driveease_v1/Pages/MainPages/historic_page.dart';
-import 'package:driveease_v1/Pages/MainPages/home_page.dart';
-import 'package:driveease_v1/Pages/MainPages/options_page.dart';
-import 'package:driveease_v1/Pages/MainPages/report_page.dart';
+import 'package:driveease_v1/Pages/Display/historic_page.dart';
+import 'package:driveease_v1/Pages/Display/home_page.dart';
+import 'package:driveease_v1/Pages/Pillar/options_page.dart';
+import 'package:driveease_v1/Pages/Display/report_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 

@@ -1,4 +1,4 @@
-import 'package:driveease_v1/Pages/MainPages/layout_page.dart';
+import 'package:driveease_v1/Pages/Pillar/layout_page.dart';
 import 'package:driveease_v1/Pages/Login/signup_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
