@@ -47,7 +47,7 @@ class _StartStopButtonState extends State<StartStopButton> {
 
   String? _validaGanhos(String? value) {
     String? entrada = value!.replaceAll(',', '.');
-    RegExp regex = RegExp(r'^\d*\.?\d{2}$');
+    RegExp regex = RegExp(r'^\d*\.\d{2}$');
 
     if (value.isEmpty) {
       return 'Campo obrigatório';
@@ -81,8 +81,10 @@ class _StartStopButtonState extends State<StartStopButton> {
       stopKm: stopKmDouble,
       ganhos: ganhosDouble,
     );
-    corridaDaoDb.inserirStop(corridaStop);
-    _limpaStart();
+    corridaDaoDb.inserirStop(corridaStop).then((value) => corridaStop = value);
+    if (corridaStop.id != null) {
+      _limpaStart();
+    }
   }
 
   _clickIniciar() {
