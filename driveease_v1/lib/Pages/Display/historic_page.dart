@@ -16,14 +16,13 @@ class HistoricPage extends StatefulWidget {
 
 class _HistoricPageState extends State<HistoricPage> {
   late CorridaDaoDb _corridaDaoDb;
-  // ignore: unused_field
   late ServicoDaoDb _servicoDaoDb;
   List<Corrida> _listDeCorridas = [];
   List<Servico> _listDeServicos = [];
 
   _carregaListas() async {
     _listDeCorridas = await _corridaDaoDb.listar();
-    // _listDeServicos = await _servicoDaoDb.listar();
+    _listDeServicos = await _servicoDaoDb.listar();
     setState(() {});
   }
 
@@ -46,6 +45,7 @@ class _HistoricPageState extends State<HistoricPage> {
       initialIndex: 0,
       length: 2,
       child: Scaffold(
+        backgroundColor: Utils.corFundo,
         appBar: AppBar(
           title: const Text('Histórico'),
           backgroundColor: Utils.corPrimaria,

@@ -1,4 +1,5 @@
 import 'package:driveease_v1/Utils/colors_utils.dart';
+import 'package:driveease_v1/Widgets/Button/new_servico_button_widget.dart';
 import 'package:driveease_v1/Widgets/Button/star_stop_button_widget.dart';
 import 'package:driveease_v1/Widgets/Graphics/main_graphic_widget.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +21,17 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         color: Utils.corFundo,
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              'Resumo Geral',
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-            GraphicMain(),
-            Spacer(),
-            StartStopButton(),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              NewServicoButton(),
+              const GraphicMain(),
+              const Spacer(),
+              const StartStopButton(),
+            ],
+          ),
         ),
       ),
     );

@@ -13,6 +13,7 @@ class CardCorrida extends StatelessWidget {
 
   _getPopupMenuItem() {
     return PopupMenuButton<MyItem>(
+      iconColor: Colors.white,
       onSelected: (MyItem value) {
         onMenuClick(value);
       },
@@ -42,17 +43,29 @@ class CardCorrida extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Utils.corFundo,
+          color: Colors.green.shade500,
         ),
         child: ListTile(
           title: Row(
             children: [
               Column(
                 children: [
-                  Text('Start: ${corrida.dataHoraStart}'),
-                  Text('Km Inicio: ${corrida.startKm.toString()}'),
-                  Text('Stop: ${corrida.dataHoraStop}'),
-                  Text('Km Fim: ${corrida.stopKm.toString()}'),
+                  Text(
+                    'Start: ${corrida.dataHoraStart}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    'Km Inicio: ${corrida.startKm.toString()}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    'Stop: ${corrida.dataHoraStop}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    'Km Fim: ${corrida.stopKm.toString()}',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
               const Spacer(),
