@@ -5,7 +5,7 @@ import 'package:driveease_v1/Widgets/Graphics/main_graphic_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -21,15 +21,15 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         color: Utils.corFundo,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+        child: const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               NewServicoButton(),
-              const GraphicMain(),
-              const Spacer(),
-              const StartStopButton(),
+              GraphicMain(),
+              Spacer(),
+              StartStopButton(),
             ],
           ),
         ),

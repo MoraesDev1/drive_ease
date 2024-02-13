@@ -2,7 +2,10 @@ import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 class CadastroPage extends StatefulWidget {
+  const CadastroPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _CadastroPageState createState() => _CadastroPageState();
 }
 
@@ -16,14 +19,14 @@ class _CadastroPageState extends State<CadastroPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Cadastro Confirmado'),
-          content: Text('Seu cadastro foi realizado com sucesso!'),
+          title: const Text('Cadastro Confirmado'),
+          content: const Text('Seu cadastro foi realizado com sucesso!'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -37,17 +40,17 @@ class _CadastroPageState extends State<CadastroPage> {
       backgroundColor: Utils.corFundo,
       appBar: AppBar(
         backgroundColor: Utils.corPrimaria,
-        title: Text('Cadastro'),
+        title: const Text('Cadastro'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Nome Completo',
                   prefixIcon: Icon(Icons.person),
                 ),
@@ -58,9 +61,9 @@ class _CadastroPageState extends State<CadastroPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                   prefixIcon: Icon(Icons.email),
                 ),
@@ -72,9 +75,9 @@ class _CadastroPageState extends State<CadastroPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Senha',
                   prefixIcon: Icon(Icons.lock),
                 ),
@@ -87,9 +90,9 @@ class _CadastroPageState extends State<CadastroPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Confirmação de Senha',
                   prefixIcon: Icon(Icons.lock),
                 ),
@@ -104,7 +107,7 @@ class _CadastroPageState extends State<CadastroPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Utils.corPrimaria),
@@ -120,7 +123,7 @@ class _CadastroPageState extends State<CadastroPage> {
                     _showCadastroConfirmadoDialog();
                   }
                 },
-                child: Text('Cadastrar'),
+                child: const Text('Cadastrar'),
               ),
             ],
           ),
@@ -131,7 +134,7 @@ class _CadastroPageState extends State<CadastroPage> {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: CadastroPage(),
   ));
 }

@@ -51,19 +51,19 @@ class CardCorrida extends StatelessWidget {
                 children: [
                   Text(
                     'Start: ${corrida.dataHoraStart}',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   Text(
                     'Km Inicio: ${corrida.startKm.toString()}',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   Text(
                     'Stop: ${corrida.dataHoraStop}',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   Text(
                     'Km Fim: ${corrida.stopKm.toString()}',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ],
               ),

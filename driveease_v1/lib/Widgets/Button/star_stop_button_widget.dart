@@ -32,7 +32,6 @@ class _StartStopButtonState extends State<StartStopButton> {
   }
 
   _alteraEstadoBotao() {
-    print(mediator.listaCorridaStart);
     setState(() {
       if (mediator.listaCorridaStart.isEmpty) {
         start = true;

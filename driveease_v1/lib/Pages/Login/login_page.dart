@@ -7,6 +7,7 @@ class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -24,12 +25,12 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Utils.corFundo,
       appBar: AppBar(
         backgroundColor: Utils.corPrimaria,
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -44,11 +45,11 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: 'Senha', prefixIcon: Icon(Icons.lock)),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -57,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LayoutPage(),
+                              builder: (context) => const LayoutPage(),
                             ),
                           );
                         } else {
@@ -77,9 +78,9 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       }
                     },
-                    child: Text('Entrar'),
                     color: Colors.blue,
                     textColor: Utils.corFundo,
+                    child: const Text('Entrar'),
                   ),
                   MaterialButton(
                     color: Utils.corPrimaria,
@@ -87,12 +88,12 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CadastroPage(),
+                          builder: (context) => const CadastroPage(),
                         ),
                       );
                     },
-                    child: Text('Criar cadastro'),
                     textColor: Utils.corFundo,
+                    child: const Text('Criar cadastro'),
                   ),
                   MaterialButton(
                     onPressed: () {
@@ -103,8 +104,8 @@ class _LoginPageState extends State<LoginPage> {
                       //   ),
                       // );
                     },
-                    child: Text('Políticas de Privacidade'),
                     textColor: Colors.blue,
+                    child: const Text('Políticas de Privacidade'),
                   ),
                 ],
               ),

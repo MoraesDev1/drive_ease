@@ -8,13 +8,11 @@ class CorridaDaoDb implements CorridaDao {
 
   @override
   Future atualizar(Corrida corrida) {
-    // TODO: implement atualizar
     throw UnimplementedError();
   }
 
   @override
   Future excluir(Corrida corrida) {
-    // TODO: implement excluir
     throw UnimplementedError();
   }
 
@@ -39,7 +37,7 @@ class CorridaDaoDb implements CorridaDao {
   @override
   Future<List<Corrida>> listarSemana() async {
     final now = DateTime.now();
-    final lastWeek = now.subtract(Duration(days: 7));
+    final lastWeek = now.subtract(const Duration(days: 7));
 
     final List<Map<String, dynamic>> result = await conexao.db.query(
       'corrida',
