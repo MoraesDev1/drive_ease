@@ -18,14 +18,16 @@ const List<String> tipoDeServico = <String>[
 ];
 
 class _NewServicoButtonState extends State<NewServicoButton> {
+  String? dropdownValue;
   final _formKeyServico = GlobalKey<FormState>();
   final TextEditingController _controllerTipoDeServico =
-      TextEditingController(text: 'Nenhum');
+      TextEditingController();
   final TextEditingController _controllerQuilometragem =
       TextEditingController();
   final TextEditingController _controllerGanhos = TextEditingController();
   final TextEditingController _controllerDescricao = TextEditingController();
   bool validado = false;
+  int ignoraPrimeira = 0;
 
   String? _validaQuilometragem(String? value) {
     RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
@@ -51,141 +53,84 @@ class _NewServicoButtonState extends State<NewServicoButton> {
   }
 
   String? _validaTipo(String? value) {
-    if (value!.isEmpty || value == 'Nenhum') {
+    if (value == null || value.isEmpty) {
       return 'Campo obrigatório';
     }
     return null;
   }
 
+  _esconderTeclado() {
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+
   _clickSalvar() {
     if (_formKeyServico.currentState!.validate()) {
       _formKeyServico.currentState!.save();
-      String? retornoValidacao = _validaTipo(_controllerTipoDeServico.text);
-      if (retornoValidacao == null) {
-        _controllerTipoDeServico.text = 'Nenhum';
-        validado = false;
-        setState(() {
-          _controllerDescricao.clear();
-          _controllerGanhos.clear();
-          _controllerQuilometragem.clear();
-        });
-        Navigator.of(context).pop();
-      } else {
-        validado = true;
-      }
+      setState(() {
+        _controllerDescricao.clear();
+        _controllerGanhos.clear();
+        _controllerQuilometragem.clear();
+        _controllerTipoDeServico.clear();
+      });
+      Navigator.of(context).pop();
     }
   }
 
   _getInfoServico() {
     return Center(
-      child: SingleChildScrollView(
-        child: StatefulBuilder(builder: (context, setState) {
-          return AlertDialog(
-            content: SizedBox(
-              child: Form(
-                key: _formKeyServico,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Text('Novo Serviço'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: DropdownMenu<String>(
-                        controller: _controllerTipoDeServico,
-                        errorText: validado
-                            ? _validaTipo(_controllerTipoDeServico.text)
-                            : null,
-                        onSelected: (value) {
-                          setState(() {
-                            validado = !validado;
-                          });
-                        },
-                        dropdownMenuEntries: tipoDeServico
-                            .map<DropdownMenuEntry<String>>((String value) {
-                          return DropdownMenuEntry<String>(
-                            value: value,
-                            label: value,
-                          );
-                        }).toList(),
+      child: GestureDetector(
+        onTap: _esconderTeclado,
+        child: SingleChildScrollView(
+          child: StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              content: SizedBox(
+                child: Form(
+                  key: _formKeyServico,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text('Novo Serviço'),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: TextFormField(
-                        onFieldSubmitted: (value) => _clickSalvar(),
-                        maxLength: 8,
-                        validator: _validaQuilometragem,
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.number,
-                        controller: _controllerQuilometragem,
-                        decoration: const InputDecoration(
-                          counterText: '',
-                          hintText: 'Ex: 000000.0',
-                          label: Text(
-                            'Quilometragem atual',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          suffixText: 'Km',
-                          suffixStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: TextFormField(
-                        maxLength: 10,
-                        controller: _controllerGanhos,
-                        validator: _validaCusto,
-                        onFieldSubmitted: (value) => _clickSalvar(),
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          counterText: '',
-                          label: Text(
-                            'Custo',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          prefixText: 'R\$',
-                          prefixStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Expanded(
-                        child: TextFormField(
-                          maxLines: null,
-                          onFieldSubmitted: (value) => _clickSalvar(),
-                          cursorColor: Colors.black,
-                          controller: _controllerDescricao,
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: DropdownButtonFormField<String>(
                           decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(15),
-                            hintText: 'Descreva o servico realizado',
-                            label: Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                'Descrição',
-                                style: TextStyle(color: Colors.black),
-                              ),
+                            hintText: 'Nenhum',
+                            hintStyle: TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(),
+                          ),
+                          validator: _validaTipo,
+                          onChanged: (value) {
+                            setState(() {
+                              dropdownValue = value;
+                            });
+                          },
+                          items: tipoDeServico
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: TextFormField(
+                          onFieldSubmitted: (value) => _clickSalvar(),
+                          maxLength: 8,
+                          validator: _validaQuilometragem,
+                          cursorColor: Colors.black,
+                          keyboardType: TextInputType.number,
+                          controller: _controllerQuilometragem,
+                          decoration: const InputDecoration(
+                            counterText: '',
+                            hintText: 'Ex: 000000.0',
+                            label: Text(
+                              'Quilometragem atual',
+                              style: TextStyle(color: Colors.black),
                             ),
                             border: OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(
@@ -193,32 +138,92 @@ class _NewServicoButtonState extends State<NewServicoButton> {
                                 color: Colors.black,
                               ),
                             ),
+                            suffixText: 'Km',
+                            suffixStyle: TextStyle(
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Utils.corPrimaria,
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: TextFormField(
+                          maxLength: 10,
+                          controller: _controllerGanhos,
+                          validator: _validaCusto,
+                          onFieldSubmitted: (value) => _clickSalvar(),
+                          cursorColor: Colors.black,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            counterText: '',
+                            label: Text(
+                              'Custo',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            border: OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
                               ),
-                              child: const Text('Criar Serviço'),
-                              onPressed: () => _clickSalvar(),
+                            ),
+                            prefixText: 'R\$',
+                            prefixStyle: TextStyle(
+                              color: Colors.black,
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Expanded(
+                          child: TextFormField(
+                            maxLines: null,
+                            onFieldSubmitted: (value) => _clickSalvar(),
+                            cursorColor: Colors.black,
+                            controller: _controllerDescricao,
+                            decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.all(15),
+                              hintText: 'Descreva o servico realizado',
+                              label: Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  'Descrição',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Utils.corPrimaria,
+                                ),
+                                child: const Text('Criar Serviço'),
+                                onPressed: () => _clickSalvar(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }
