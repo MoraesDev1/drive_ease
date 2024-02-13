@@ -1,4 +1,4 @@
-import 'package:driveease_v1/Database/LocalDatabase/conexao_db.dart';
+import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Database/LocalDatabase/database.dart';
 import 'package:driveease_v1/Pages/Pillar/layout_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
@@ -16,7 +16,8 @@ class _LoadingPageState extends State<LoadingPage> {
   void initState() {
     super.initState();
     LocalDatabase.initDatabase('driveease_v1.db').then((value) async {
-      ConexaoDb().db = value;
+      Mediator().db = value;
+      Mediator().buscarCorridaStart();
       await Future.delayed(const Duration(seconds: 5));
       if (!context.mounted) return;
       Navigator.pushReplacement(

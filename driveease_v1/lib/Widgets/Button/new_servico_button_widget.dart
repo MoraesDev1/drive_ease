@@ -1,6 +1,6 @@
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+// import 'package:path/path.dart';
 
 class NewServicoButton extends StatefulWidget {
   NewServicoButton({super.key});
@@ -27,7 +27,9 @@ class _NewServicoButtonState extends State<NewServicoButton> {
 
   final _formKeyStart = GlobalKey<FormState>();
 
-  String? _validaQuilometragem(String? value) {}
+  String? _validaQuilometragem(String? value) {
+    return null;
+  }
 
   _clickSalvar() {}
 

@@ -1,5 +1,4 @@
 import 'package:driveease_v1/Model/corrida.dart';
-import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 enum MyItem { itemEdit, itemDelete, itemTap, itemLongPress }

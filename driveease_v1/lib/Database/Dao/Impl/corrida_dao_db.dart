@@ -1,9 +1,10 @@
 import 'package:driveease_v1/Database/Dao/corrida_dao.dart';
-import 'package:driveease_v1/Database/LocalDatabase/conexao_db.dart';
+import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
+
 import 'package:driveease_v1/Model/corrida.dart';
 
 class CorridaDaoDb implements CorridaDao {
-  final ConexaoDb conexao = ConexaoDb();
+  final Mediator conexao = Mediator();
 
   @override
   Future atualizar(Corrida corrida) {
@@ -21,16 +22,6 @@ class CorridaDaoDb implements CorridaDao {
   Future<Corrida> inserirStart(Corrida corrida) async {
     await conexao.db.insert('start', corrida.toMapStart());
     return corrida;
-  }
-
-  Future<List<Corrida>> buscarCorridaStart() async {
-    final List<Map<String, dynamic>> result = await conexao.db.query('start');
-    return result.map((e) => Corrida.fromMapStart(e)).toList();
-  }
-
-  Future<int> limpaStart() async {
-    final int result = await conexao.db.delete('start', where: null);
-    return result;
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
+import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
@@ -22,16 +23,23 @@ class _StartStopButtonState extends State<StartStopButton> {
   final TextEditingController _controllerQuilometragemStop =
       TextEditingController();
   final TextEditingController _controllerGanhos = TextEditingController();
-  List<Corrida> listaCorridaStart = [];
+  Mediator mediator = Mediator();
 
-  _buscaCorridaEmStart() {
-    corridaDaoDb
-        .buscarCorridaStart()
-        .then((value) => listaCorridaStart = value);
+  @override
+  initState() {
+    super.initState();
+    _alteraEstadoBotao();
   }
 
-  _limpaStart() {
-    corridaDaoDb.limpaStart().then((value) => listaCorridaStart.clear());
+  _alteraEstadoBotao() {
+    print(mediator.listaCorridaStart);
+    setState(() {
+      if (mediator.listaCorridaStart.isEmpty) {
+        start = true;
+      } else {
+        start = false;
+      }
+    });
   }
 
   String? _validaQuilometragem(String? value) {
@@ -65,7 +73,9 @@ class _StartStopButtonState extends State<StartStopButton> {
       dataHoraStart: dataFormatada,
       startKm: quilometragemDouble,
     );
-    corridaDaoDb.inserirStart(corridaStart);
+    corridaDaoDb
+        .inserirStart(corridaStart)
+        .then((value) => mediator.listaCorridaStart.add(value));
   }
 
   _criaCorridaStop(String stopKm, String ganhos) {
@@ -75,16 +85,19 @@ class _StartStopButtonState extends State<StartStopButton> {
     DateTime dataAtual = DateTime.now();
     String dataFormatada = DateFormat('dd/MM/yyyy HH:mm:ss').format(dataAtual);
     Corrida corridaStop = Corrida.stop(
-      dataHoraStart: listaCorridaStart[0].dataHoraStart,
-      startKm: listaCorridaStart[0].startKm,
+      dataHoraStart: mediator.listaCorridaStart[0].dataHoraStart,
+      startKm: mediator.listaCorridaStart[0].startKm,
       dataHoraStop: dataFormatada,
       stopKm: stopKmDouble,
       ganhos: ganhosDouble,
     );
-    corridaDaoDb.inserirStop(corridaStop).then((value) => corridaStop = value);
-    if (corridaStop.id != null) {
-      _limpaStart();
-    }
+    corridaDaoDb.inserirStop(corridaStop).then(
+      (value) {
+        if (value.id! > 0) {
+          mediator.limparStart();
+        }
+      },
+    );
   }
 
   _clickIniciar() {
@@ -93,26 +106,29 @@ class _StartStopButtonState extends State<StartStopButton> {
 
       _criaCorridaStart(_controllerQuilometragemStart.text);
 
-      Navigator.of(context).pop();
+      mediator.buscarCorridaStart();
 
       setState(() {
         start = !start;
         _controllerQuilometragemStart.clear();
-        _buscaCorridaEmStart();
       });
+      Navigator.of(context).pop();
     }
   }
 
   _clickEncerrar() {
     if (_formKeyStop.currentState!.validate()) {
       _formKeyStop.currentState!.save();
-      Navigator.of(context).pop();
+
+      mediator.buscarCorridaStart();
+
       _criaCorridaStop(
           _controllerQuilometragemStop.text, _controllerGanhos.text);
       setState(() {
         start = !start;
         _controllerQuilometragemStop.clear();
       });
+      Navigator.of(context).pop();
     }
   }
 
