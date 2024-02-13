@@ -6,7 +6,7 @@ class ServicoDaoDb implements ServicoDao {
   final Mediator conexao = Mediator();
 
   @override
-  Future atualizar(Servico servico) {
+  Future editar(Servico servico) {
     throw UnimplementedError();
   }
 

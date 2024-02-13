@@ -41,13 +41,27 @@ class _StartStopButtonState extends State<StartStopButton> {
     });
   }
 
-  String? _validaQuilometragem(String? value) {
+  String? _validaQuilometragemStart(String? value) {
     RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
 
     if (value != null && value.isEmpty) {
       return 'Campo obrigatório';
     } else if (!regex.hasMatch(value!)) {
       return 'Preenchimento incorreto!\nA forma correta é 000000.0';
+    }
+    return null;
+  }
+
+  String? _validaQuilometragemStop(String? value) {
+    RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
+    double? stopKmDouble = double.parse(_controllerQuilometragemStop.text);
+
+    if (value != null && value.isEmpty) {
+      return 'Campo obrigatório';
+    } else if (!regex.hasMatch(value!)) {
+      return 'Preenchimento incorreto!\nA forma correta é 000000.0';
+    } else if (mediator.listaCorridaStart[0].startKm > stopKmDouble) {
+      return 'A quilometragem final deve ser \nmaior que a inicial.';
     }
     return null;
   }
@@ -148,7 +162,7 @@ class _StartStopButtonState extends State<StartStopButton> {
                 child: TextFormField(
                   onFieldSubmitted: (value) => _clickIniciar(),
                   maxLength: 8,
-                  validator: _validaQuilometragem,
+                  validator: _validaQuilometragemStart,
                   cursorColor: Colors.black,
                   keyboardType: TextInputType.number,
                   controller: _controllerQuilometragemStart,
@@ -211,7 +225,7 @@ class _StartStopButtonState extends State<StartStopButton> {
                 padding: const EdgeInsets.all(8),
                 child: TextFormField(
                   maxLength: 8,
-                  validator: _validaQuilometragem,
+                  validator: _validaQuilometragemStop,
                   onFieldSubmitted: (value) => _clickEncerrar(),
                   cursorColor: Colors.black,
                   keyboardType: TextInputType.number,

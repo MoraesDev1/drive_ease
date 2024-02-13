@@ -7,7 +7,7 @@ class CorridaDaoDb implements CorridaDao {
   final Mediator conexao = Mediator();
 
   @override
-  Future atualizar(Corrida corrida) {
+  Future editar(Corrida corrida) {
     throw UnimplementedError();
   }
 
