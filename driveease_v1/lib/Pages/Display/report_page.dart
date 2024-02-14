@@ -9,7 +9,7 @@ class ReportPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Relatórios'),
-        backgroundColor: Utils.corPrimaria,
+        backgroundColor: Utils.verdePrimario,
       ),
       body: Container(
         color: Colors.green[100],

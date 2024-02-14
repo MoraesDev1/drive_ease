@@ -6,24 +6,22 @@ class LocalDatabase {
     1: [
       '''
       CREATE TABLE corrida (
-        id INTEGER AUTO_INCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         datahora_start TEXT(50),
         start_km REAL,
         datahora_stop TEXT(50),
         stop_km REAL,
-        ganhos REAL,
-        PRIMARY KEY(id)
+        ganhos REAL
       );
     ''',
       '''
       CREATE TABLE servico (
-        id INTEGER AUTO_INCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         tipo TEXT,
         data TEXT,
         km REAL,
         descricao TEXT,
-        valor REAL,
-        PRIMARY KEY(id)
+        valor REAL
       );
     ''',
       '''CREATE TABLE start (

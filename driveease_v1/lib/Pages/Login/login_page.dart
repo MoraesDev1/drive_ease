@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Utils.corFundo,
       appBar: AppBar(
-        backgroundColor: Utils.corPrimaria,
+        backgroundColor: Utils.verdePrimario,
         title: const Text('Login'),
       ),
       body: Form(
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text('Entrar'),
                   ),
                   MaterialButton(
-                    color: Utils.corPrimaria,
+                    color: Utils.verdePrimario,
                     onPressed: () {
                       Navigator.push(
                         context,

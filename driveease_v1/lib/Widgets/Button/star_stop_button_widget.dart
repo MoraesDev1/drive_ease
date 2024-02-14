@@ -104,13 +104,16 @@ class _StartStopButtonState extends State<StartStopButton> {
       stopKm: stopKmDouble,
       ganhos: ganhosDouble,
     );
-    corridaDaoDb.inserirStop(corridaStop).then(
-      (value) {
-        if (value.id! > 0) {
-          mediator.limparStart();
-        }
-      },
-    );
+    insereCorridaNoBanco(corridaStop);
+  }
+
+  insereCorridaNoBanco(Corrida corrida) async {
+    Corrida corridaInserida = await corridaDaoDb.inserirStop(corrida);
+
+    if (corridaInserida.id! > 0) {
+      mediator.limparStart();
+      //mediator._listaDeCorridas.add(corridaInserida); validar se não é feito automaticamente no listar
+    }
   }
 
   _clickIniciar() {
@@ -140,6 +143,7 @@ class _StartStopButtonState extends State<StartStopButton> {
       setState(() {
         start = !start;
         _controllerQuilometragemStop.clear();
+        _controllerGanhos.clear();
       });
       Navigator.of(context).pop();
     }
@@ -193,7 +197,7 @@ class _StartStopButtonState extends State<StartStopButton> {
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Utils.corPrimaria,
+                          backgroundColor: Utils.verdePrimario,
                         ),
                         child: const Text('Iniciar'),
                         onPressed: () => _clickIniciar(),
@@ -282,7 +286,7 @@ class _StartStopButtonState extends State<StartStopButton> {
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Utils.corPrimaria,
+                          backgroundColor: Utils.verdePrimario,
                         ),
                         child: const Text('Encerrar'),
                         onPressed: () => _clickEncerrar(),

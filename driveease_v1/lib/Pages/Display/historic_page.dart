@@ -1,5 +1,6 @@
 import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
 import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
+import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
@@ -17,12 +18,11 @@ class HistoricPage extends StatefulWidget {
 class _HistoricPageState extends State<HistoricPage> {
   late CorridaDaoDb _corridaDaoDb;
   late ServicoDaoDb _servicoDaoDb;
-  List<Corrida> _listaDeCorridas = [];
-  List<Servico> _listaDeServicos = [];
+  Mediator mediator = Mediator();
 
   _carregaListas() async {
-    _listaDeCorridas = await _corridaDaoDb.listar();
-    _listaDeServicos = await _servicoDaoDb.listar();
+    mediator.listaDeCorridas = await _corridaDaoDb.listar();
+    mediator.listaDeServicos = await _servicoDaoDb.listar();
     setState(() {});
   }
 
@@ -35,9 +35,111 @@ class _HistoricPageState extends State<HistoricPage> {
   }
 
   _clickEditCorrida(Corrida corrida) {}
-  _clickRemoverCorrida(Corrida corrida) {}
+
+  _removerCorrida(Corrida corrida) {
+    _corridaDaoDb.excluir(corrida).then((value) {
+      _carregaListas();
+    });
+  }
+
+  _clickRemoverCorrida(Corrida corrida) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Remover Corrida'),
+        content: const Text('Tem certeza que deseja remover esta Corrida?'),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Utils.verdePrimario),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Cancelar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Utils.verdePrimario),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _removerCorrida(corrida);
+                },
+                child: const Text(
+                  'Remover',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   _clickEditServico(Servico servico) {}
-  _clickRemoverServico(Servico servico) {}
+
+  _removerServico(Servico servico) {
+    _servicoDaoDb.excluir(servico);
+    _carregaListas();
+  }
+
+  _clickRemoverServico(Servico servico) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Remover Serviço'),
+        content: const Text('Tem certeza que deseja remover este Serviço?'),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Utils.verdePrimario),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Cancelar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Utils.verdePrimario),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _removerServico(servico);
+                },
+                child: const Text(
+                  'Remover',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +150,7 @@ class _HistoricPageState extends State<HistoricPage> {
         backgroundColor: Utils.corFundo,
         appBar: AppBar(
           title: const Text('Histórico'),
-          backgroundColor: Utils.corPrimaria,
+          backgroundColor: Utils.verdePrimario,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: Container(
@@ -74,19 +176,19 @@ class _HistoricPageState extends State<HistoricPage> {
             Center(
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 10.0),
-                itemCount: _listaDeCorridas.length,
+                itemCount: mediator.listaDeCorridas.length,
                 itemBuilder: (context, index) {
-                  Corrida corrida = _listaDeCorridas[index];
+                  Corrida corrida = mediator.listaDeCorridas[index];
                   return CardCorrida(
                     corrida: corrida,
-                    onMenuClick: (MyItem item) {
+                    onMenuClick: (MyItemCorrida item) {
                       switch (item) {
-                        case MyItem.itemTap:
-                        case MyItem.itemEdit:
+                        case MyItemCorrida.itemTap:
+                        case MyItemCorrida.itemEdit:
                           _clickEditCorrida(corrida);
                           break;
-                        case MyItem.itemLongPress:
-                        case MyItem.itemDelete:
+                        case MyItemCorrida.itemLongPress:
+                        case MyItemCorrida.itemDelete:
                           _clickRemoverCorrida(corrida);
                           break;
                       }
@@ -98,9 +200,9 @@ class _HistoricPageState extends State<HistoricPage> {
             Center(
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 10.0),
-                itemCount: _listaDeServicos.length,
+                itemCount: mediator.listaDeServicos.length,
                 itemBuilder: (context, index) {
-                  Servico servico = _listaDeServicos[index];
+                  Servico servico = mediator.listaDeServicos[index];
                   return CardServico(
                     servico: servico,
                     onMenuClick: (MyItemServico item) {

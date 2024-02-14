@@ -1,10 +1,13 @@
 import 'package:driveease_v1/Model/corrida.dart';
+import 'package:driveease_v1/Model/servico.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Mediator {
   Mediator._privateConstructor();
   late Database db;
   List<Corrida> listaCorridaStart = [];
+  List<Corrida> listaDeCorridas = [];
+  List<Servico> listaDeServicos = [];
 
   static final Mediator _instance = Mediator._privateConstructor();
 

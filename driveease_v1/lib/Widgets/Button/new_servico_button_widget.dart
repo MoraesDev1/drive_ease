@@ -95,7 +95,11 @@ class _NewServicoButtonState extends State<NewServicoButton> {
       descricao: descricao,
       valor: custoDouble,
     );
-    servicoDaoDb.inserir(servicoCriado);
+    _insereServicoNoBanco(servicoCriado);
+  }
+
+  _insereServicoNoBanco(Servico servico) async {
+    servicoDaoDb.inserir(servico);
   }
 
   _getInfoServico() {
@@ -230,7 +234,7 @@ class _NewServicoButtonState extends State<NewServicoButton> {
                             Expanded(
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Utils.corPrimaria,
+                                  backgroundColor: Utils.verdePrimario,
                                 ),
                                 child: const Text('Criar Serviço'),
                                 onPressed: () => _clickSalvar(),
@@ -257,7 +261,7 @@ class _NewServicoButtonState extends State<NewServicoButton> {
         Expanded(
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Utils.corPrimaria,
+              backgroundColor: Utils.verdePrimario,
             ),
             onPressed: () {
               showDialog(

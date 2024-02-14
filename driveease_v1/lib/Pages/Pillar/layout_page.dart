@@ -37,7 +37,7 @@ class _LayoutPageState extends State<LayoutPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Utils.corPrimaria,
+        backgroundColor: Utils.verdePrimario,
         unselectedItemColor: Colors.white,
         selectedItemColor: Utils.corSecundaria,
         currentIndex: selectedIcon,

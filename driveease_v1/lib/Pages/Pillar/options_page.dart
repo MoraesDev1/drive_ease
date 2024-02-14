@@ -9,7 +9,7 @@ class OptionsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Opções'),
-        backgroundColor: Utils.corPrimaria,
+        backgroundColor: Utils.verdePrimario,
       ),
       body: Container(
         color: Colors.green[100],

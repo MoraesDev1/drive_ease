@@ -12,8 +12,12 @@ class CorridaDaoDb implements CorridaDao {
   }
 
   @override
-  Future excluir(Corrida corrida) {
-    throw UnimplementedError();
+  Future excluir(Corrida corrida) async {
+    await conexao.db.delete(
+      'corrida',
+      where: 'id = ?',
+      whereArgs: [corrida.id],
+    );
   }
 
   @override

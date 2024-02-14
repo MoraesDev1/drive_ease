@@ -39,7 +39,7 @@ class _CadastroPageState extends State<CadastroPage> {
     return Scaffold(
       backgroundColor: Utils.corFundo,
       appBar: AppBar(
-        backgroundColor: Utils.corPrimaria,
+        backgroundColor: Utils.verdePrimario,
         title: const Text('Cadastro'),
       ),
       body: SingleChildScrollView(
@@ -110,7 +110,8 @@ class _CadastroPageState extends State<CadastroPage> {
               const SizedBox(height: 20.0),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Utils.corPrimaria),
+                  backgroundColor:
+                      MaterialStatePropertyAll(Utils.verdePrimario),
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {

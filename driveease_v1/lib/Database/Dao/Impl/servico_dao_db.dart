@@ -11,8 +11,12 @@ class ServicoDaoDb implements ServicoDao {
   }
 
   @override
-  Future excluir(Servico servico) {
-    throw UnimplementedError();
+  Future excluir(Servico servico) async {
+    await mediator.db.delete(
+      'servico',
+      where: 'id = ?',
+      whereArgs: [servico.id],
+    );
   }
 
   @override

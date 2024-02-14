@@ -1,5 +1,4 @@
 import 'package:driveease_v1/Model/servico.dart';
-import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 enum MyItemServico { itemEdit, itemDelete, itemTap, itemLongPress }
@@ -53,6 +52,8 @@ class CardServico extends StatelessWidget {
                   Text('Data: ${servico.data}',
                       style: const TextStyle(color: Colors.white)),
                   Text('Descrição: ${servico.descricao}',
+                      style: const TextStyle(color: Colors.white)),
+                  Text('ID: ${servico.id}',
                       style: const TextStyle(color: Colors.white))
                 ],
               ),
