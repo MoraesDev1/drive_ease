@@ -17,12 +17,12 @@ class HistoricPage extends StatefulWidget {
 class _HistoricPageState extends State<HistoricPage> {
   late CorridaDaoDb _corridaDaoDb;
   late ServicoDaoDb _servicoDaoDb;
-  List<Corrida> _listDeCorridas = [];
-  List<Servico> _listDeServicos = [];
+  List<Corrida> _listaDeCorridas = [];
+  List<Servico> _listaDeServicos = [];
 
   _carregaListas() async {
-    _listDeCorridas = await _corridaDaoDb.listar();
-    _listDeServicos = await _servicoDaoDb.listar();
+    _listaDeCorridas = await _corridaDaoDb.listar();
+    _listaDeServicos = await _servicoDaoDb.listar();
     setState(() {});
   }
 
@@ -74,9 +74,9 @@ class _HistoricPageState extends State<HistoricPage> {
             Center(
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 10.0),
-                itemCount: _listDeCorridas.length,
+                itemCount: _listaDeCorridas.length,
                 itemBuilder: (context, index) {
-                  Corrida corrida = _listDeCorridas[index];
+                  Corrida corrida = _listaDeCorridas[index];
                   return CardCorrida(
                     corrida: corrida,
                     onMenuClick: (MyItem item) {
@@ -98,9 +98,9 @@ class _HistoricPageState extends State<HistoricPage> {
             Center(
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 10.0),
-                itemCount: _listDeServicos.length,
+                itemCount: _listaDeServicos.length,
                 itemBuilder: (context, index) {
-                  Servico servico = _listDeServicos[index];
+                  Servico servico = _listaDeServicos[index];
                   return CardServico(
                     servico: servico,
                     onMenuClick: (MyItemServico item) {

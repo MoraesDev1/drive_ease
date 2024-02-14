@@ -13,6 +13,7 @@ class CardServico extends StatelessWidget {
 
   _getPopupMenuItem() {
     return PopupMenuButton<MyItemServico>(
+      iconColor: Colors.white,
       onSelected: (MyItemServico value) {
         onMenuClick(value);
       },
@@ -42,22 +43,26 @@ class CardServico extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Utils.corFundo,
+          color: Colors.green.shade500,
         ),
         child: ListTile(
           title: Row(
             children: [
               Column(
                 children: [
-                  Text('Data: ${servico.data}'),
-                  Text('Descrição: ${servico.descricao}')
+                  Text('Data: ${servico.data}',
+                      style: const TextStyle(color: Colors.white)),
+                  Text('Descrição: ${servico.descricao}',
+                      style: const TextStyle(color: Colors.white))
                 ],
               ),
               const Spacer(),
               Column(
                 children: [
-                  Text('Km: ${servico.km}'),
-                  Text('Valor: ${servico.valor}')
+                  Text('Km: ${servico.km}',
+                      style: const TextStyle(color: Colors.white)),
+                  Text('Valor: ${servico.valor}',
+                      style: const TextStyle(color: Colors.white))
                 ],
               ),
               _getPopupMenuItem(),

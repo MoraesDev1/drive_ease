@@ -18,6 +18,7 @@ class LocalDatabase {
       '''
       CREATE TABLE servico (
         id INTEGER AUTO_INCREMENT,
+        tipo TEXT,
         data TEXT,
         km REAL,
         descricao TEXT,

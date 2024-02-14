@@ -1,5 +1,9 @@
+import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
+import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
+import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewServicoButton extends StatefulWidget {
   const NewServicoButton({super.key});
@@ -18,16 +22,16 @@ const List<String> tipoDeServico = <String>[
 ];
 
 class _NewServicoButtonState extends State<NewServicoButton> {
-  String? dropdownValue;
+  Mediator mediator = Mediator();
+  ServicoDaoDb servicoDaoDb = ServicoDaoDb();
+  String? tipoSelecionado;
   final _formKeyServico = GlobalKey<FormState>();
   final TextEditingController _controllerTipoDeServico =
       TextEditingController();
   final TextEditingController _controllerQuilometragem =
       TextEditingController();
-  final TextEditingController _controllerGanhos = TextEditingController();
   final TextEditingController _controllerDescricao = TextEditingController();
-  bool validado = false;
-  int ignoraPrimeira = 0;
+  final TextEditingController _controllerCusto = TextEditingController();
 
   String? _validaQuilometragem(String? value) {
     RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
@@ -66,14 +70,32 @@ class _NewServicoButtonState extends State<NewServicoButton> {
   _clickSalvar() {
     if (_formKeyServico.currentState!.validate()) {
       _formKeyServico.currentState!.save();
+      _criarServico(_controllerCusto.text, _controllerQuilometragem.text,
+          _controllerDescricao.text, tipoSelecionado!);
       setState(() {
         _controllerDescricao.clear();
-        _controllerGanhos.clear();
+        _controllerCusto.clear();
         _controllerQuilometragem.clear();
         _controllerTipoDeServico.clear();
       });
       Navigator.of(context).pop();
     }
+  }
+
+  _criarServico(String custo, String quilometragem, String descricao,
+      String tipoDoServico) {
+    double? quilometragemDouble = double.parse(quilometragem);
+    double? custoDouble = double.parse(custo);
+    DateTime dataAtual = DateTime.now();
+    String dataFormatada = DateFormat('dd/MM/yyyy HH:mm:ss').format(dataAtual);
+    Servico servicoCriado = Servico(
+      tipoDoServico: tipoDoServico,
+      data: dataFormatada,
+      km: quilometragemDouble,
+      descricao: descricao,
+      valor: custoDouble,
+    );
+    servicoDaoDb.inserir(servicoCriado);
   }
 
   _getInfoServico() {
@@ -104,7 +126,7 @@ class _NewServicoButtonState extends State<NewServicoButton> {
                           validator: _validaTipo,
                           onChanged: (value) {
                             setState(() {
-                              dropdownValue = value;
+                              tipoSelecionado = value;
                             });
                           },
                           items: tipoDeServico
@@ -149,7 +171,7 @@ class _NewServicoButtonState extends State<NewServicoButton> {
                         padding: const EdgeInsets.all(8),
                         child: TextFormField(
                           maxLength: 10,
-                          controller: _controllerGanhos,
+                          controller: _controllerCusto,
                           validator: _validaCusto,
                           onFieldSubmitted: (value) => _clickSalvar(),
                           cursorColor: Colors.black,
