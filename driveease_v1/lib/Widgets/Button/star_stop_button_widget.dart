@@ -14,16 +14,14 @@ class StartStopButton extends StatefulWidget {
 
 class _StartStopButtonState extends State<StartStopButton> {
   CorridaDaoDb corridaDaoDb = CorridaDaoDb();
+  Mediator mediator = Mediator();
   bool start = true;
   double sizeButton = 90;
-  final TextEditingController _controllerQuilometragemStart =
-      TextEditingController();
   final _formKeyStart = GlobalKey<FormState>();
   final _formKeyStop = GlobalKey<FormState>();
-  final TextEditingController _controllerQuilometragemStop =
-      TextEditingController();
-  final TextEditingController _controllerGanhos = TextEditingController();
-  Mediator mediator = Mediator();
+  final _controllerQuilometragemStart = TextEditingController();
+  final _controllerQuilometragemStop = TextEditingController();
+  final _controllerGanhos = TextEditingController();
 
   @override
   initState() {

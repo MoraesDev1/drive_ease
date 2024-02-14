@@ -3,6 +3,7 @@ import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
 import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
+import 'package:driveease_v1/Pages/Pillar/edit_corrida_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_corrida.dart';
 import 'package:driveease_v1/Widgets/Cards/card_servico.dart';
@@ -34,12 +35,33 @@ class _HistoricPageState extends State<HistoricPage> {
     _carregaListas();
   }
 
-  _clickEditCorrida(Corrida corrida) {}
+  _clickEditCorrida(Corrida corrida) {
+    Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+        builder: (context) => EditCorridaPage(corrida: corrida),
+      ),
+    )
+        .then((value) {
+      setState(() {
+        _carregaListas();
+      });
+    });
+  }
 
   _removerCorrida(Corrida corrida) {
-    _corridaDaoDb.excluir(corrida).then((value) {
-      _carregaListas();
-    });
+    _corridaDaoDb.excluir(corrida).then(
+      (value) {
+        _carregaListas();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Corrida removida!'),
+            backgroundColor: Colors.grey,
+            duration: Duration(seconds: 3),
+          ),
+        );
+      },
+    );
   }
 
   _clickRemoverCorrida(Corrida corrida) {
@@ -93,6 +115,13 @@ class _HistoricPageState extends State<HistoricPage> {
   _removerServico(Servico servico) {
     _servicoDaoDb.excluir(servico);
     _carregaListas();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Serviço removido!'),
+        backgroundColor: Colors.grey,
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 
   _clickRemoverServico(Servico servico) {

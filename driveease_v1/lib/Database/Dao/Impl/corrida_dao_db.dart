@@ -7,8 +7,13 @@ class CorridaDaoDb implements CorridaDao {
   final Mediator conexao = Mediator();
 
   @override
-  Future editar(Corrida corrida) {
-    throw UnimplementedError();
+  Future editar(Corrida corrida) async {
+    await conexao.db.update(
+      'corrida',
+      corrida.toMapStop(),
+      where: 'id = ?',
+      whereArgs: [corrida.id],
+    );
   }
 
   @override

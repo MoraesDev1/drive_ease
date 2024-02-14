@@ -26,12 +26,10 @@ class _NewServicoButtonState extends State<NewServicoButton> {
   ServicoDaoDb servicoDaoDb = ServicoDaoDb();
   String? tipoSelecionado;
   final _formKeyServico = GlobalKey<FormState>();
-  final TextEditingController _controllerTipoDeServico =
-      TextEditingController();
-  final TextEditingController _controllerQuilometragem =
-      TextEditingController();
-  final TextEditingController _controllerDescricao = TextEditingController();
-  final TextEditingController _controllerCusto = TextEditingController();
+  final _controllerTipoDeServico = TextEditingController();
+  final _controllerQuilometragem = TextEditingController();
+  final _controllerDescricao = TextEditingController();
+  final _controllerCusto = TextEditingController();
 
   String? _validaQuilometragem(String? value) {
     RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
