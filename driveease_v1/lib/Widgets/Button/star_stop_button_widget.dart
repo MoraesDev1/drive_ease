@@ -40,7 +40,7 @@ class _StartStopButtonState extends State<StartStopButton> {
   }
 
   String? _validaQuilometragemStart(String? value) {
-    RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
+    RegExp regex = RegExp(r'^[0-9]{0,6}\.?[0-9]*$');
 
     if (value != null && value.isEmpty) {
       return 'Campo obrigatório';
@@ -51,7 +51,7 @@ class _StartStopButtonState extends State<StartStopButton> {
   }
 
   String? _validaQuilometragemStop(String? value) {
-    RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
+    RegExp regex = RegExp(r'^[0-9]{0,6}\.?[0-9]*$');
     double? stopKmDouble = double.parse(_controllerQuilometragemStop.text);
 
     if (value != null && value.isEmpty) {
@@ -66,7 +66,7 @@ class _StartStopButtonState extends State<StartStopButton> {
 
   String? _validaGanhos(String? value) {
     String? entrada = value!.replaceAll(',', '.');
-    RegExp regex = RegExp(r'^\d*\.\d{2}$');
+    RegExp regex = RegExp(r'^\d*\.?\d*$');
 
     if (value.isEmpty) {
       return 'Campo obrigatório';
@@ -107,10 +107,8 @@ class _StartStopButtonState extends State<StartStopButton> {
 
   insereCorridaNoBanco(Corrida corrida) async {
     Corrida corridaInserida = await corridaDaoDb.inserirStop(corrida);
-
     if (corridaInserida.id! > 0) {
       mediator.limparStart();
-      //mediator._listaDeCorridas.add(corridaInserida); validar se não é feito automaticamente no listar
     }
   }
 
