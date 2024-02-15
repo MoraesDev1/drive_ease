@@ -15,23 +15,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Utils.corFundo,
       appBar: AppBar(
         title: const Text('Homepage'),
         backgroundColor: Utils.verdePrimario,
       ),
-      body: Container(
-        color: Utils.corFundo,
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              NewServicoButton(),
-              GraphicMain(),
-              Spacer(),
-              StartStopButton(),
-            ],
-          ),
+      body: const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            NewServicoButton(),
+            GraphicMain(),
+            Spacer(),
+            StartStopButton(),
+          ],
         ),
       ),
     );
