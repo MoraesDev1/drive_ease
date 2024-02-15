@@ -6,7 +6,7 @@ abstract class CorridaDao {
   Future excluir(Corrida corrida);
   Future editar(Corrida corrida);
   Future<List<Corrida>> listar();
-  Future<List<Corrida>> listarSemana();
-  Future<List<Corrida>> listarMes();
-  Future<List<Corrida>> listarAno();
+  Future<List<Corrida>> listarSemana(DateTime now);
+  Future<List<Corrida>> listarMes(DateTime now);
+  Future<List<Corrida>> listarAno(DateTime now);
 }
