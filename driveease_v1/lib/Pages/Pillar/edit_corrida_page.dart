@@ -209,11 +209,10 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
       ),
       backgroundColor: Utils.corFundo,
       body: Center(
-        child: GestureDetector(
-          onTap: _esconderTeclado,
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKeyCorrida,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKeyCorrida,
+            child: Card(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -362,7 +361,7 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Utils.verdePrimario,
                             ),
-                            child: const Text('Concluir'),
+                            child: const Text('Salvar Alterações'),
                             onPressed: () => _clickSalvar(),
                           ),
                         ),

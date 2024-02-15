@@ -4,6 +4,7 @@ import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Pages/Pillar/edit_corrida_page.dart';
+import 'package:driveease_v1/Pages/Pillar/edit_servico_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_corrida.dart';
 import 'package:driveease_v1/Widgets/Cards/card_servico.dart';
@@ -110,7 +111,19 @@ class _HistoricPageState extends State<HistoricPage> {
     );
   }
 
-  _clickEditServico(Servico servico) {}
+  _clickEditServico(Servico servico) {
+    Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+        builder: (context) => EditServicoPage(servico: servico),
+      ),
+    )
+        .then((value) {
+      setState(() {
+        _carregaListas();
+      });
+    });
+  }
 
   _removerServico(Servico servico) {
     _servicoDaoDb.excluir(servico);

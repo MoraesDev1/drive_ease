@@ -6,8 +6,13 @@ class ServicoDaoDb implements ServicoDao {
   final Mediator mediator = Mediator();
 
   @override
-  Future editar(Servico servico) {
-    throw UnimplementedError();
+  Future editar(Servico servico) async {
+    await mediator.db.update(
+      'servico',
+      servico.toMap(),
+      where: 'id = ?',
+      whereArgs: [servico.id],
+    );
   }
 
   @override

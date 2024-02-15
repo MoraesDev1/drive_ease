@@ -1,7 +1,7 @@
 import 'package:driveease_v1/Pages/Display/historic_page.dart';
 import 'package:driveease_v1/Pages/Display/home_page.dart';
 import 'package:driveease_v1/Pages/Pillar/options_page.dart';
-// import 'package:driveease_v1/Pages/Display/report_page.dart';
+import 'package:driveease_v1/Pages/Display/report_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class _LayoutPageState extends State<LayoutPage> {
 
   final List<Widget> pages = [
     const HomePage(),
-    // const ReportPage(),
+    const ReportPage(),
     const HistoricPage(),
     const OptionsPage(),
   ];

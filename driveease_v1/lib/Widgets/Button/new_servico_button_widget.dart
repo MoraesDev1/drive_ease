@@ -44,7 +44,7 @@ class _NewServicoButtonState extends State<NewServicoButton> {
 
   String? _validaCusto(String? value) {
     String? entrada = value!.replaceAll(',', '.');
-    RegExp regex = RegExp(r'^\d*\.\d{2}$');
+    RegExp regex = RegExp(r'^\d*\.?\d*$');
 
     if (value.isEmpty) {
       return 'Campo obrigatório';
