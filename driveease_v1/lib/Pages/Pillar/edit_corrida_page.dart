@@ -246,6 +246,7 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: TextFormField(
+                      onTapOutside: (event) => _esconderTeclado,
                       maxLength: 8,
                       validator: _validaQuilometragemInicio,
                       onFieldSubmitted: (value) => _clickSalvar(),
@@ -301,6 +302,7 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: TextFormField(
+                      onTapOutside: (event) => _esconderTeclado,
                       maxLength: 8,
                       validator: _validaQuilometragemFinal,
                       onFieldSubmitted: (value) => _clickSalvar(),
@@ -329,6 +331,7 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: TextFormField(
+                      onTapOutside: (event) => _esconderTeclado,
                       controller: _controllerGanhos,
                       validator: _validaGanhos,
                       onFieldSubmitted: (value) => _clickSalvar(),
