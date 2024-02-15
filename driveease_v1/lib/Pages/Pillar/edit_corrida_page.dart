@@ -2,6 +2,7 @@ import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EditCorridaPage extends StatefulWidget {
   const EditCorridaPage({super.key, required this.corrida});
@@ -32,7 +33,7 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
 
   String? _validaGanhos(String? value) {
     String? entrada = value!.replaceAll(',', '.');
-    RegExp regex = RegExp(r'^\d*\.\d{2}$');
+    RegExp regex = RegExp(r'^\d*\.?\d*$');
 
     if (value.isEmpty) {
       return 'Campo obrigatório';
@@ -43,7 +44,7 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
   }
 
   String? _validaQuilometragemInicio(String? value) {
-    RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
+    RegExp regex = RegExp(r'^[0-9]{0,6}\.?[0-9]*$');
 
     if (value == null || value.isEmpty) {
       return 'Campo obrigatório';
@@ -129,6 +130,76 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
     FocusScope.of(context).requestFocus(FocusNode());
   }
 
+  _selecionarDatainicial() async {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2050),
+    ).then(
+      (selectedDate) {
+        if (selectedDate != null) {
+          showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+          ).then(
+            (selectedTime) {
+              if (selectedTime != null) {
+                DateTime selectedDateTime = DateTime(
+                  selectedDate.year,
+                  selectedDate.month,
+                  selectedDate.day,
+                  selectedTime.hour,
+                  selectedTime.minute,
+                );
+                String dataFormatada =
+                    DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDateTime);
+                setState(() {
+                  _controllerDataInicial.text = dataFormatada;
+                });
+              }
+            },
+          );
+        }
+      },
+    );
+  }
+
+  _selecionarDataFinal() async {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    ).then(
+      (selectedDate) {
+        if (selectedDate != null) {
+          showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+          ).then(
+            (selectedTime) {
+              if (selectedTime != null) {
+                DateTime selectedDateTime = DateTime(
+                  selectedDate.year,
+                  selectedDate.month,
+                  selectedDate.day,
+                  selectedTime.hour,
+                  selectedTime.minute,
+                );
+                String dataFormatada =
+                    DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDateTime);
+                setState(() {
+                  _controllerDataFinal.text = dataFormatada;
+                });
+              }
+            },
+          );
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,11 +220,17 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: TextFormField(
+                      readOnly: true,
+                      onTap: () => _selecionarDatainicial(),
                       onFieldSubmitted: (value) => _clickSalvar(),
                       cursorColor: Colors.black,
                       keyboardType: TextInputType.number,
                       controller: _controllerDataInicial,
                       decoration: const InputDecoration(
+                        suffixIcon: Icon(
+                          Icons.calendar_month,
+                          color: Colors.black,
+                        ),
                         label: Text(
                           'Data Inicial',
                           style: TextStyle(color: Colors.black),
@@ -198,11 +275,17 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: TextFormField(
+                      readOnly: true,
+                      onTap: () => _selecionarDataFinal(),
                       onFieldSubmitted: (value) => _clickSalvar(),
                       cursorColor: Colors.black,
                       keyboardType: TextInputType.number,
                       controller: _controllerDataFinal,
                       decoration: const InputDecoration(
+                        suffixIcon: Icon(
+                          Icons.calendar_month,
+                          color: Colors.black,
+                        ),
                         label: Text(
                           'Data Final',
                           style: TextStyle(color: Colors.black),

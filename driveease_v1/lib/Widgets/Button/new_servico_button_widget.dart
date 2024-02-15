@@ -32,7 +32,7 @@ class _NewServicoButtonState extends State<NewServicoButton> {
   final _controllerCusto = TextEditingController();
 
   String? _validaQuilometragem(String? value) {
-    RegExp regex = RegExp(r'^[0-9]{0,6}\.[0-9]$');
+    RegExp regex = RegExp(r'^[0-9]{0,6}\.?[0-9]*$');
 
     if (value != null && value.isEmpty) {
       return 'Campo obrigatório';
