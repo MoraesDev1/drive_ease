@@ -18,7 +18,7 @@ class _LoadingPageState extends State<LoadingPage> {
     LocalDatabase.initDatabase('driveease_v1.db').then((value) async {
       Mediator().db = value;
       Mediator().buscarCorridaStart();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 4));
       if (!context.mounted) return;
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const LayoutPage()));
@@ -29,11 +29,11 @@ class _LoadingPageState extends State<LoadingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Utils.corFundo,
-      body: const Center(
+      body: Center(
         child: SizedBox(
-          width: 50,
-          height: 50,
-          child: CircularProgressIndicator(),
+          width: 500,
+          height: 500,
+          child: Image.asset('Assets/car4.gif'),
         ),
       ),
     );
