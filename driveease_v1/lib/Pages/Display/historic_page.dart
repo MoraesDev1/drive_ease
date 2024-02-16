@@ -191,6 +191,7 @@ class _HistoricPageState extends State<HistoricPage> {
       child: Scaffold(
         backgroundColor: Utils.corFundo,
         appBar: AppBar(
+          centerTitle: true,
           title: const Text('Histórico'),
           backgroundColor: Utils.verdePrimario,
           bottom: PreferredSize(

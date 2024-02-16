@@ -68,6 +68,7 @@ class _ReportPageState extends State<ReportPage> {
         backgroundColor: Utils.corFundo,
         appBar: AppBar(
           title: const Text('Relatórios'),
+          centerTitle: true,
           backgroundColor: Utils.verdePrimario,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),

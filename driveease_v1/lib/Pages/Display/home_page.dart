@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Utils.corFundo,
       appBar: AppBar(
         title: const Text('Homepage'),
+        centerTitle: true,
         backgroundColor: Utils.verdePrimario,
       ),
       body: const Padding(
