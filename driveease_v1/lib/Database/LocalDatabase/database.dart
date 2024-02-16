@@ -28,7 +28,15 @@ class LocalDatabase {
         datahora_start TEXT(50),
         start_km REAL
       );
-    '''
+    ''',
+      '''CREATE TABLE meta (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        inicio TEXT(50),
+        fim TEXT(50),
+        valor REAL,
+        descricao TEXT
+);
+''',
     ],
   };
 
