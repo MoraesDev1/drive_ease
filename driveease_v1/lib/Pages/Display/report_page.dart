@@ -4,7 +4,9 @@ import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
+import 'package:driveease_v1/Widgets/Graphics/main_graphic_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -18,30 +20,33 @@ class _ReportPageState extends State<ReportPage> {
   late ServicoDaoDb _servicoDaoDb;
   Mediator mediator = Mediator();
 
-  _filtraMes() async {
-    List<double?> ganhos = [15, 25, 37, 95];
-    List<double?> despesas = [11, 24, 22, 55, 10];
-    double resultado = 0;
-    List<Corrida> listaCorridaMes = await _corridaDaoDb.listarMes(DateTime
-        .now()); //DateTime.now() inserido só pro código rodar, não faz parte da logica
-    List<Servico> listaServicoMes = await _servicoDaoDb.listarMes(DateTime
-        .now()); //DateTime.now() inserido só pro código rodar, não faz parte da logica
-    for (Corrida corrida in listaCorridaMes) {
-      ganhos.add(corrida.ganhos);
-    }
-    for (Servico servico in listaServicoMes) {
-      despesas.add(servico.valor);
-    }
-    for (double? i in ganhos) {
-      resultado += i!;
-    }
-    for (double? i in despesas) {
-      resultado -= i!;
-    }
-    return resultado;
+  Future<void> _gerarRelatorioGrafico() async {
+    double totalGanhos = mediator.listaDeCorridas
+        .fold(0, (total, corrida) => total + (corrida.ganhos ?? 0));
+    double totalDespesas = mediator.listaDeServicos
+        .fold(0, (total, servico) => total + servico.valor.abs());
+    print('Total Ganhos: $totalGanhos');
+    print('Total Despesas: $totalDespesas');
+    List lista = filtrarSemana(DateTime.now());
+    print(lista);
   }
 
-  _carregarSemana() async {}
+  List<dynamic> filtrarSemana(DateTime selectedDate) {
+    String dataFormatada =
+        DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDate);
+    DateTime dataConvertida = DateTime.parse(dataFormatada);
+    final firstDayOfWeek =
+        dataConvertida.subtract(Duration(days: dataConvertida.weekday - 1));
+    final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 6));
+    print(dataConvertida);
+
+    return mediator.listaDeCorridas.where((corrida) {
+      print(corrida.dataHoraStart);
+      DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
+      return itemDate.isAfter(firstDayOfWeek) &&
+          itemDate.isBefore(lastDayOfWeek);
+    }).toList();
+  }
 
   _carregarDia() async {}
 
@@ -92,11 +97,26 @@ class _ReportPageState extends State<ReportPage> {
             ),
           ),
         ),
-        body: const TabBarView(
-          children: <Widget>[
-            Center(child: Text('Diario')),
-            Center(child: Text('Semanal')),
-            Center(child: Text('Mensal')),
+        body: TabBarView(
+          children: [
+            FutureBuilder(
+                future: _gerarRelatorioGrafico(),
+                builder: (context, snapshot) {
+                  return Column(
+                    children: [
+                      GraphicMain(),
+                      Center(child: Text('Diario')),
+                    ],
+                  );
+                }),
+            Column(children: [
+              GraphicMain(),
+              Center(child: Text('Semanal')),
+            ]),
+            Column(children: [
+              GraphicMain(),
+              Center(child: Text('Mensal')),
+            ]),
           ],
         ),
       ),

@@ -41,8 +41,8 @@ class ServicoDaoDb implements ServicoDao {
     final lastWeek = now.subtract(const Duration(days: 7));
 
     final List<Map<String, dynamic>> result = await mediator.db.query(
-      'corrida',
-      where: 'datahora_start BETWEEN ? AND ?',
+      'servico',
+      where: 'data BETWEEN ? AND ?',
       whereArgs: [lastWeek.toIso8601String(), now.toIso8601String()],
     );
     return result.map((e) => Servico.fromMap(e)).toList();
@@ -53,8 +53,8 @@ class ServicoDaoDb implements ServicoDao {
     final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
 
     final List<Map<String, dynamic>> result = await mediator.db.query(
-      'corrida',
-      where: 'datahora_start BETWEEN ? AND ?',
+      'servico',
+      where: 'data BETWEEN ? AND ?',
       whereArgs: [
         firstDayOfMonth.toIso8601String(),
         lastDayOfMonth.toIso8601String(),
@@ -68,8 +68,8 @@ class ServicoDaoDb implements ServicoDao {
     final lastDayOfYear = DateTime(now.year + 1, 0, 0);
 
     final List<Map<String, dynamic>> result = await mediator.db.query(
-      'corrida',
-      where: 'datahora_start BETWEEN ? AND ?',
+      'servico',
+      where: 'data BETWEEN ? AND ?',
       whereArgs: [
         firstDayOfYear.toIso8601String(),
         lastDayOfYear.toIso8601String(),
