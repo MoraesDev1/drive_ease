@@ -1,4 +1,5 @@
 import 'package:driveease_v1/Model/corrida.dart';
+import 'package:driveease_v1/Model/metas.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -8,6 +9,7 @@ class Mediator {
   List<Corrida> listaCorridaStart = [];
   List<Corrida> listaDeCorridas = [];
   List<Servico> listaDeServicos = [];
+  List<Meta> listaDeMetas = [];
 
   static final Mediator _instance = Mediator._privateConstructor();
 
