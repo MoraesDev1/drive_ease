@@ -4,9 +4,9 @@ import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
-import 'package:driveease_v1/Widgets/Graphics/main_graphic_widget.dart';
+import 'package:driveease_v1/Widgets/Cards/card_corrida.dart';
+import 'package:driveease_v1/Widgets/Cards/card_servico.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -19,42 +19,12 @@ class _ReportPageState extends State<ReportPage> {
   late CorridaDaoDb _corridaDaoDb;
   late ServicoDaoDb _servicoDaoDb;
   Mediator mediator = Mediator();
-
-  Future<void> _gerarRelatorioGrafico() async {
-    double totalGanhos = mediator.listaDeCorridas
-        .fold(0, (total, corrida) => total + (corrida.ganhos ?? 0));
-    double totalDespesas = mediator.listaDeServicos
-        .fold(0, (total, servico) => total + servico.valor.abs());
-    print('Total Ganhos: $totalGanhos');
-    print('Total Despesas: $totalDespesas');
-    List lista = filtrarSemana(DateTime.now());
-    print(lista);
-  }
-
-  List<dynamic> filtrarSemana(DateTime selectedDate) {
-    String dataFormatada =
-        DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDate);
-    DateTime dataConvertida = DateTime.parse(dataFormatada);
-    final firstDayOfWeek =
-        dataConvertida.subtract(Duration(days: dataConvertida.weekday - 1));
-    final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 6));
-    print(dataConvertida);
-
-    return mediator.listaDeCorridas.where((corrida) {
-      print(corrida.dataHoraStart);
-      DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
-      return itemDate.isAfter(firstDayOfWeek) &&
-          itemDate.isBefore(lastDayOfWeek);
-    }).toList();
-  }
-
-  _carregarDia() async {}
-
-  _carregaListas() async {
-    mediator.listaDeCorridas = await _corridaDaoDb.listar();
-    mediator.listaDeServicos = await _servicoDaoDb.listar();
-    setState(() {});
-  }
+  List<Corrida> listCorridaDia = [];
+  List<Servico> listServicoDia = [];
+  List<Corrida> listCorridaSemana = [];
+  List<Servico> listServicoSemana = [];
+  List<Corrida> listCorridaMes = [];
+  List<Servico> listServicoMes = [];
 
   @override
   initState() {
@@ -62,6 +32,181 @@ class _ReportPageState extends State<ReportPage> {
     _corridaDaoDb = CorridaDaoDb();
     _servicoDaoDb = ServicoDaoDb();
     _carregaListas();
+    listCorridaDia = _filtrarCorridaDia(DateTime(2024, 02, 14, 19, 04, 54, 45));
+    // listServicoDia = _filtrarServicoDia(DateTime(2024, 01, 10, 19, 04, 54, 45));
+    listCorridaSemana = _filtrarCorridaSemana(DateTime.now());
+    // listServicoSemana =
+    //     _filtrarServicoSemana(DateTime(2024, 01, 10, 19, 04, 54, 45));
+    listCorridaMes = _filtrarCorridaMes(DateTime(2024, 01, 10, 19, 04, 54, 45));
+    // listServicoMes = _filtrarServicoMes(DateTime(2024, 01, 10, 19, 04, 54, 45));
+    _gerarRelatorioGrafico();
+  }
+
+  _carregaListas() async {
+    mediator.listaDeCorridas = await _corridaDaoDb.listar();
+    mediator.listaDeServicos = await _servicoDaoDb.listar();
+    setState(() {});
+  }
+
+  _gerarRelatorioGrafico() {
+    double totalGanhos = mediator.listaDeCorridas
+        .fold(0, (total, corrida) => total + (corrida.ganhos ?? 0));
+    double totalDespesas = mediator.listaDeServicos
+        .fold(0, (total, servico) => total + servico.valor.abs());
+    print('Total Ganhos: $totalGanhos');
+    print('Total Despesas: $totalDespesas');
+    List lista = _filtrarCorridaSemana(DateTime.now());
+    print(lista);
+  }
+
+  List<Corrida> _filtrarCorridaMes(DateTime selectedDate) {
+    return mediator.listaDeCorridas.where((corrida) {
+      DateTime converterStringParaDateTime(String stringDataHora) {
+        List<String> partes = stringDataHora.split(' ');
+        List<String> partesData = partes[0].split('/');
+        List<String> partesHora = partes[1].split(':');
+        DateTime dataHoraObjeto = DateTime(
+          int.parse(partesData[2]), // ano
+          int.parse(partesData[1]), // mês
+          int.parse(partesData[0]), // dia
+          int.parse(partesHora[0]), // hora
+          int.parse(partesHora[1]), // minuto
+          int.parse(partesHora[2]), // segundo
+        );
+        return dataHoraObjeto;
+      }
+
+      DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
+      print(itemDate);
+      return itemDate.month == selectedDate.month &&
+          itemDate.year == selectedDate.year;
+    }).toList();
+  }
+
+  List<Servico> _filtrarServicoMes(DateTime selectedDate) {
+    return mediator.listaDeServicos.where((servico) {
+      DateTime converterStringParaDateTime(String stringDataHora) {
+        List<String> partes = stringDataHora.split(' ');
+        List<String> partesData = partes[0].split('/');
+        List<String> partesHora = partes[1].split(':');
+        DateTime dataHoraObjeto = DateTime(
+          int.parse(partesData[2]), // ano
+          int.parse(partesData[1]), // mês
+          int.parse(partesData[0]), // dia
+          int.parse(partesHora[0]), // hora
+          int.parse(partesHora[1]), // minuto
+          int.parse(partesHora[2]), // segundo
+        );
+        return dataHoraObjeto;
+      }
+
+      DateTime itemDate = converterStringParaDateTime(servico.data);
+      print(itemDate);
+      return itemDate.month == selectedDate.month &&
+          itemDate.year == selectedDate.year;
+    }).toList();
+  }
+
+  List<Corrida> _filtrarCorridaSemana(DateTime selectedDate) {
+    final firstDayOfWeek =
+        selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
+    final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 7));
+    print(selectedDate);
+    return mediator.listaDeCorridas.where((corrida) {
+      DateTime converterStringParaDateTime(String stringDataHora) {
+        List<String> partes = stringDataHora.split(' ');
+        List<String> partesData = partes[0].split('/');
+        List<String> partesHora = partes[1].split(':');
+        DateTime dataHoraObjeto = DateTime(
+          int.parse(partesData[2]), // ano
+          int.parse(partesData[1]), // mês
+          int.parse(partesData[0]), // dia
+          int.parse(partesHora[0]), // hora
+          int.parse(partesHora[1]), // minuto
+          int.parse(partesHora[2]), // segundo
+        );
+        return dataHoraObjeto;
+      }
+
+      DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
+      print(itemDate);
+      return itemDate.isAfter(firstDayOfWeek) &&
+          itemDate.isBefore(lastDayOfWeek);
+    }).toList();
+  }
+
+  List<Servico> _filtrarServicoSemana(DateTime selectedDate) {
+    final firstDayOfWeek =
+        selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
+    final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 7));
+    print(selectedDate);
+    return mediator.listaDeServicos.where((servico) {
+      DateTime converterStringParaDateTime(String stringDataHora) {
+        List<String> partes = stringDataHora.split(' ');
+        List<String> partesData = partes[0].split('/');
+        List<String> partesHora = partes[1].split(':');
+        DateTime dataHoraObjeto = DateTime(
+          int.parse(partesData[2]), // ano
+          int.parse(partesData[1]), // mês
+          int.parse(partesData[0]), // dia
+          int.parse(partesHora[0]), // hora
+          int.parse(partesHora[1]), // minuto
+          int.parse(partesHora[2]), // segundo
+        );
+        return dataHoraObjeto;
+      }
+
+      DateTime itemDate = converterStringParaDateTime(servico.data);
+      print(itemDate);
+      return itemDate.isAfter(firstDayOfWeek) &&
+          itemDate.isBefore(lastDayOfWeek);
+    }).toList();
+  }
+
+  List<Corrida> _filtrarCorridaDia(DateTime selectedDate) {
+    return mediator.listaDeCorridas.where((corrida) {
+      DateTime converterStringParaDateTime(String stringDataHora) {
+        List<String> partes = stringDataHora.split(' ');
+        List<String> partesData = partes[0].split('/');
+        List<String> partesHora = partes[1].split(':');
+        DateTime dataHoraObjeto = DateTime(
+          int.parse(partesData[2]), // ano
+          int.parse(partesData[1]), // mês
+          int.parse(partesData[0]), // dia
+          int.parse(partesHora[0]), // hora
+          int.parse(partesHora[1]), // minuto
+          int.parse(partesHora[2]), // segundo
+        );
+        return dataHoraObjeto;
+      }
+
+      DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
+      print(itemDate);
+      return itemDate.day == selectedDate.day;
+    }).toList();
+  }
+
+  List<Servico> _filtrarServicoDia(DateTime selectedDate) {
+    return mediator.listaDeServicos.where((servico) {
+      DateTime converterStringParaDateTime(String stringDataHora) {
+        List<String> partes = stringDataHora.split(' ');
+        List<String> partesData = partes[0].split('/');
+        List<String> partesHora = partes[1].split(':');
+        DateTime dataHoraObjeto = DateTime(
+          int.parse(partesData[2]), // ano
+          int.parse(partesData[1]), // mês
+          int.parse(partesData[0]), // dia
+          int.parse(partesHora[0]), // hora
+          int.parse(partesHora[1]), // minuto
+          int.parse(partesHora[2]), // segundo
+        );
+        return dataHoraObjeto;
+      }
+
+      DateTime itemDate = converterStringParaDateTime(servico.data);
+      print(itemDate);
+      return itemDate.day == selectedDate.day;
+    }).toList();
   }
 
   @override
@@ -100,24 +245,66 @@ class _ReportPageState extends State<ReportPage> {
         ),
         body: TabBarView(
           children: [
-            FutureBuilder(
-                future: _gerarRelatorioGrafico(),
-                builder: (context, snapshot) {
-                  return Column(
-                    children: [
-                      GraphicMain(),
-                      Center(child: Text('Diario')),
-                    ],
-                  );
-                }),
-            Column(children: [
-              GraphicMain(),
-              Center(child: Text('Semanal')),
-            ]),
-            Column(children: [
-              GraphicMain(),
-              Center(child: Text('Mensal')),
-            ]),
+            ListView.builder(
+              padding: const EdgeInsets.only(top: 10.0),
+              itemCount: listCorridaDia.length,
+              itemBuilder: (context, index) {
+                Corrida corrida = listCorridaDia[index];
+                return CardCorrida(
+                  corrida: corrida,
+                  onMenuClick: (MyItemCorrida item) {
+                    switch (item) {
+                      case MyItemCorrida.itemTap:
+                      case MyItemCorrida.itemEdit:
+                        break;
+                      case MyItemCorrida.itemLongPress:
+                      case MyItemCorrida.itemDelete:
+                        break;
+                    }
+                  },
+                );
+              },
+            ),
+            ListView.builder(
+              padding: const EdgeInsets.only(top: 10.0),
+              itemCount: listCorridaSemana.length,
+              itemBuilder: (context, index) {
+                Corrida corrida = listCorridaSemana[index];
+                return CardCorrida(
+                  corrida: corrida,
+                  onMenuClick: (MyItemCorrida item) {
+                    switch (item) {
+                      case MyItemCorrida.itemTap:
+                      case MyItemCorrida.itemEdit:
+                        break;
+                      case MyItemCorrida.itemLongPress:
+                      case MyItemCorrida.itemDelete:
+                        break;
+                    }
+                  },
+                );
+              },
+            ),
+            ListView.builder(
+              padding: const EdgeInsets.only(top: 10.0),
+              itemCount: listCorridaMes.length,
+              itemBuilder: (context, index) {
+                Corrida corrida = listCorridaMes[index];
+                return CardCorrida(
+                  corrida: corrida,
+                  onMenuClick: (MyItemCorrida item) {
+                    switch (item) {
+                      case MyItemCorrida.itemTap:
+                      case MyItemCorrida.itemEdit:
+                        break;
+                      case MyItemCorrida.itemLongPress:
+                      case MyItemCorrida.itemDelete:
+                        break;
+                    }
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),
