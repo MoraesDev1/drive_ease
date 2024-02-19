@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/utils/utils.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -8,7 +7,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -16,7 +15,7 @@ class SplashScreen extends StatelessWidget {
         child: Center(
           child: Image.asset(
             'Assets/splashscreen.png',
-            color: Color(0xffad9c00),
+            color: const Color(0xffad9c00),
           ),
         ),
       ),
