@@ -27,8 +27,6 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            NewServicoButton(),
-            NewMetaButton(),
             GraphicMain(),
             Spacer(),
             StartStopButton(),

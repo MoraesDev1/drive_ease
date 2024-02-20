@@ -100,7 +100,8 @@ class _NewServicoButtonState extends State<NewServicoButton> {
     servicoDaoDb.inserir(servico);
   }
 
-  _getInfoServico() {
+  @override
+  Widget build(BuildContext context) {
     return AlertDialog(
       content: SizedBox(
         child: Form(
@@ -242,28 +243,6 @@ class _NewServicoButtonState extends State<NewServicoButton> {
           ),
         ),
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Utils.verdePrimario,
-            ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => _getInfoServico(),
-              );
-            },
-            child: const Text('Novo Serviço'),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -22,10 +22,10 @@ class _NewMetaButtonState extends State<NewMetaButton> {
   final _controllerDescricao = TextEditingController();
 
   String? _validaValor(String? value) {
-    String? entrada = value!.replaceAll(',', '.');
-    RegExp regex = RegExp(r'^\d*\.?\d*$');
+    // String? entrada = value!.replaceAll(',', '.');
+    // RegExp regex = RegExp(r'^\d*\.?\d*$');
 
-    if (value.isEmpty) {
+    if (value!.isEmpty) {
       return 'Campo obrigatório';
     }
     return null;
@@ -85,7 +85,8 @@ class _NewMetaButtonState extends State<NewMetaButton> {
     );
   }
 
-  _getInfoMeta() {
+  @override
+  Widget build(BuildContext context) {
     return AlertDialog(
       content: SizedBox(
         child: Form(
@@ -226,28 +227,6 @@ class _NewMetaButtonState extends State<NewMetaButton> {
           ),
         ),
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Utils.verdePrimario,
-            ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => _getInfoMeta(),
-              );
-            },
-            child: const Text('Nova Meta'),
-          ),
-        ),
-      ],
     );
   }
 }
