@@ -14,16 +14,6 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
   double heightMenuButton = 50;
   double widthtMenuButton = 200;
   bool open = false;
-  bool isVisible = false;
-
-  // _alteraVisible() {
-  //   const duration = Duration(milliseconds: 300);
-  //   Future.delayed(duration, () {
-  //     setState(() {
-  //       isVisible = !isVisible;
-  //     });
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
