@@ -5,7 +5,6 @@ import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_corrida.dart';
-import 'package:driveease_v1/Widgets/Cards/card_servico.dart';
 import 'package:flutter/material.dart';
 
 class ReportPage extends StatefulWidget {
