@@ -24,10 +24,17 @@ class _ReportPageState extends State<ReportPage> {
   List<Servico> listServicoSemana = [];
   List<Corrida> listCorridaMes = [];
   List<Servico> listServicoMes = [];
+  int mes = 1;
+  int ano = 2010;
 
   @override
   initState() {
     super.initState();
+    String dataAtual = DateTime.now().toString();
+    int mesAtual = int.parse(dataAtual.substring(6, 7));
+    int anoAtual = int.parse(dataAtual.substring(0, 4));
+    mes = mesAtual;
+    ano = anoAtual;
     _corridaDaoDb = CorridaDaoDb();
     _servicoDaoDb = ServicoDaoDb();
     _carregaListas();
@@ -76,7 +83,6 @@ class _ReportPageState extends State<ReportPage> {
       }
 
       DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
-      print(itemDate);
       return itemDate.month == selectedDate.month &&
           itemDate.year == selectedDate.year;
     }).toList();
@@ -100,7 +106,6 @@ class _ReportPageState extends State<ReportPage> {
       }
 
       DateTime itemDate = converterStringParaDateTime(servico.data);
-      print(itemDate);
       return itemDate.month == selectedDate.month &&
           itemDate.year == selectedDate.year;
     }).toList();
@@ -109,8 +114,7 @@ class _ReportPageState extends State<ReportPage> {
   List<Corrida> _filtrarCorridaSemana(DateTime selectedDate) {
     final firstDayOfWeek =
         selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
-    final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 7));
-    print(selectedDate);
+    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
     return mediator.listaDeCorridas.where((corrida) {
       DateTime converterStringParaDateTime(String stringDataHora) {
         List<String> partes = stringDataHora.split(' ');
@@ -128,7 +132,7 @@ class _ReportPageState extends State<ReportPage> {
       }
 
       DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
-      print(itemDate);
+
       return itemDate.isAfter(firstDayOfWeek) &&
           itemDate.isBefore(lastDayOfWeek);
     }).toList();
@@ -138,7 +142,7 @@ class _ReportPageState extends State<ReportPage> {
     final firstDayOfWeek =
         selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
     final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 7));
-    print(selectedDate);
+
     return mediator.listaDeServicos.where((servico) {
       DateTime converterStringParaDateTime(String stringDataHora) {
         List<String> partes = stringDataHora.split(' ');
@@ -156,7 +160,7 @@ class _ReportPageState extends State<ReportPage> {
       }
 
       DateTime itemDate = converterStringParaDateTime(servico.data);
-      print(itemDate);
+
       return itemDate.isAfter(firstDayOfWeek) &&
           itemDate.isBefore(lastDayOfWeek);
     }).toList();
@@ -180,7 +184,7 @@ class _ReportPageState extends State<ReportPage> {
       }
 
       DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
-      print(itemDate);
+
       return itemDate.day == selectedDate.day;
     }).toList();
   }
@@ -203,10 +207,59 @@ class _ReportPageState extends State<ReportPage> {
       }
 
       DateTime itemDate = converterStringParaDateTime(servico.data);
-      print(itemDate);
+
       return itemDate.day == selectedDate.day;
     }).toList();
   }
+
+  Map<int, String> mesesDoAno = {
+    1: 'Janeiro',
+    2: 'Fevereiro',
+    3: 'Março',
+    4: 'Abril',
+    5: 'Maio',
+    6: 'Junho',
+    7: 'Julho',
+    8: 'Agosto',
+    9: 'Setembro',
+    10: 'Outubro',
+    11: 'Novembro',
+    12: 'Dezembro',
+  };
+
+  List<int> listaDeAnos = [
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -246,26 +299,6 @@ class _ReportPageState extends State<ReportPage> {
           children: [
             ListView.builder(
               padding: const EdgeInsets.only(top: 10.0),
-              itemCount: listCorridaDia.length,
-              itemBuilder: (context, index) {
-                Corrida corrida = listCorridaDia[index];
-                return CardCorrida(
-                  corrida: corrida,
-                  onMenuClick: (MyItemCorrida item) {
-                    switch (item) {
-                      case MyItemCorrida.itemTap:
-                      case MyItemCorrida.itemEdit:
-                        break;
-                      case MyItemCorrida.itemLongPress:
-                      case MyItemCorrida.itemDelete:
-                        break;
-                    }
-                  },
-                );
-              },
-            ),
-            ListView.builder(
-              padding: const EdgeInsets.only(top: 10.0),
               itemCount: listCorridaSemana.length,
               itemBuilder: (context, index) {
                 Corrida corrida = listCorridaSemana[index];
@@ -303,6 +336,98 @@ class _ReportPageState extends State<ReportPage> {
                   },
                 );
               },
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Container(
+                    color: Colors.white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios),
+                          onPressed: () {
+                            setState(() {
+                              if (mes > 1 && mes <= 12) {
+                                mes = --mes;
+                              } else if (ano > 2010 && ano < 2040) {
+                                mes = 12;
+                                ano = --ano;
+                              }
+                            });
+                          },
+                        ),
+                        DropdownButton<String>(
+                          underline: const SizedBox(
+                            height: 0,
+                            width: 0,
+                          ),
+                          icon: const SizedBox(
+                            height: 0,
+                            width: 0,
+                          ),
+                          value: mesesDoAno[mes],
+                          items: mesesDoAno.entries.map((entry) {
+                            return DropdownMenuItem<String>(
+                              value: entry.value,
+                              child: Text(entry.value),
+                            );
+                          }).toList(),
+                          onChanged: (String? novoMes) {
+                            if (novoMes != null) {
+                              setState(() {
+                                mes = mesesDoAno.entries
+                                    .firstWhere(
+                                        (entry) => entry.value == novoMes)
+                                    .key;
+                              });
+                            }
+                          },
+                        ),
+                        DropdownButton<int>(
+                          underline: const SizedBox(
+                            height: 0,
+                            width: 0,
+                          ),
+                          icon: const SizedBox(
+                            height: 0,
+                            width: 0,
+                          ),
+                          value: ano,
+                          items: listaDeAnos.map((ano) {
+                            return DropdownMenuItem<int>(
+                              value: ano,
+                              child: Text(ano.toString()),
+                            );
+                          }).toList(),
+                          onChanged: (int? novoAno) {
+                            if (novoAno != null) {
+                              setState(() {
+                                ano = novoAno;
+                              });
+                            }
+                          },
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (mes > 0 && mes < 12) {
+                                mes = ++mes;
+                              } else if (ano > 2009 && ano < 2040) {
+                                mes = 1;
+                                ano = ++ano;
+                              }
+                            });
+                          },
+                          icon: const Icon(Icons.arrow_forward_ios),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
           ],
         ),
