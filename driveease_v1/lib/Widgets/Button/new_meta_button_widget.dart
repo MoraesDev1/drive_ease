@@ -87,143 +87,145 @@ class _NewMetaButtonState extends State<NewMetaButton> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: SizedBox(
-        child: Form(
-          key: _formKeyMeta,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.all(8),
-                child: Text('Nova Meta'),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextFormField(
-                  onTapOutside: (event) => _esconderTeclado(),
-                  readOnly: true,
-                  onTap: () => _selecionarData(_controllerInicio),
-                  onFieldSubmitted: (value) => _clickSalvar(),
-                  cursorColor: Colors.black,
-                  keyboardType: TextInputType.number,
-                  controller: _controllerInicio,
-                  decoration: const InputDecoration(
-                    suffixIcon: Icon(
-                      Icons.calendar_month,
-                      color: Colors.black,
-                    ),
-                    label: Text(
-                      'Data Inicial',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+    return SingleChildScrollView(
+      child: AlertDialog(
+        content: SizedBox(
+          child: Form(
+            key: _formKeyMeta,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text('Nova Meta'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                    onTapOutside: (event) => _esconderTeclado(),
+                    readOnly: true,
+                    onTap: () => _selecionarData(_controllerInicio),
+                    onFieldSubmitted: (value) => _clickSalvar(),
+                    cursorColor: Colors.black,
+                    keyboardType: TextInputType.number,
+                    controller: _controllerInicio,
+                    decoration: const InputDecoration(
+                      suffixIcon: Icon(
+                        Icons.calendar_month,
                         color: Colors.black,
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextFormField(
-                  onTapOutside: (event) => _esconderTeclado(),
-                  readOnly: true,
-                  onTap: () => _selecionarData(_controllerFim),
-                  onFieldSubmitted: (value) => _clickSalvar(),
-                  cursorColor: Colors.black,
-                  keyboardType: TextInputType.number,
-                  controller: _controllerFim,
-                  decoration: const InputDecoration(
-                    suffixIcon: Icon(
-                      Icons.calendar_month,
-                      color: Colors.black,
-                    ),
-                    label: Text(
-                      'Data Final',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black,
+                      label: Text(
+                        'Data Inicial',
+                        style: TextStyle(color: Colors.black),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextFormField(
-                  onTapOutside: (event) => _esconderTeclado,
-                  maxLength: 10,
-                  controller: _controllerValor,
-                  validator: _validaValor,
-                  onFieldSubmitted: (value) => _clickSalvar(),
-                  cursorColor: Colors.black,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    counterText: '',
-                    label: Text(
-                      'Valor',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    prefixText: 'R\$',
-                    prefixStyle: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextFormField(
-                  onTapOutside: (event) => _esconderTeclado,
-                  maxLines: null,
-                  onFieldSubmitted: (value) => _clickSalvar(),
-                  cursorColor: Colors.black,
-                  controller: _controllerDescricao,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.all(15),
-                    hintText: 'Descreva a meta',
-                    label: Text(
-                      'Descrição',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Utils.verdePrimario,
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
                         ),
-                        child: const Text('Criar Meta'),
-                        onPressed: () => _clickSalvar(),
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                    onTapOutside: (event) => _esconderTeclado(),
+                    readOnly: true,
+                    onTap: () => _selecionarData(_controllerFim),
+                    onFieldSubmitted: (value) => _clickSalvar(),
+                    cursorColor: Colors.black,
+                    keyboardType: TextInputType.number,
+                    controller: _controllerFim,
+                    decoration: const InputDecoration(
+                      suffixIcon: Icon(
+                        Icons.calendar_month,
+                        color: Colors.black,
+                      ),
+                      label: Text(
+                        'Data Final',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                    onTapOutside: (event) => _esconderTeclado,
+                    maxLength: 10,
+                    controller: _controllerValor,
+                    validator: _validaValor,
+                    onFieldSubmitted: (value) => _clickSalvar(),
+                    cursorColor: Colors.black,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      counterText: '',
+                      label: Text(
+                        'Valor',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                      prefixText: 'R\$',
+                      prefixStyle: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                    onTapOutside: (event) => _esconderTeclado,
+                    maxLines: null,
+                    onFieldSubmitted: (value) => _clickSalvar(),
+                    cursorColor: Colors.black,
+                    controller: _controllerDescricao,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(15),
+                      hintText: 'Descreva a meta',
+                      label: Text(
+                        'Descrição',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Utils.verdePrimario,
+                          ),
+                          child: const Text('Criar Meta'),
+                          onPressed: () => _clickSalvar(),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
