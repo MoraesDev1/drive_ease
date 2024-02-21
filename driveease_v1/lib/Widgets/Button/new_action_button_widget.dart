@@ -14,6 +14,13 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
   double heightMenuButton = 50;
   double widthtMenuButton = 200;
   bool open = false;
+  bool visible = false;
+
+  _alteraVisible() {
+    setState(() {
+      visible = !visible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +33,27 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 300),
             opacity: open ? 1 : 0,
-            child: ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => const NewServicoButton(),
-                );
-                setState(() {
-                  open = !open;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Utils.verdePrimario,
-                fixedSize: Size(widthtMenuButton, heightMenuButton),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
+            onEnd: () => _alteraVisible(),
+            child: Visibility(
+              visible: visible ? visible : open,
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const NewServicoButton(),
+                  );
+                  setState(() {
+                    open = !open;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Utils.verdePrimario,
+                  fixedSize: Size(widthtMenuButton, heightMenuButton),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                ),
+                child: const Text('Novo Serviço'),
               ),
-              child: const Text('Novo Serviço'),
             ),
           ),
         ),
@@ -51,7 +62,7 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
           bottom: open ? 90 : 20,
           right: 15,
           child: Visibility(
-            visible: open,
+            visible: visible ? visible : open,
             child: ElevatedButton(
               onPressed: () {
                 showDialog(
@@ -77,7 +88,6 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
           right: 15,
           child: ElevatedButton(
             onPressed: () {
-              // _alteraVisible();
               setState(() {
                 open = !open;
               });
