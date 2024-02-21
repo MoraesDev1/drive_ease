@@ -6,6 +6,7 @@ import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_corrida.dart';
 import 'package:driveease_v1/Widgets/Cards/card_servico.dart';
+import 'package:driveease_v1/Widgets/Graphics/report_graphic_widget.dart';
 import 'package:flutter/material.dart';
 
 class ReportPage extends StatefulWidget {
@@ -265,25 +266,9 @@ class _ReportPageState extends State<ReportPage> {
                 );
               },
             ),
-            ListView.builder(
-              padding: const EdgeInsets.only(top: 10.0),
-              itemCount: listCorridaSemana.length,
-              itemBuilder: (context, index) {
-                Corrida corrida = listCorridaSemana[index];
-                return CardCorrida(
-                  corrida: corrida,
-                  onMenuClick: (MyItemCorrida item) {
-                    switch (item) {
-                      case MyItemCorrida.itemTap:
-                      case MyItemCorrida.itemEdit:
-                        break;
-                      case MyItemCorrida.itemLongPress:
-                      case MyItemCorrida.itemDelete:
-                        break;
-                    }
-                  },
-                );
-              },
+            BarChartSemana(
+              listCorridaSemana: listCorridaSemana,
+              listServicoSemana: listServicoSemana,
             ),
             ListView.builder(
               padding: const EdgeInsets.only(top: 10.0),
