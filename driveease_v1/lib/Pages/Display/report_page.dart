@@ -4,6 +4,7 @@ import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
+import 'package:driveease_v1/Widgets/Graphics/report_graphic_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -562,6 +563,10 @@ class _ReportPageState extends State<ReportPage> {
                       ],
                     ),
                   ),
+                ),
+                BarChartSemana(
+                  listCorridaSemana: listCorridaSemana,
+                  listServicoSemana: listServicoSemana,
                 )
               ],
             ),
