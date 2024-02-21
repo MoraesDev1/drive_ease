@@ -2,6 +2,7 @@ import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:intl/intl.dart';
 
 class BarChartSemana extends StatelessWidget {
   BarChartSemana(
@@ -10,18 +11,39 @@ class BarChartSemana extends StatelessWidget {
   List<Servico> listServicoSemana = [];
   final List<double> ganhos = [100.0, 150.0, 200.0, 120.0, 180.0, 25, 45];
 
+  List<String> getLista() {
+    List<String> listaDias = [];
+
+    for (Corrida objeto in listCorridaSemana) {
+      DateTime dataObjeto =
+          DateFormat('dd/MM/yyyy HH:mm:ss').parse(objeto.dataHoraStart);
+      String diaFormatado = DateFormat('dd/MM').format(dataObjeto);
+      listaDias.add(diaFormatado);
+    }
+    return listaDias;
+  }
+
   List<double> calculaGanhosSemana() {
-    List<double> seg = [];
-    List<double> ter = [];
-    List<double> qua = [];
-    List<double> qui = [];
-    List<double> sex = [];
-    List<double> sab = [];
-    List<double> dom = [];
     List<double> totaisPorDia = [];
 
-    for (var i in listCorridaSemana) {}
+    Map<String, double?> somasDiarias = {};
 
+    // Itere sobre a lista de objetos
+    for (Corrida objeto in listCorridaSemana) {
+      // Converta a string do dia do objeto para um objeto DateTime
+      DateTime dataObjeto =
+          DateFormat('dd/MM/yyyy HH:mm:ss').parse(objeto.dataHoraStart);
+      // Extraia a data como uma string no formato 'dd/MM/yyyy'
+      String diaFormatado = DateFormat('dd/MM/yyyy').format(dataObjeto);
+
+      // Atualize a soma correspondente ao dia no mapa
+      somasDiarias[diaFormatado] =
+          (somasDiarias[diaFormatado] ?? 0) + objeto.ganhos!;
+    }
+    // Imprima as somas diárias
+    somasDiarias.forEach((dia, soma) {
+      totaisPorDia.add(soma!);
+    });
     return totaisPorDia;
   }
 
@@ -86,6 +108,7 @@ Widget diasDaSemana(double value, TitleMeta meta) {
     fontWeight: FontWeight.bold,
     fontSize: 10,
   );
+  List<String> totaisPorDia;
 
   Widget text;
   switch (value.toInt()) {
