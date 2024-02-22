@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class BarChartSemana extends StatelessWidget {
   BarChartSemana(
-      {required this.listCorridaSemana, required this.listServicoSemana});
+      {super.key,
+      required this.listCorridaSemana,
+      required this.listServicoSemana});
   List<Corrida> listCorridaSemana = [];
   List<Servico> listServicoSemana = [];
   final List<double> ganhos = [100.0, 150.0, 200.0, 120.0, 180.0, 25, 45];
@@ -106,7 +109,7 @@ Widget diasDaSemana(double value, TitleMeta meta) {
     fontWeight: FontWeight.bold,
     fontSize: 10,
   );
-  List<String> totaisPorDia;
+  // List<String> totaisPorDia;
 
   Widget text;
   switch (value.toInt()) {

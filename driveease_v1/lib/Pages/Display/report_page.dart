@@ -59,7 +59,6 @@ class _ReportPageState extends State<ReportPage> {
     final firstDayOfWeek =
         dataConvertida.subtract(Duration(days: dataConvertida.weekday - 1));
     final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 6));
-    print(dataConvertida);
 
     return mediator.listaDeCorridas.where((corrida) {
       print(corrida.dataHoraStart);
@@ -76,14 +75,12 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   _gerarRelatorioGrafico() {
-    double totalGanhos = mediator.listaDeCorridas
-        .fold(0, (total, corrida) => total + (corrida.ganhos ?? 0));
-    double totalDespesas = mediator.listaDeServicos
-        .fold(0, (total, servico) => total + servico.valor.abs());
-    print('Total Ganhos: $totalGanhos');
-    print('Total Despesas: $totalDespesas');
-    List lista = _filtrarCorridaSemana(DateTime.now());
-    print(lista);
+    // double totalGanhos = mediator.listaDeCorridas
+    //     .fold(0, (total, corrida) => total + (corrida.ganhos ?? 0));
+    // double totalDespesas = mediator.listaDeServicos
+    //     .fold(0, (total, servico) => total + servico.valor.abs());
+
+    // List lista = _filtrarCorridaSemana(DateTime.now());
   }
 
   List<Corrida> _filtrarCorridaMes(DateTime selectedDate) {
