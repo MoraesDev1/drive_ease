@@ -28,19 +28,17 @@ class BarChartSemana extends StatelessWidget {
 
     Map<String, double?> somasDiarias = {};
 
-    // Itere sobre a lista de objetos
+    listCorridaSemana.sort((a, b) => DateFormat('dd/MM/yyyy HH:mm:ss')
+        .parse(a.dataHoraStart)
+        .compareTo(DateFormat('dd/MM/yyyy HH:mm:ss').parse(b.dataHoraStart)));
+
     for (Corrida objeto in listCorridaSemana) {
-      // Converta a string do dia do objeto para um objeto DateTime
       DateTime dataObjeto =
           DateFormat('dd/MM/yyyy HH:mm:ss').parse(objeto.dataHoraStart);
-      // Extraia a data como uma string no formato 'dd/MM/yyyy'
       String diaFormatado = DateFormat('dd/MM/yyyy').format(dataObjeto);
-
-      // Atualize a soma correspondente ao dia no mapa
       somasDiarias[diaFormatado] =
           (somasDiarias[diaFormatado] ?? 0) + objeto.ganhos!;
     }
-    // Imprima as somas diárias
     somasDiarias.forEach((dia, soma) {
       totaisPorDia.add(soma!);
     });
