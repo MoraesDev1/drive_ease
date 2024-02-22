@@ -190,7 +190,7 @@ class _StartStopButtonState extends State<StartStopButton> {
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Utils.verdePrimario,
+                          backgroundColor: UtilsColors.verdePrimario,
                         ),
                         child: const Text('Iniciar'),
                         onPressed: () => _clickIniciar(),
@@ -279,7 +279,7 @@ class _StartStopButtonState extends State<StartStopButton> {
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Utils.verdePrimario,
+                          backgroundColor: UtilsColors.verdePrimario,
                         ),
                         child: const Text('Encerrar'),
                         onPressed: () => _clickEncerrar(),

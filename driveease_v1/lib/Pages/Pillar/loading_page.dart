@@ -28,7 +28,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Utils.corFundo,
+      backgroundColor: UtilsColors.corFundo,
       body: Center(
         child: SizedBox(
           width: 500,

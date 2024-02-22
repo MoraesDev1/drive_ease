@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Utils {
+class UtilsColors {
   static Color verdePrimario = Colors.green.shade900;
   static Color verdeSecundario = Colors.green.shade500;
   static Color corFundo = const Color.fromARGB(255, 226, 226, 226);

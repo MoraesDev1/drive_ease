@@ -231,7 +231,7 @@ class _NewServicoButtonState extends State<NewServicoButton> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Utils.verdePrimario,
+                              backgroundColor: UtilsColors.verdePrimario,
                             ),
                             child: const Text('Criar Serviço'),
                             onPressed: () => _clickSalvar(),

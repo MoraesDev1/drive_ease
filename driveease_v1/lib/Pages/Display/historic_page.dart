@@ -77,7 +77,7 @@ class _HistoricPageState extends State<HistoricPage> {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Utils.verdePrimario),
+                    backgroundColor: UtilsColors.verdePrimario),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -91,7 +91,7 @@ class _HistoricPageState extends State<HistoricPage> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Utils.verdePrimario),
+                    backgroundColor: UtilsColors.verdePrimario),
                 onPressed: () {
                   Navigator.of(context).pop();
                   _removerCorrida(corrida);
@@ -149,7 +149,7 @@ class _HistoricPageState extends State<HistoricPage> {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Utils.verdePrimario),
+                    backgroundColor: UtilsColors.verdePrimario),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -163,7 +163,7 @@ class _HistoricPageState extends State<HistoricPage> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Utils.verdePrimario),
+                    backgroundColor: UtilsColors.verdePrimario),
                 onPressed: () {
                   Navigator.of(context).pop();
                   _removerServico(servico);
@@ -189,18 +189,18 @@ class _HistoricPageState extends State<HistoricPage> {
       initialIndex: 0,
       length: 2,
       child: Scaffold(
-        backgroundColor: Utils.corFundo,
+        backgroundColor: UtilsColors.corFundo,
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Histórico'),
-          backgroundColor: Utils.verdePrimario,
+          backgroundColor: UtilsColors.verdePrimario,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: Container(
               color: Colors.green.shade500,
               child: TabBar(
-                indicatorColor: Utils.corSecundaria,
-                labelColor: Utils.corSecundaria,
+                indicatorColor: UtilsColors.corSecundaria,
+                labelColor: UtilsColors.corSecundaria,
                 unselectedLabelColor: Colors.white,
                 tabs: const <Widget>[
                   Tab(

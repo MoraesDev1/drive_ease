@@ -50,7 +50,7 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Utils.verdePrimario,
+                  backgroundColor: UtilsColors.verdePrimario,
                   fixedSize: Size(widthtMenuButton, heightMenuButton),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
@@ -77,7 +77,7 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Utils.verdePrimario,
+                backgroundColor: UtilsColors.verdePrimario,
                 fixedSize: Size(widthtMenuButton, heightMenuButton),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
@@ -96,7 +96,7 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
               });
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Utils.verdePrimario,
+              backgroundColor: UtilsColors.verdePrimario,
               fixedSize: Size(heightMenuButton, heightMenuButton),
               shape: const CircleBorder(),
             ),

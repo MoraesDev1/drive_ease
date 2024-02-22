@@ -37,9 +37,9 @@ class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Utils.corFundo,
+      backgroundColor: UtilsColors.corFundo,
       appBar: AppBar(
-        backgroundColor: Utils.verdePrimario,
+        backgroundColor: UtilsColors.verdePrimario,
         title: const Text('Cadastro'),
       ),
       body: SingleChildScrollView(
@@ -111,7 +111,7 @@ class _CadastroPageState extends State<CadastroPage> {
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStatePropertyAll(Utils.verdePrimario),
+                      MaterialStatePropertyAll(UtilsColors.verdePrimario),
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {

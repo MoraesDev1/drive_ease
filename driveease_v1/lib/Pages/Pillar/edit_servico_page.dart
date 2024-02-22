@@ -170,9 +170,9 @@ class _EditServicoPageState extends State<EditServicoPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Editar serviço'),
-        backgroundColor: Utils.verdePrimario,
+        backgroundColor: UtilsColors.verdePrimario,
       ),
-      backgroundColor: Utils.corFundo,
+      backgroundColor: UtilsColors.corFundo,
       body: Center(
         child: SingleChildScrollView(
           child: Form(
@@ -316,7 +316,7 @@ class _EditServicoPageState extends State<EditServicoPage> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Utils.verdePrimario,
+                              backgroundColor: UtilsColors.verdePrimario,
                             ),
                             child: const Text('Salvar Alterações'),
                             onPressed: () => _clickSalvar(),
