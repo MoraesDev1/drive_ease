@@ -3,7 +3,6 @@ import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class NewServicoButton extends StatefulWidget {
   const NewServicoButton({super.key});
@@ -84,11 +83,10 @@ class _NewServicoButtonState extends State<NewServicoButton> {
       String tipoDoServico) {
     double? quilometragemDouble = double.parse(quilometragem);
     double? custoDouble = double.parse(custo);
-    DateTime dataAtual = DateTime.now();
-    String dataFormatada = DateFormat('dd/MM/yyyy HH:mm:ss').format(dataAtual);
+    String dataAtual = DateTime.now().toString();
     Servico servicoCriado = Servico(
       tipoDoServico: tipoDoServico,
-      data: dataFormatada,
+      data: dataAtual,
       km: quilometragemDouble,
       descricao: descricao,
       valor: custoDouble,
