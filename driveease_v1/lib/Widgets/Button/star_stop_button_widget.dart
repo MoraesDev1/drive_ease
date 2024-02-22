@@ -3,7 +3,6 @@ import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class StartStopButton extends StatefulWidget {
   const StartStopButton({super.key});
@@ -78,10 +77,9 @@ class _StartStopButtonState extends State<StartStopButton> {
 
   _criaCorridaStart(String quilometragem) {
     double? quilometragemDouble = double.parse(quilometragem);
-    DateTime dataAtual = DateTime.now();
-    String dataFormatada = DateFormat('dd/MM/yyyy HH:mm:ss').format(dataAtual);
+    String dataAtual = DateTime.now().toString();
     Corrida corridaStart = Corrida.start(
-      dataHoraStart: dataFormatada,
+      dataHoraStart: dataAtual,
       startKm: quilometragemDouble,
     );
     corridaDaoDb
@@ -93,12 +91,11 @@ class _StartStopButtonState extends State<StartStopButton> {
     String ganhosFormatada = ganhos.replaceAll(',', '.');
     double? ganhosDouble = double.parse(ganhosFormatada);
     double? stopKmDouble = double.parse(stopKm);
-    DateTime dataAtual = DateTime.now();
-    String dataFormatada = DateFormat('dd/MM/yyyy HH:mm:ss').format(dataAtual);
+    String dataAtual = DateTime.now().toString();
     Corrida corridaStop = Corrida.stop(
       dataHoraStart: mediator.listaCorridaStart[0].dataHoraStart,
       startKm: mediator.listaCorridaStart[0].startKm,
-      dataHoraStop: dataFormatada,
+      dataHoraStop: dataAtual,
       stopKm: stopKmDouble,
       ganhos: ganhosDouble,
     );

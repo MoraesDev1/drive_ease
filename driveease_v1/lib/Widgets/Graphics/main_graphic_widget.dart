@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class GraphicMain extends StatefulWidget {
-  GraphicMain({super.key});
+  const GraphicMain({super.key});
 
   @override
   State<GraphicMain> createState() => _GraphicMainState();

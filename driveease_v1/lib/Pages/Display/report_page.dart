@@ -1,12 +1,9 @@
-import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
-import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
 import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Graphics/report_graphic_semana_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -16,8 +13,6 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  late CorridaDaoDb _corridaDaoDb;
-  late ServicoDaoDb _servicoDaoDb;
   Mediator mediator = Mediator();
   List<Corrida> listCorridaDia = [];
   List<Servico> listServicoDia = [];
@@ -32,6 +27,7 @@ class _ReportPageState extends State<ReportPage> {
   @override
   initState() {
     super.initState();
+    mediator.carregaListas();
     String dataAtual = DateTime.now().toString();
     int diaAtual = int.parse(dataAtual.substring(8, 9));
     int mesAtual = int.parse(dataAtual.substring(6, 7));
@@ -39,39 +35,15 @@ class _ReportPageState extends State<ReportPage> {
     mes = mesAtual;
     ano = anoAtual;
     dia = diaAtual;
-    _corridaDaoDb = CorridaDaoDb();
-    _servicoDaoDb = ServicoDaoDb();
-    _carregaListas();
-    listCorridaDia = _filtrarCorridaDia(DateTime(2024, 02, 14, 19, 04, 54, 45));
+
+    // listCorridaDia = _filtrarCorridaDia(DateTime(2024, 02, 14, 19, 04, 54, 45));
     // listServicoDia = _filtrarServicoDia(DateTime(2024, 01, 10, 19, 04, 54, 45));
-    listCorridaSemana = _filtrarCorridaSemana(DateTime.now());
+    // listCorridaSemana = _filtrarCorridaSemana(DateTime.now());
     // listServicoSemana =
     //     _filtrarServicoSemana(DateTime(2024, 01, 10, 19, 04, 54, 45));
-    listCorridaMes = _filtrarCorridaMes(DateTime(2024, 01, 10, 19, 04, 54, 45));
+    // listCorridaMes = _filtrarCorridaMes(DateTime(2024, 01, 10, 19, 04, 54, 45));
     // listServicoMes = _filtrarServicoMes(DateTime(2024, 01, 10, 19, 04, 54, 45));
     _gerarRelatorioGrafico();
-  }
-
-  List<dynamic> filtrarSemana(DateTime selectedDate) {
-    String dataFormatada =
-        DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDate);
-    DateTime dataConvertida = DateTime.parse(dataFormatada);
-    final firstDayOfWeek =
-        dataConvertida.subtract(Duration(days: dataConvertida.weekday - 1));
-    final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 6));
-
-    return mediator.listaDeCorridas.where((corrida) {
-      print(corrida.dataHoraStart);
-      DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
-      return itemDate.isAfter(firstDayOfWeek) &&
-          itemDate.isBefore(lastDayOfWeek);
-    }).toList();
-  }
-
-  _carregaListas() async {
-    mediator.listaDeCorridas = await _corridaDaoDb.listar();
-    mediator.listaDeServicos = await _servicoDaoDb.listar();
-    setState(() {});
   }
 
   _gerarRelatorioGrafico() {
@@ -83,152 +55,167 @@ class _ReportPageState extends State<ReportPage> {
     // List lista = _filtrarCorridaSemana(DateTime.now());
   }
 
-  List<Corrida> _filtrarCorridaMes(DateTime selectedDate) {
-    return mediator.listaDeCorridas.where((corrida) {
-      DateTime converterStringParaDateTime(String stringDataHora) {
-        List<String> partes = stringDataHora.split(' ');
-        List<String> partesData = partes[0].split('/');
-        List<String> partesHora = partes[1].split(':');
-        DateTime dataHoraObjeto = DateTime(
-          int.parse(partesData[2]), // ano
-          int.parse(partesData[1]), // mês
-          int.parse(partesData[0]), // dia
-          int.parse(partesHora[0]), // hora
-          int.parse(partesHora[1]), // minuto
-          int.parse(partesHora[2]), // segundo
-        );
-        return dataHoraObjeto;
-      }
+  // List<dynamic> filtrarSemana(DateTime selectedDate) {
+  //   String dataFormatada =
+  //       DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDate);
+  //   DateTime dataConvertida = DateTime.parse(dataFormatada);
+  //   final firstDayOfWeek =
+  //       dataConvertida.subtract(Duration(days: dataConvertida.weekday - 1));
+  //   final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 6));
 
-      DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
-      return itemDate.month == selectedDate.month &&
-          itemDate.year == selectedDate.year;
-    }).toList();
-  }
+  //   return mediator.listaDeCorridas.where((corrida) {
+  //     DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
+  //     return itemDate.isAfter(firstDayOfWeek) &&
+  //         itemDate.isBefore(lastDayOfWeek);
+  //   }).toList();
+  // }
 
-  List<Servico> _filtrarServicoMes(DateTime selectedDate) {
-    return mediator.listaDeServicos.where((servico) {
-      DateTime converterStringParaDateTime(String stringDataHora) {
-        List<String> partes = stringDataHora.split(' ');
-        List<String> partesData = partes[0].split('/');
-        List<String> partesHora = partes[1].split(':');
-        DateTime dataHoraObjeto = DateTime(
-          int.parse(partesData[2]), // ano
-          int.parse(partesData[1]), // mês
-          int.parse(partesData[0]), // dia
-          int.parse(partesHora[0]), // hora
-          int.parse(partesHora[1]), // minuto
-          int.parse(partesHora[2]), // segundo
-        );
-        return dataHoraObjeto;
-      }
+  // List<Corrida> _filtrarCorridaMes(DateTime selectedDate) {
+  //   return mediator.listaDeCorridas.where((corrida) {
+  //     DateTime converterStringParaDateTime(String stringDataHora) {
+  //       List<String> partes = stringDataHora.split(' ');
+  //       List<String> partesData = partes[0].split('/');
+  //       List<String> partesHora = partes[1].split(':');
+  //       DateTime dataHoraObjeto = DateTime(
+  //         int.parse(partesData[2]), // ano
+  //         int.parse(partesData[1]), // mês
+  //         int.parse(partesData[0]), // dia
+  //         int.parse(partesHora[0]), // hora
+  //         int.parse(partesHora[1]), // minuto
+  //         int.parse(partesHora[2]), // segundo
+  //       );
+  //       return dataHoraObjeto;
+  //     }
 
-      DateTime itemDate = converterStringParaDateTime(servico.data);
-      return itemDate.month == selectedDate.month &&
-          itemDate.year == selectedDate.year;
-    }).toList();
-  }
+  //     DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
+  //     return itemDate.month == selectedDate.month &&
+  //         itemDate.year == selectedDate.year;
+  //   }).toList();
+  // }
 
-  List<Corrida> _filtrarCorridaSemana(DateTime selectedDate) {
-    final firstDayOfWeek =
-        selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
-    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
-    return mediator.listaDeCorridas.where((corrida) {
-      DateTime converterStringParaDateTime(String stringDataHora) {
-        List<String> partes = stringDataHora.split(' ');
-        List<String> partesData = partes[0].split('/');
-        List<String> partesHora = partes[1].split(':');
-        DateTime dataHoraObjeto = DateTime(
-          int.parse(partesData[2]), // ano
-          int.parse(partesData[1]), // mês
-          int.parse(partesData[0]), // dia
-          int.parse(partesHora[0]), // hora
-          int.parse(partesHora[1]), // minuto
-          int.parse(partesHora[2]), // segundo
-        );
-        return dataHoraObjeto;
-      }
+  // List<Servico> _filtrarServicoMes(DateTime selectedDate) {
+  //   return mediator.listaDeServicos.where((servico) {
+  //     DateTime converterStringParaDateTime(String stringDataHora) {
+  //       List<String> partes = stringDataHora.split(' ');
+  //       List<String> partesData = partes[0].split('/');
+  //       List<String> partesHora = partes[1].split(':');
+  //       DateTime dataHoraObjeto = DateTime(
+  //         int.parse(partesData[2]), // ano
+  //         int.parse(partesData[1]), // mês
+  //         int.parse(partesData[0]), // dia
+  //         int.parse(partesHora[0]), // hora
+  //         int.parse(partesHora[1]), // minuto
+  //         int.parse(partesHora[2]), // segundo
+  //       );
+  //       return dataHoraObjeto;
+  //     }
 
-      DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
+  //     DateTime itemDate = converterStringParaDateTime(servico.data);
+  //     return itemDate.month == selectedDate.month &&
+  //         itemDate.year == selectedDate.year;
+  //   }).toList();
+  // }
 
-      return itemDate.isAfter(firstDayOfWeek) &&
-          itemDate.isBefore(lastDayOfWeek);
-    }).toList();
-  }
+  // List<Corrida> _filtrarCorridaSemana(DateTime selectedDate) {
+  //   final firstDayOfWeek =
+  //       selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
+  //   final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
+  //   return mediator.listaDeCorridas.where((corrida) {
+  //     DateTime converterStringParaDateTime(String stringDataHora) {
+  //       List<String> partes = stringDataHora.split(' ');
+  //       List<String> partesData = partes[0].split('/');
+  //       List<String> partesHora = partes[1].split(':');
+  //       DateTime dataHoraObjeto = DateTime(
+  //         int.parse(partesData[2]), // ano
+  //         int.parse(partesData[1]), // mês
+  //         int.parse(partesData[0]), // dia
+  //         int.parse(partesHora[0]), // hora
+  //         int.parse(partesHora[1]), // minuto
+  //         int.parse(partesHora[2]), // segundo
+  //       );
+  //       return dataHoraObjeto;
+  //     }
 
-  List<Servico> _filtrarServicoSemana(DateTime selectedDate) {
-    final firstDayOfWeek =
-        selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
-    final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 7));
+  //     DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
 
-    return mediator.listaDeServicos.where((servico) {
-      DateTime converterStringParaDateTime(String stringDataHora) {
-        List<String> partes = stringDataHora.split(' ');
-        List<String> partesData = partes[0].split('/');
-        List<String> partesHora = partes[1].split(':');
-        DateTime dataHoraObjeto = DateTime(
-          int.parse(partesData[2]), // ano
-          int.parse(partesData[1]), // mês
-          int.parse(partesData[0]), // dia
-          int.parse(partesHora[0]), // hora
-          int.parse(partesHora[1]), // minuto
-          int.parse(partesHora[2]), // segundo
-        );
-        return dataHoraObjeto;
-      }
+  //     return itemDate.isAfter(firstDayOfWeek) &&
+  //         itemDate.isBefore(lastDayOfWeek);
+  //   }).toList();
+  // }
 
-      DateTime itemDate = converterStringParaDateTime(servico.data);
+  // List<Servico> _filtrarServicoSemana(DateTime selectedDate) {
+  //   final firstDayOfWeek =
+  //       selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
+  //   final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 7));
 
-      return itemDate.isAfter(firstDayOfWeek) &&
-          itemDate.isBefore(lastDayOfWeek);
-    }).toList();
-  }
+  //   return mediator.listaDeServicos.where((servico) {
+  //     DateTime converterStringParaDateTime(String stringDataHora) {
+  //       List<String> partes = stringDataHora.split(' ');
+  //       List<String> partesData = partes[0].split('/');
+  //       List<String> partesHora = partes[1].split(':');
+  //       DateTime dataHoraObjeto = DateTime(
+  //         int.parse(partesData[2]), // ano
+  //         int.parse(partesData[1]), // mês
+  //         int.parse(partesData[0]), // dia
+  //         int.parse(partesHora[0]), // hora
+  //         int.parse(partesHora[1]), // minuto
+  //         int.parse(partesHora[2]), // segundo
+  //       );
+  //       return dataHoraObjeto;
+  //     }
 
-  List<Corrida> _filtrarCorridaDia(DateTime selectedDate) {
-    return mediator.listaDeCorridas.where((corrida) {
-      DateTime converterStringParaDateTime(String stringDataHora) {
-        List<String> partes = stringDataHora.split(' ');
-        List<String> partesData = partes[0].split('/');
-        List<String> partesHora = partes[1].split(':');
-        DateTime dataHoraObjeto = DateTime(
-          int.parse(partesData[2]), // ano
-          int.parse(partesData[1]), // mês
-          int.parse(partesData[0]), // dia
-          int.parse(partesHora[0]), // hora
-          int.parse(partesHora[1]), // minuto
-          int.parse(partesHora[2]), // segundo
-        );
-        return dataHoraObjeto;
-      }
+  //     DateTime itemDate = converterStringParaDateTime(servico.data);
 
-      DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
+  //     return itemDate.isAfter(firstDayOfWeek) &&
+  //         itemDate.isBefore(lastDayOfWeek);
+  //   }).toList();
+  // }
 
-      return itemDate.day == selectedDate.day;
-    }).toList();
-  }
+  // List<Corrida> _filtrarCorridaDia(DateTime selectedDate) {
+  //   return mediator.listaDeCorridas.where((corrida) {
+  //     DateTime converterStringParaDateTime(String stringDataHora) {
+  //       List<String> partes = stringDataHora.split(' ');
+  //       List<String> partesData = partes[0].split('/');
+  //       List<String> partesHora = partes[1].split(':');
+  //       DateTime dataHoraObjeto = DateTime(
+  //         int.parse(partesData[2]), // ano
+  //         int.parse(partesData[1]), // mês
+  //         int.parse(partesData[0]), // dia
+  //         int.parse(partesHora[0]), // hora
+  //         int.parse(partesHora[1]), // minuto
+  //         int.parse(partesHora[2]), // segundo
+  //       );
+  //       return dataHoraObjeto;
+  //     }
 
-  List<Servico> _filtrarServicoDia(DateTime selectedDate) {
-    return mediator.listaDeServicos.where((servico) {
-      DateTime converterStringParaDateTime(String stringDataHora) {
-        List<String> partes = stringDataHora.split(' ');
-        List<String> partesData = partes[0].split('/');
-        List<String> partesHora = partes[1].split(':');
-        DateTime dataHoraObjeto = DateTime(
-          int.parse(partesData[2]), // ano
-          int.parse(partesData[1]), // mês
-          int.parse(partesData[0]), // dia
-          int.parse(partesHora[0]), // hora
-          int.parse(partesHora[1]), // minuto
-          int.parse(partesHora[2]), // segundo
-        );
-        return dataHoraObjeto;
-      }
+  //     DateTime itemDate = converterStringParaDateTime(corrida.dataHoraStart);
 
-      DateTime itemDate = converterStringParaDateTime(servico.data);
+  //     return itemDate.day == selectedDate.day;
+  //   }).toList();
+  // }
 
-      return itemDate.day == selectedDate.day;
-    }).toList();
-  }
+  // List<Servico> _filtrarServicoDia(DateTime selectedDate) {
+  //   return mediator.listaDeServicos.where((servico) {
+  //     DateTime converterStringParaDateTime(String stringDataHora) {
+  //       List<String> partes = stringDataHora.split(' ');
+  //       List<String> partesData = partes[0].split('/');
+  //       List<String> partesHora = partes[1].split(':');
+  //       DateTime dataHoraObjeto = DateTime(
+  //         int.parse(partesData[2]), // ano
+  //         int.parse(partesData[1]), // mês
+  //         int.parse(partesData[0]), // dia
+  //         int.parse(partesHora[0]), // hora
+  //         int.parse(partesHora[1]), // minuto
+  //         int.parse(partesHora[2]), // segundo
+  //       );
+  //       return dataHoraObjeto;
+  //     }
+
+  //     DateTime itemDate = converterStringParaDateTime(servico.data);
+
+  //     return itemDate.day == selectedDate.day;
+  //   }).toList();
+  // }
 
   Map<int, String> mesesDoAno = {
     1: 'Janeiro',
