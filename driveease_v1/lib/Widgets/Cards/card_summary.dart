@@ -9,7 +9,10 @@ class CardSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(20)),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color.fromARGB(90, 0, 0, 0)),
+      ),
       padding: const EdgeInsets.all(8),
       height: 130,
       child: Card(

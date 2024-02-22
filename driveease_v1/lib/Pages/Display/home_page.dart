@@ -1,5 +1,5 @@
 import 'package:driveease_v1/Utils/colors_utils.dart';
-import 'package:driveease_v1/Widgets/Button/star_stop_button_widget.dart';
+import 'package:driveease_v1/Widgets/Section/goals_section.dart';
 import 'package:driveease_v1/Widgets/Section/summary_section.dart';
 import 'package:flutter/material.dart';
 
@@ -21,13 +21,14 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Utils.verdePrimario,
       ),
       body: const Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SummarySection(),
-            const Spacer(),
-            const StartStopButton(),
+            SizedBox(height: 10),
+            GoalsSection(),
+            Spacer(),
           ],
         ),
       ),

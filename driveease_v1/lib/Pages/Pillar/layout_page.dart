@@ -16,6 +16,7 @@ class LayoutPage extends StatefulWidget {
 class _LayoutPageState extends State<LayoutPage> {
   int selectedIcon = 0;
   PageController pageController = PageController();
+  bool isHomePage = true;
 
   final List<Widget> pages = [
     const HomePage(),
@@ -24,19 +25,28 @@ class _LayoutPageState extends State<LayoutPage> {
     const OptionsPage(),
   ];
 
+  _isHomePage(int index) {
+    if (index == 0) {
+      isHomePage = true;
+    } else {
+      isHomePage = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: const MenuNovaAcao(),
+        floatingActionButton: MenuNovaAcao(isHomePage: isHomePage),
         body: PageView(
           controller: pageController,
-          children: pages,
           onPageChanged: (index) {
             setState(() {
+              _isHomePage(index);
               selectedIcon = index;
             });
           },
+          children: pages,
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

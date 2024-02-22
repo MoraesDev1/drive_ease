@@ -1,10 +1,13 @@
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Button/new_meta_button_widget.dart';
 import 'package:driveease_v1/Widgets/Button/new_servico_button_widget.dart';
+import 'package:driveease_v1/Widgets/Button/star_stop_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class MenuNovaAcao extends StatefulWidget {
-  const MenuNovaAcao({super.key});
+  const MenuNovaAcao({super.key, required this.isHomePage});
+
+  final bool isHomePage;
 
   @override
   State<MenuNovaAcao> createState() => _MenuNovaAcaoState();
@@ -98,6 +101,14 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
               shape: const CircleBorder(),
             ),
             child: Text(!open ? '+' : 'x'),
+          ),
+        ),
+        Positioned(
+          bottom: -5,
+          right: 115,
+          child: Visibility(
+            visible: widget.isHomePage,
+            child: const StartStopButton(),
           ),
         ),
       ],
