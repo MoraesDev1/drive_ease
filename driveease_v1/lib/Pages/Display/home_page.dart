@@ -20,16 +20,17 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: UtilsColors.verdePrimario,
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SummarySection(),
-            SizedBox(height: 10),
-            GoalsSection(),
-            Spacer(),
-          ],
+      body: SingleChildScrollView(
+        child: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SummarySection(),
+              SizedBox(height: 10),
+              GoalsSection()
+            ],
+          ),
         ),
       ),
     );

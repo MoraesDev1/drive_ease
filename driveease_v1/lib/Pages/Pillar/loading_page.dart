@@ -18,7 +18,7 @@ class _LoadingPageState extends State<LoadingPage> {
     LocalDatabase.initDatabase('driveease_v1.db').then((value) async {
       Mediator().db = value;
       Mediator().buscarCorridaStart();
-      await Future.delayed(const Duration(seconds: 4));
+      await Future.delayed(const Duration(seconds: 2));
       if (!context.mounted) return;
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const LayoutPage()));

@@ -6,7 +6,7 @@ class GoalsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         Card(
           elevation: 0,
@@ -26,41 +26,36 @@ class GoalsSection extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
-        SizedBox(
-          height: 400,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                CardGoal(
-                  titulo: 'Hoje',
-                  saldo: 80,
-                  meta: 200,
-                  corDoIndicadorDeProgresso: Colors.blue,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                CardGoal(
-                  titulo: 'Esta Semana',
-                  saldo: 435.80,
-                  meta: 1000,
-                  corDoIndicadorDeProgresso: Colors.purple,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                CardGoal(
-                  titulo: 'Este Mês',
-                  saldo: 2879.25,
-                  meta: 5000,
-                  corDoIndicadorDeProgresso: Colors.teal,
-                ),
-                SizedBox(
-                  height: 100,
-                ),
-              ],
+        Column(
+          children: [
+            CardGoal(
+              titulo: 'Hoje',
+              saldo: 80,
+              meta: 200,
+              corDoIndicadorDeProgresso: Colors.blue,
             ),
-          ),
+            SizedBox(
+              height: 10,
+            ),
+            CardGoal(
+              titulo: 'Esta Semana',
+              saldo: 435.80,
+              meta: 1000,
+              corDoIndicadorDeProgresso: Colors.purple,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            CardGoal(
+              titulo: 'Este Mês',
+              saldo: 2879.25,
+              meta: 5000,
+              corDoIndicadorDeProgresso: Colors.teal,
+            ),
+            SizedBox(
+              height: 100,
+            ),
+          ],
         ),
       ],
     );
