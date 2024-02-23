@@ -17,7 +17,7 @@ class BarChartSemana extends StatelessWidget {
   List<Servico> listServicoSemana;
   double ganhoMaximoSemana = 0;
   final List<double> ganhos = [100.0, 150.0, 200.0, 120.0, 180.0, 25, 45];
-  Map<int, String> mapDiasDaSemana = {};
+  static Map<int, String> mapDiasDaSemana = {};
 
   List<String> getLista() {
     List<String> listaDias = [];
@@ -36,9 +36,8 @@ class BarChartSemana extends StatelessWidget {
 
     Map<String, double?> somasDiarias = {};
 
-    listCorridaSemana.sort((a, b) => DateFormat('dd/MM/yyyy HH:mm:ss')
-        .parse(a.dataHoraStart)
-        .compareTo(DateFormat('dd/MM/yyyy HH:mm:ss').parse(b.dataHoraStart)));
+    listCorridaSemana.sort((a, b) => DateTime.parse(a.dataHoraStart)
+        .compareTo(DateTime.parse(b.dataHoraStart)));
 
     for (Corrida objeto in listCorridaSemana) {
       DateTime dataObjeto = DateTime.parse(objeto.dataHoraStart);
@@ -122,48 +121,49 @@ Widget diasDaSemana(double value, TitleMeta meta) {
     fontWeight: FontWeight.bold,
     fontSize: 10,
   );
+  Map<int, String> mapFodac = BarChartSemana.mapDiasDaSemana;
 
   Widget text;
   switch (value.toInt()) {
     case 0:
-      text = const Text(
-        'Seg',
+      text = Text(
+        '${mapFodac[0]}',
         style: style,
       );
       break;
     case 1:
-      text = const Text(
-        'Ter',
+      text = Text(
+        '${mapFodac[1]}',
         style: style,
       );
       break;
     case 2:
-      text = const Text(
-        'Qua',
+      text = Text(
+        '${mapFodac[2]}',
         style: style,
       );
       break;
     case 3:
-      text = const Text(
-        'Qui',
+      text = Text(
+        '${mapFodac[3]}',
         style: style,
       );
       break;
     case 4:
-      text = const Text(
-        'Sex',
+      text = Text(
+        '${mapFodac[4]}',
         style: style,
       );
       break;
     case 5:
-      text = const Text(
-        'Sab',
+      text = Text(
+        '${mapFodac[5]}',
         style: style,
       );
       break;
     case 6:
-      text = const Text(
-        'Dom',
+      text = Text(
+        '${mapFodac[6]}',
         style: style,
       );
       break;
