@@ -33,7 +33,9 @@ class _LoadingPageState extends State<LoadingPage> {
         child: SizedBox(
           width: 500,
           height: 500,
-          child: Image.asset('Assets/car4.gif'),
+          child: Image.asset(
+            'Assets/car4.gif',
+          ),
         ),
       ),
     );

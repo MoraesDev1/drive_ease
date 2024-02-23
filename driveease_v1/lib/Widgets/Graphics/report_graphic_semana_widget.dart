@@ -1,3 +1,4 @@
+import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,13 @@ class BarChartSemana extends StatelessWidget {
       {super.key,
       required this.listCorridaSemana,
       required this.listServicoSemana});
-  List<Corrida> listCorridaSemana = [];
-  List<Servico> listServicoSemana = [];
+
+  Mediator mediator = Mediator();
+  List<Corrida> listCorridaSemana;
+  List<Servico> listServicoSemana;
+  double ganhoMaximoSemana = 0;
   final List<double> ganhos = [100.0, 150.0, 200.0, 120.0, 180.0, 25, 45];
+  Map<int, String> mapDiasDaSemana = {};
 
   List<String> getLista() {
     List<String> listaDias = [];
@@ -36,20 +41,28 @@ class BarChartSemana extends StatelessWidget {
         .compareTo(DateFormat('dd/MM/yyyy HH:mm:ss').parse(b.dataHoraStart)));
 
     for (Corrida objeto in listCorridaSemana) {
-      DateTime dataObjeto =
-          DateFormat('dd/MM/yyyy HH:mm:ss').parse(objeto.dataHoraStart);
+      DateTime dataObjeto = DateTime.parse(objeto.dataHoraStart);
       String diaFormatado = DateFormat('dd/MM/yyyy').format(dataObjeto);
       somasDiarias[diaFormatado] =
           (somasDiarias[diaFormatado] ?? 0) + objeto.ganhos!;
     }
+    int key = 0;
     somasDiarias.forEach((dia, soma) {
+      mapDiasDaSemana[key] = dia;
+      key++;
       totaisPorDia.add(soma!);
     });
+    ganhoMaximoSemana =
+        totaisPorDia.fold(ganhoMaximoSemana, (valorAtual, proximoValor) {
+      return valorAtual > proximoValor ? valorAtual : proximoValor;
+    });
+    print('HEY $ganhoMaximoSemana');
     return totaisPorDia;
   }
 
   @override
   Widget build(BuildContext context) {
+    print(mapDiasDaSemana);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -77,7 +90,7 @@ class BarChartSemana extends StatelessWidget {
                 gridData: const FlGridData(show: false),
                 borderData: FlBorderData(show: false),
                 alignment: BarChartAlignment.spaceAround,
-                maxY: 400,
+                maxY: ganhoMaximoSemana,
                 barGroups: calculaGanhosSemana()
                     .asMap()
                     .entries
@@ -109,7 +122,6 @@ Widget diasDaSemana(double value, TitleMeta meta) {
     fontWeight: FontWeight.bold,
     fontSize: 10,
   );
-  // List<String> totaisPorDia;
 
   Widget text;
   switch (value.toInt()) {

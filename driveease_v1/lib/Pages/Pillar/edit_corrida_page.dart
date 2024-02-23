@@ -152,8 +152,7 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                   selectedTime.hour,
                   selectedTime.minute,
                 );
-                String dataFormatada =
-                    DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDateTime);
+                String dataFormatada = selectedDateTime.toString();
                 setState(() {
                   _controllerDataInicial.text = dataFormatada;
                 });

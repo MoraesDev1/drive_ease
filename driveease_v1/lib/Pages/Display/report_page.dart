@@ -1,6 +1,8 @@
 import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
 import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
 import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
+import 'package:driveease_v1/Model/corrida.dart';
+import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Graphics/report_graphic_semana_widget.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,12 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
+  List<Corrida> listCorridaDia = [];
+  List<Servico> listServicoDia = [];
+  List<Corrida> listCorridaSemana = [];
+  List<Servico> listServicoSemana = [];
+  List<Corrida> listCorridaMes = [];
+  List<Servico> listServicoMes = [];
   Mediator mediator = Mediator();
   int dia = 1;
   int mes = 1;
@@ -23,7 +31,6 @@ class _ReportPageState extends State<ReportPage> {
   @override
   initState() {
     super.initState();
-    _carregaListas();
     String dataAtual = DateTime.now().toString();
     int diaAtual = int.parse(dataAtual.substring(8, 10));
     int mesAtual = int.parse(dataAtual.substring(6, 7));
@@ -31,11 +38,81 @@ class _ReportPageState extends State<ReportPage> {
     mes = mesAtual;
     ano = anoAtual;
     dia = diaAtual;
+    carregaListas();
+    listCorridaSemana = filtrarCorridaSemana(DateTime.now());
   }
 
-  _carregaListas() async {
+  carregaListas() async {
     mediator.listaDeCorridas = await _corridaDaoDb.listar();
     mediator.listaDeServicos = await _servicoDaoDb.listar();
+  }
+
+  List<dynamic> filtrarSemana(DateTime selectedDate) {
+    //   String dataFormatada =
+    //       DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDate);
+    //   DateTime dataConvertida = DateTime.parse(dataFormatada);
+    final firstDayOfWeek =
+        selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
+    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 6));
+
+    return mediator.listaDeCorridas.where((corrida) {
+      DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
+      return itemDate.isAfter(firstDayOfWeek) &&
+          itemDate.isBefore(lastDayOfWeek);
+    }).toList();
+  }
+
+  List<Corrida> filtrarCorridaMes(DateTime selectedDate) {
+    return mediator.listaDeCorridas.where((corrida) {
+      DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
+      return itemDate.month == selectedDate.month &&
+          itemDate.year == selectedDate.year;
+    }).toList();
+  }
+
+  List<Servico> filtrarServicoMes(DateTime selectedDate) {
+    return mediator.listaDeServicos.where((servico) {
+      DateTime itemDate = DateTime.parse(servico.data);
+      return itemDate.month == selectedDate.month &&
+          itemDate.year == selectedDate.year;
+    }).toList();
+  }
+
+  List<Corrida> filtrarCorridaSemana(DateTime selectedDate) {
+    final firstDayOfWeek =
+        selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
+    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
+    return mediator.listaDeCorridas.where((corrida) {
+      DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
+      return itemDate.isAfter(firstDayOfWeek) &&
+          itemDate.isBefore(lastDayOfWeek);
+    }).toList();
+  }
+
+  List<Servico> filtrarServicoSemana(DateTime selectedDate) {
+    final firstDayOfWeek =
+        selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
+    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
+
+    return mediator.listaDeServicos.where((servico) {
+      DateTime itemDate = DateTime.parse(servico.data);
+      return itemDate.isAfter(firstDayOfWeek) &&
+          itemDate.isBefore(lastDayOfWeek);
+    }).toList();
+  }
+
+  List<Corrida> filtrarCorridaDia(DateTime selectedDate) {
+    return mediator.listaDeCorridas.where((corrida) {
+      DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
+      return itemDate.day == selectedDate.day;
+    }).toList();
+  }
+
+  List<Servico> filtrarServicoDia(DateTime selectedDate) {
+    return mediator.listaDeServicos.where((servico) {
+      DateTime itemDate = DateTime.parse(servico.data);
+      return itemDate.day == selectedDate.day;
+    }).toList();
   }
 
   Map<int, String> mesesDoAno = {
@@ -370,8 +447,8 @@ class _ReportPageState extends State<ReportPage> {
                   ),
                 ),
                 BarChartSemana(
-                  listCorridaSemana: mediator.listCorridaSemana,
-                  listServicoSemana: mediator.listServicoSemana,
+                  listCorridaSemana: listCorridaSemana,
+                  listServicoSemana: listServicoSemana,
                 )
               ],
             ),
