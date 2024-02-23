@@ -11,7 +11,7 @@ class OptionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Utils.corFundo,
+      backgroundColor: UtilsColors.corFundo,
       appBar: AppBar(
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
@@ -22,7 +22,7 @@ class OptionsPage extends StatelessWidget {
         ],
         title: const Text('Opções'),
         centerTitle: true,
-        backgroundColor: Utils.verdePrimario,
+        backgroundColor: UtilsColors.verdePrimario,
       ),
       body: SingleChildScrollView(
         child: Padding(

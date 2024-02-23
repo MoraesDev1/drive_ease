@@ -11,7 +11,7 @@ void main() {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
-      // supportedLocales: const [Locale('pt', 'BR')],
+      supportedLocales: const [Locale('pt', 'BR')],
       home:
           const LoadingPage(), //temporariamente manter em LoadingPage até que o Login esteja funcional
       theme: ThemeData(

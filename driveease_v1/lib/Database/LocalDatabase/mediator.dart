@@ -1,5 +1,3 @@
-import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
-import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/metas.dart';
 import 'package:driveease_v1/Model/servico.dart';
@@ -8,8 +6,6 @@ import 'package:sqflite/sqflite.dart';
 class Mediator {
   Mediator._privateConstructor();
   late Database db;
-  final CorridaDaoDb _corridaDaoDb = CorridaDaoDb();
-  final ServicoDaoDb _servicoDaoDb = ServicoDaoDb();
   List<Corrida> listaCorridaStart = [];
   List<Corrida> listaDeCorridas = [];
   List<Servico> listaDeServicos = [];
@@ -19,11 +15,6 @@ class Mediator {
 
   factory Mediator() {
     return _instance;
-  }
-
-  carregaListas() async {
-    listaDeCorridas = await _corridaDaoDb.listar();
-    listaDeServicos = await _servicoDaoDb.listar();
   }
 
   buscarCorridaStart() async {

@@ -1,10 +1,11 @@
+import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
+import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
 import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Graphics/report_graphic_semana_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -14,54 +15,45 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  Mediator mediator = Mediator();
   List<Corrida> listCorridaDia = [];
   List<Servico> listServicoDia = [];
   List<Corrida> listCorridaSemana = [];
   List<Servico> listServicoSemana = [];
   List<Corrida> listCorridaMes = [];
   List<Servico> listServicoMes = [];
+  Mediator mediator = Mediator();
   int dia = 1;
   int mes = 1;
   int ano = 2010;
+  final CorridaDaoDb _corridaDaoDb = CorridaDaoDb();
+  final ServicoDaoDb _servicoDaoDb = ServicoDaoDb();
 
   @override
   initState() {
     super.initState();
-    mediator.carregaListas();
     String dataAtual = DateTime.now().toString();
-    int diaAtual = int.parse(dataAtual.substring(8, 9));
+    int diaAtual = int.parse(dataAtual.substring(8, 10));
     int mesAtual = int.parse(dataAtual.substring(6, 7));
     int anoAtual = int.parse(dataAtual.substring(0, 4));
     mes = mesAtual;
     ano = anoAtual;
     dia = diaAtual;
-
-    listCorridaDia = _filtrarCorridaDia(DateTime.now());
-    listServicoDia = _filtrarServicoDia(DateTime.now());
-    listCorridaSemana = _filtrarCorridaSemana(DateTime.now());
-    listServicoSemana = _filtrarServicoSemana(DateTime.now());
-    listCorridaMes = _filtrarCorridaMes(DateTime.now());
-    listServicoMes = _filtrarServicoMes(DateTime.now());
-    _gerarRelatorioGrafico();
+    carregaListas();
+    listCorridaSemana = filtrarCorridaSemana(DateTime.now());
   }
 
-  _gerarRelatorioGrafico() {
-    double totalGanhos = mediator.listaDeCorridas
-        .fold(0, (total, corrida) => total + (corrida.ganhos ?? 0));
-    double totalDespesas = mediator.listaDeServicos
-        .fold(0, (total, servico) => total + servico.valor.abs());
-
-    List lista = _filtrarCorridaSemana(DateTime.now());
+  carregaListas() async {
+    mediator.listaDeCorridas = await _corridaDaoDb.listar();
+    mediator.listaDeServicos = await _servicoDaoDb.listar();
   }
 
   List<dynamic> filtrarSemana(DateTime selectedDate) {
-    String dataFormatada =
-        DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDate);
-    DateTime dataConvertida = DateTime.parse(dataFormatada);
+    //   String dataFormatada =
+    //       DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDate);
+    //   DateTime dataConvertida = DateTime.parse(dataFormatada);
     final firstDayOfWeek =
-        dataConvertida.subtract(Duration(days: dataConvertida.weekday - 1));
-    final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 6));
+        selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
+    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 6));
 
     return mediator.listaDeCorridas.where((corrida) {
       DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
@@ -70,7 +62,7 @@ class _ReportPageState extends State<ReportPage> {
     }).toList();
   }
 
-  List<Corrida> _filtrarCorridaMes(DateTime selectedDate) {
+  List<Corrida> filtrarCorridaMes(DateTime selectedDate) {
     return mediator.listaDeCorridas.where((corrida) {
       DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
       return itemDate.month == selectedDate.month &&
@@ -78,7 +70,7 @@ class _ReportPageState extends State<ReportPage> {
     }).toList();
   }
 
-  List<Servico> _filtrarServicoMes(DateTime selectedDate) {
+  List<Servico> filtrarServicoMes(DateTime selectedDate) {
     return mediator.listaDeServicos.where((servico) {
       DateTime itemDate = DateTime.parse(servico.data);
       return itemDate.month == selectedDate.month &&
@@ -86,7 +78,7 @@ class _ReportPageState extends State<ReportPage> {
     }).toList();
   }
 
-  List<Corrida> _filtrarCorridaSemana(DateTime selectedDate) {
+  List<Corrida> filtrarCorridaSemana(DateTime selectedDate) {
     final firstDayOfWeek =
         selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
     final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
@@ -97,10 +89,10 @@ class _ReportPageState extends State<ReportPage> {
     }).toList();
   }
 
-  List<Servico> _filtrarServicoSemana(DateTime selectedDate) {
+  List<Servico> filtrarServicoSemana(DateTime selectedDate) {
     final firstDayOfWeek =
         selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
-    final lastDayOfWeek = firstDayOfWeek.add(Duration(days: 7));
+    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
 
     return mediator.listaDeServicos.where((servico) {
       DateTime itemDate = DateTime.parse(servico.data);
@@ -109,14 +101,14 @@ class _ReportPageState extends State<ReportPage> {
     }).toList();
   }
 
-  List<Corrida> _filtrarCorridaDia(DateTime selectedDate) {
+  List<Corrida> filtrarCorridaDia(DateTime selectedDate) {
     return mediator.listaDeCorridas.where((corrida) {
       DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
       return itemDate.day == selectedDate.day;
     }).toList();
   }
 
-  List<Servico> _filtrarServicoDia(DateTime selectedDate) {
+  List<Servico> filtrarServicoDia(DateTime selectedDate) {
     return mediator.listaDeServicos.where((servico) {
       DateTime itemDate = DateTime.parse(servico.data);
       return itemDate.day == selectedDate.day;
@@ -212,18 +204,18 @@ class _ReportPageState extends State<ReportPage> {
       initialIndex: 0,
       length: 3,
       child: Scaffold(
-        backgroundColor: Utils.corFundo,
+        backgroundColor: UtilsColors.corFundo,
         appBar: AppBar(
           title: const Text('Relatórios'),
           centerTitle: true,
-          backgroundColor: Utils.verdePrimario,
+          backgroundColor: UtilsColors.verdePrimario,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: Container(
               color: Colors.green.shade500,
               child: TabBar(
-                indicatorColor: Utils.corSecundaria,
-                labelColor: Utils.corSecundaria,
+                indicatorColor: UtilsColors.corSecundaria,
+                labelColor: UtilsColors.corSecundaria,
                 unselectedLabelColor: Colors.white,
                 tabs: const <Widget>[
                   Tab(

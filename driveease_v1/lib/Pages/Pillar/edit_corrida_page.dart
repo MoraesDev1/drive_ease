@@ -152,8 +152,7 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                   selectedTime.hour,
                   selectedTime.minute,
                 );
-                String dataFormatada =
-                    DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDateTime);
+                String dataFormatada = selectedDateTime.toString();
                 setState(() {
                   _controllerDataInicial.text = dataFormatada;
                 });
@@ -205,9 +204,9 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Editar corrida'),
-        backgroundColor: Utils.verdePrimario,
+        backgroundColor: UtilsColors.verdePrimario,
       ),
-      backgroundColor: Utils.corFundo,
+      backgroundColor: UtilsColors.corFundo,
       body: Center(
         child: SingleChildScrollView(
           child: Form(
@@ -362,7 +361,7 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Utils.verdePrimario,
+                              backgroundColor: UtilsColors.verdePrimario,
                             ),
                             child: const Text('Salvar Alterações'),
                             onPressed: () => _clickSalvar(),
