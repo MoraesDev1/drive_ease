@@ -90,7 +90,8 @@ class CardServico extends StatelessWidget {
                 ),
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceAround, //alinhar textos
                 children: [
                   Text('Data: $data',
                       style: const TextStyle(color: Colors.white)),
