@@ -77,7 +77,7 @@ class _HistoricPageState extends State<HistoricPage> {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: UtilsColors.verdePrimario),
+                    backgroundColor: UtilsColors.corFloatingActionButton),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -91,7 +91,7 @@ class _HistoricPageState extends State<HistoricPage> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: UtilsColors.verdePrimario),
+                    backgroundColor: UtilsColors.corFloatingActionButton),
                 onPressed: () {
                   Navigator.of(context).pop();
                   _removerCorrida(corrida);
@@ -149,7 +149,7 @@ class _HistoricPageState extends State<HistoricPage> {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: UtilsColors.verdePrimario),
+                    backgroundColor: UtilsColors.corFloatingActionButton),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -163,7 +163,7 @@ class _HistoricPageState extends State<HistoricPage> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: UtilsColors.verdePrimario),
+                    backgroundColor: UtilsColors.corFloatingActionButton),
                 onPressed: () {
                   Navigator.of(context).pop();
                   _removerServico(servico);
@@ -189,19 +189,24 @@ class _HistoricPageState extends State<HistoricPage> {
       initialIndex: 0,
       length: 2,
       child: Scaffold(
-        backgroundColor: UtilsColors.corFundo,
+        backgroundColor: UtilsColors.corFundoTela,
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Histórico'),
-          backgroundColor: UtilsColors.verdePrimario,
+          backgroundColor: UtilsColors.corAppBar,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: Container(
-              color: Colors.green.shade500,
+              color: UtilsColors.corTabBar,
               child: TabBar(
-                indicatorColor: UtilsColors.corSecundaria,
-                labelColor: UtilsColors.corSecundaria,
-                unselectedLabelColor: Colors.white,
+                onTap: (value) {
+                  setState(() {
+                    _carregaListas();
+                  });
+                },
+                indicatorColor: UtilsColors.corDestaqueOn,
+                labelColor: UtilsColors.corDestaqueOn,
+                unselectedLabelColor: UtilsColors.corNaoSelecionado,
                 tabs: const <Widget>[
                   Tab(
                     child: Text('Corridas'),

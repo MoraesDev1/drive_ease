@@ -1,5 +1,5 @@
 import 'package:driveease_v1/Pages/Pillar/layout_page.dart';
-import 'package:driveease_v1/Pages/sobre_page.dart';
+import 'package:driveease_v1/Pages/Display/sobre_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_account.dart';
 import 'package:driveease_v1/Widgets/Cards/card_nav_to_page.dart';
@@ -12,7 +12,7 @@ class OptionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UtilsColors.corFundo,
+      backgroundColor: UtilsColors.corFundoTela,
       appBar: AppBar(
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
@@ -23,7 +23,7 @@ class OptionsPage extends StatelessWidget {
         ],
         title: const Text('Opções'),
         centerTitle: true,
-        backgroundColor: UtilsColors.verdePrimario,
+        backgroundColor: UtilsColors.corAppBar,
       ),
       body: SingleChildScrollView(
         child: Padding(

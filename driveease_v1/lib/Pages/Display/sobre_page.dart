@@ -7,7 +7,7 @@ class SobrePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: UtilsColors.verdePrimario,
+        backgroundColor: UtilsColors.corAppBar,
         title: const Text('Sobre Nós'),
       ),
       body: const Padding(

@@ -1,4 +1,5 @@
 import 'package:driveease_v1/Model/servico.dart';
+import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -11,15 +12,13 @@ class CardServico extends StatelessWidget {
   final Function(MyItemServico item) onMenuClick;
   final Servico servico;
   late String data;
-  late String hora;
+
   late String iconPath;
 
   _formataData() {
     DateTime dataEmDateTime = DateTime.parse(servico.data);
     String formattedDate = DateFormat('dd/MM/yyyy').format(dataEmDateTime);
-    String formattedHour = DateFormat('HH:mm:ss').format(dataEmDateTime);
     data = formattedDate;
-    hora = formattedHour;
   }
 
   _defineIcone() {
@@ -71,52 +70,58 @@ class CardServico extends StatelessWidget {
   Widget build(BuildContext context) {
     _formataData();
     _defineIcone();
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.grey,
-        ),
-        child: ListTile(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: Image.asset(
-                  iconPath,
+    return Container(
+      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
+      height: 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: UtilsColors.corCardServicoECorrida,
+      ),
+      child: ListTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              height: 50,
+              width: 50,
+              child: Image.asset(
+                iconPath,
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      servico.tipoDoServico,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Column(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceAround, //alinhar textos
-                children: [
-                  Text('Data: $data',
-                      style: const TextStyle(color: Colors.white)),
-                  Text('Hora: $hora',
-                      style: const TextStyle(color: Colors.white)),
-                ],
-              ),
-              Column(
-                children: [
-                  Text('Km: ${servico.km}',
-                      style: const TextStyle(color: Colors.white)),
-                  Text('Valor: ${servico.valor}',
-                      style: const TextStyle(color: Colors.white)),
-                ],
-              ),
-              _getPopupMenuItem(),
-            ],
-          ),
-          onTap: () {
-            onMenuClick(MyItemServico.itemTap);
-          },
-          onLongPress: () {
-            onMenuClick(MyItemServico.itemLongPress);
-          },
+                const SizedBox(height: 8),
+                Text('Data: $data',
+                    style: const TextStyle(color: Colors.white)),
+                Text('Valor: R\$${servico.valor.toStringAsFixed(2)}',
+                    style: const TextStyle(color: Colors.white)),
+                const SizedBox(height: 8),
+              ],
+            ),
+            _getPopupMenuItem(),
+          ],
         ),
+        onTap: () {
+          onMenuClick(MyItemServico.itemTap);
+        },
+        onLongPress: () {
+          onMenuClick(MyItemServico.itemLongPress);
+        },
       ),
     );
   }

@@ -235,9 +235,9 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Editar corrida'),
-        backgroundColor: UtilsColors.verdePrimario,
+        backgroundColor: UtilsColors.corAppBar,
       ),
-      backgroundColor: UtilsColors.corFundo,
+      backgroundColor: UtilsColors.corFundoTela,
       body: Center(
         child: SingleChildScrollView(
           child: Form(
@@ -392,7 +392,8 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: UtilsColors.verdePrimario,
+                              backgroundColor:
+                                  UtilsColors.corFloatingActionButton,
                             ),
                             child: const Text('Salvar Alterações'),
                             onPressed: () => _clickSalvar(),

@@ -1,7 +1,7 @@
-class DateUtils {
-  DateUtils._privateConstructor();
+class UtilsDates {
+  UtilsDates();
 
-  Map<int, String> mesesDoAno = {
+  static Map<int, String> mesesDoAno = {
     1: 'Janeiro',
     2: 'Fevereiro',
     3: 'Março',
@@ -16,7 +16,7 @@ class DateUtils {
     12: 'Dezembro',
   };
 
-  List<int> listaDeAnos = [
+  static List<int> listaDeAnos = [
     2010,
     2011,
     2012,
@@ -50,7 +50,7 @@ class DateUtils {
     2040
   ];
 
-  List<int> diasDoMes = [
+  static List<int> diasDoMes = [
     1,
     2,
     3,
@@ -83,10 +83,4 @@ class DateUtils {
     30,
     31
   ];
-
-  static final DateUtils _instance = DateUtils._privateConstructor();
-
-  factory DateUtils() {
-    return _instance;
-  }
 }

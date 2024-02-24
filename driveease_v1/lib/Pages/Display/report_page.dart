@@ -4,6 +4,7 @@ import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
+import 'package:driveease_v1/Utils/date_utils.dart';
 import 'package:driveease_v1/Widgets/Graphics/report_graphic_semana_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -115,108 +116,25 @@ class _ReportPageState extends State<ReportPage> {
     }).toList();
   }
 
-  Map<int, String> mesesDoAno = {
-    1: 'Janeiro',
-    2: 'Fevereiro',
-    3: 'Março',
-    4: 'Abril',
-    5: 'Maio',
-    6: 'Junho',
-    7: 'Julho',
-    8: 'Agosto',
-    9: 'Setembro',
-    10: 'Outubro',
-    11: 'Novembro',
-    12: 'Dezembro',
-  };
-
-  List<int> listaDeAnos = [
-    2010,
-    2011,
-    2012,
-    2013,
-    2014,
-    2015,
-    2016,
-    2017,
-    2018,
-    2019,
-    2020,
-    2021,
-    2022,
-    2023,
-    2024,
-    2025,
-    2026,
-    2027,
-    2028,
-    2029,
-    2030,
-    2031,
-    2032,
-    2033,
-    2034,
-    2035,
-    2036,
-    2037,
-    2038,
-    2039,
-    2040
-  ];
-
-  List<int> diasDoMes = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24,
-    25,
-    26,
-    27,
-    28,
-    29,
-    30,
-    31
-  ];
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
       length: 3,
       child: Scaffold(
-        backgroundColor: UtilsColors.corFundo,
+        backgroundColor: UtilsColors.corFundoTela,
         appBar: AppBar(
           title: const Text('Relatórios'),
           centerTitle: true,
-          backgroundColor: UtilsColors.verdePrimario,
+          backgroundColor: UtilsColors.corAppBar,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: Container(
-              color: Colors.green.shade500,
+              color: UtilsColors.corTabBar,
               child: TabBar(
-                indicatorColor: UtilsColors.corSecundaria,
-                labelColor: UtilsColors.corSecundaria,
-                unselectedLabelColor: Colors.white,
+                indicatorColor: UtilsColors.corDestaqueOn,
+                labelColor: UtilsColors.corDestaqueOn,
+                unselectedLabelColor: UtilsColors.corNaoSelecionado,
                 tabs: const <Widget>[
                   Tab(
                     child: Text('Diario'),
@@ -239,7 +157,7 @@ class _ReportPageState extends State<ReportPage> {
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: Container(
-                    color: Colors.white,
+                    color: UtilsColors.corFundoPadraoWidgets,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -269,7 +187,7 @@ class _ReportPageState extends State<ReportPage> {
                             width: 0,
                           ),
                           value: dia,
-                          items: diasDoMes.map((dia) {
+                          items: UtilsDates.diasDoMes.map((dia) {
                             return DropdownMenuItem<int>(
                               value: dia,
                               child: Text(dia.toString()),
@@ -292,8 +210,8 @@ class _ReportPageState extends State<ReportPage> {
                             height: 0,
                             width: 0,
                           ),
-                          value: mesesDoAno[mes],
-                          items: mesesDoAno.entries.map((entry) {
+                          value: UtilsDates.mesesDoAno[mes],
+                          items: UtilsDates.mesesDoAno.entries.map((entry) {
                             return DropdownMenuItem<String>(
                               value: entry.value,
                               child: Text(entry.value),
@@ -302,7 +220,7 @@ class _ReportPageState extends State<ReportPage> {
                           onChanged: (String? novoMes) {
                             if (novoMes != null) {
                               setState(() {
-                                mes = mesesDoAno.entries
+                                mes = UtilsDates.mesesDoAno.entries
                                     .firstWhere(
                                         (entry) => entry.value == novoMes)
                                     .key;
@@ -320,7 +238,7 @@ class _ReportPageState extends State<ReportPage> {
                             width: 0,
                           ),
                           value: ano,
-                          items: listaDeAnos.map((ano) {
+                          items: UtilsDates.listaDeAnos.map((ano) {
                             return DropdownMenuItem<int>(
                               value: ano,
                               child: Text(ano.toString()),
@@ -361,7 +279,7 @@ class _ReportPageState extends State<ReportPage> {
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: Container(
-                    color: Colors.white,
+                    color: UtilsColors.corFundoPadraoWidgets,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -387,8 +305,8 @@ class _ReportPageState extends State<ReportPage> {
                             height: 0,
                             width: 0,
                           ),
-                          value: mesesDoAno[mes],
-                          items: mesesDoAno.entries.map((entry) {
+                          value: UtilsDates.mesesDoAno[mes],
+                          items: UtilsDates.mesesDoAno.entries.map((entry) {
                             return DropdownMenuItem<String>(
                               value: entry.value,
                               child: Text(entry.value),
@@ -397,7 +315,7 @@ class _ReportPageState extends State<ReportPage> {
                           onChanged: (String? novoMes) {
                             if (novoMes != null) {
                               setState(() {
-                                mes = mesesDoAno.entries
+                                mes = UtilsDates.mesesDoAno.entries
                                     .firstWhere(
                                         (entry) => entry.value == novoMes)
                                     .key;
@@ -415,7 +333,7 @@ class _ReportPageState extends State<ReportPage> {
                             width: 0,
                           ),
                           value: ano,
-                          items: listaDeAnos.map((ano) {
+                          items: UtilsDates.listaDeAnos.map((ano) {
                             return DropdownMenuItem<int>(
                               value: ano,
                               child: Text(ano.toString()),
@@ -457,7 +375,7 @@ class _ReportPageState extends State<ReportPage> {
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: Container(
-                    color: Colors.white,
+                    color: UtilsColors.corFundoPadraoWidgets,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -483,8 +401,8 @@ class _ReportPageState extends State<ReportPage> {
                             height: 0,
                             width: 0,
                           ),
-                          value: mesesDoAno[mes],
-                          items: mesesDoAno.entries.map((entry) {
+                          value: UtilsDates.mesesDoAno[mes],
+                          items: UtilsDates.mesesDoAno.entries.map((entry) {
                             return DropdownMenuItem<String>(
                               value: entry.value,
                               child: Text(entry.value),
@@ -493,7 +411,7 @@ class _ReportPageState extends State<ReportPage> {
                           onChanged: (String? novoMes) {
                             if (novoMes != null) {
                               setState(() {
-                                mes = mesesDoAno.entries
+                                mes = UtilsDates.mesesDoAno.entries
                                     .firstWhere(
                                         (entry) => entry.value == novoMes)
                                     .key;
@@ -511,7 +429,7 @@ class _ReportPageState extends State<ReportPage> {
                             width: 0,
                           ),
                           value: ano,
-                          items: listaDeAnos.map((ano) {
+                          items: UtilsDates.listaDeAnos.map((ano) {
                             return DropdownMenuItem<int>(
                               value: ano,
                               child: Text(ano.toString()),

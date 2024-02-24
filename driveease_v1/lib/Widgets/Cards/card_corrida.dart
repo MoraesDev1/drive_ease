@@ -1,5 +1,7 @@
 import 'package:driveease_v1/Model/corrida.dart';
+import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 enum MyItemCorrida { itemEdit, itemDelete, itemTap, itemLongPress }
 
@@ -9,6 +11,13 @@ class CardCorrida extends StatelessWidget {
 
   late Function(MyItemCorrida item) onMenuClick;
   late Corrida corrida;
+  late String data;
+
+  _formataData() {
+    DateTime dataEmDateTime = DateTime.parse(corrida.dataHoraStart);
+    String formattedDate = DateFormat('dd/MM/yyyy').format(dataEmDateTime);
+    data = formattedDate;
+  }
 
   _getPopupMenuItem() {
     return PopupMenuButton<MyItemCorrida>(
@@ -42,7 +51,7 @@ class CardCorrida extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.green.shade500,
+          color: UtilsColors.corCardServicoECorrida,
         ),
         child: ListTile(
           title: Row(

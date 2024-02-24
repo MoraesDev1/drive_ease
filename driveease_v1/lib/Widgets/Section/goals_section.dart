@@ -1,3 +1,4 @@
+import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_goal.dart';
 import 'package:flutter/material.dart';
 
@@ -8,52 +9,54 @@ class GoalsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Card(
-          elevation: 0,
-          color: Color.fromARGB(75, 0, 0, 0),
-          child: Padding(
-            padding: EdgeInsets.all(4),
-            child: Text(
-              'Metas',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4),
+              child: Text(
+                'Metas:',
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: UtilsColors.corTextoEmDestaqueNosWidgets,
+                ),
               ),
             ),
-          ),
+          ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Column(
           children: [
             CardGoal(
               titulo: 'Hoje',
-              saldo: 80,
-              meta: 200,
+              saldo: 90.50, //valores devem ser variaveis de acordo com o banco
+              meta: 200, //valores devem ser variaveis de acordo com o banco
               corDoIndicadorDeProgresso: Colors.blue,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             CardGoal(
               titulo: 'Esta Semana',
-              saldo: 435.80,
-              meta: 1000,
+              saldo: 435.80, //valores devem ser variaveis de acordo com o banco
+              meta: 1000, //valores devem ser variaveis de acordo com o banco
               corDoIndicadorDeProgresso: Colors.purple,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             CardGoal(
               titulo: 'Este Mês',
-              saldo: 2879.25,
-              meta: 5000,
+              saldo:
+                  2879.25, //valores devem ser variaveis de acordo com o banco
+              meta: 5000, //valores devem ser variaveis de acordo com o banco
               corDoIndicadorDeProgresso: Colors.teal,
             ),
-            SizedBox(
-              height: 100,
+            const SizedBox(
+              height: 110,
             ),
           ],
         ),

@@ -22,9 +22,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UtilsColors.corFundo,
+      backgroundColor: UtilsColors.corFundoTela,
       appBar: AppBar(
-        backgroundColor: UtilsColors.verdePrimario,
+        backgroundColor: UtilsColors.corFloatingActionButton,
         title: const Text('Login'),
       ),
       body: Form(
@@ -79,11 +79,11 @@ class _LoginPageState extends State<LoginPage> {
                       }
                     },
                     color: Colors.blue,
-                    textColor: UtilsColors.corFundo,
+                    textColor: UtilsColors.corFundoTela,
                     child: const Text('Entrar'),
                   ),
                   MaterialButton(
-                    color: UtilsColors.verdePrimario,
+                    color: UtilsColors.corFloatingActionButton,
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       );
                     },
-                    textColor: UtilsColors.corFundo,
+                    textColor: UtilsColors.corFundoTela,
                     child: const Text('Criar cadastro'),
                   ),
                   MaterialButton(

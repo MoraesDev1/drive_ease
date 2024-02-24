@@ -1,7 +1,8 @@
+import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 class CardGoal extends StatelessWidget {
-  const CardGoal({
+  CardGoal({
     super.key,
     required this.titulo,
     required this.meta,
@@ -14,8 +15,8 @@ class CardGoal extends StatelessWidget {
   final double saldo;
   final Color corDoIndicadorDeProgresso;
 
-  final TextStyle subtitleStyle = const TextStyle(
-    color: Color.fromARGB(255, 158, 158, 158),
+  final TextStyle subtitleStyle = TextStyle(
+    color: UtilsColors.corTextoSecundarioNosWidgets,
     fontWeight: FontWeight.w500,
   );
 
@@ -25,7 +26,9 @@ class CardGoal extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color.fromARGB(90, 0, 0, 0)),
+        border: Border.all(
+          color: corDoIndicadorDeProgresso,
+        ),
       ),
       padding: const EdgeInsets.only(left: 20, right: 20),
       height: 110,
@@ -34,8 +37,8 @@ class CardGoal extends StatelessWidget {
         children: [
           Text(
             titulo,
-            style: const TextStyle(
-              color: Colors.black,
+            style: TextStyle(
+              color: UtilsColors.corTextoEmDestaqueNosWidgets,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -72,9 +75,9 @@ class CardGoal extends StatelessWidget {
               ),
               Text(
                 saldo.toStringAsFixed(2),
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 23,
+                style: TextStyle(
+                  color: UtilsColors.corTextoEmDestaqueNosWidgets,
+                  fontSize: 25,
                 ),
               ),
               Text(

@@ -217,7 +217,8 @@ class _NewMetaButtonState extends State<NewMetaButton> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: UtilsColors.verdePrimario,
+                              backgroundColor:
+                                  UtilsColors.corFloatingActionButton,
                             ),
                             child: const Text('Criar Meta'),
                             onPressed: () => _clickSalvar(),

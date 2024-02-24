@@ -94,7 +94,8 @@ class _NewServicoButtonState extends State<NewServicoButton> {
   }
 
   _insereServicoNoBanco(Servico servico) async {
-    servicoDaoDb.inserir(servico);
+    Servico servicoInserido = await servicoDaoDb.inserir(servico);
+    mediator.listaDeServicos.add(servicoInserido);
   }
 
   @override
@@ -230,7 +231,8 @@ class _NewServicoButtonState extends State<NewServicoButton> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: UtilsColors.verdePrimario,
+                              backgroundColor:
+                                  UtilsColors.corFloatingActionButton,
                             ),
                             child: const Text('Criar Serviço'),
                             onPressed: () => _clickSalvar(),

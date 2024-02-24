@@ -190,7 +190,7 @@ class _StartStopButtonState extends State<StartStopButton> {
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: UtilsColors.verdePrimario,
+                          backgroundColor: UtilsColors.corFloatingActionButton,
                         ),
                         child: const Text('Iniciar'),
                         onPressed: () => _clickIniciar(),
@@ -279,7 +279,7 @@ class _StartStopButtonState extends State<StartStopButton> {
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: UtilsColors.verdePrimario,
+                          backgroundColor: UtilsColors.corFloatingActionButton,
                         ),
                         child: const Text('Encerrar'),
                         onPressed: () => _clickEncerrar(),
@@ -301,7 +301,8 @@ class _StartStopButtonState extends State<StartStopButton> {
       padding: const EdgeInsets.all(10),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: start ? Colors.green.shade500 : Colors.red.shade500,
+          backgroundColor:
+              start ? UtilsColors.corDestaqueOn : Colors.red.shade500,
           fixedSize: Size(sizeButton, sizeButton),
           shape: const CircleBorder(),
         ),

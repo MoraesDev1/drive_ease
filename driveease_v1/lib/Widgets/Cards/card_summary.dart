@@ -1,9 +1,17 @@
+import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 class CardSummary extends StatelessWidget {
-  const CardSummary({super.key, required this.titulo});
+  const CardSummary({
+    super.key,
+    required this.titulo,
+    required this.recebimentos,
+    required this.despesas,
+  });
 
   final String titulo;
+  final double recebimentos;
+  final double despesas;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +30,8 @@ class CardSummary extends StatelessWidget {
           children: [
             Text(
               titulo,
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: UtilsColors.corTextoEmDestaqueNosWidgets,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
@@ -31,31 +39,31 @@ class CardSummary extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const Row(
+            Row(
               children: [
                 Text(
                   'Recebimentos',
                   style: TextStyle(
-                    color: Color.fromARGB(255, 158, 158, 158),
+                    color: UtilsColors.corTextoSecundarioNosWidgets,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
                   '__________________',
                   style: TextStyle(
-                      color: Color.fromARGB(131, 158, 158, 158),
+                      color: UtilsColors.corTextoSecundarioNosWidgets,
                       fontWeight: FontWeight.w500),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
-                  'R\$XXXX,XX',
+                  'R\$${recebimentos.toStringAsFixed(2)}',
                   style: TextStyle(
-                    color: Color.fromARGB(255, 158, 158, 158),
+                    color: UtilsColors.corTextoSecundarioNosWidgets,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -64,31 +72,31 @@ class CardSummary extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const Row(
+            Row(
               children: [
                 Text(
                   'Despesas',
                   style: TextStyle(
-                    color: Color.fromARGB(255, 158, 158, 158),
+                    color: UtilsColors.corTextoSecundarioNosWidgets,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
                   '______________________',
                   style: TextStyle(
-                      color: Color.fromARGB(131, 158, 158, 158),
+                      color: UtilsColors.corTextoSecundarioNosWidgets,
                       fontWeight: FontWeight.w500),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
-                  ' R\$XXXX,XX',
+                  ' R\$${despesas.toStringAsFixed(2)}',
                   style: TextStyle(
-                    color: Color.fromARGB(255, 158, 158, 158),
+                    color: UtilsColors.corTextoSecundarioNosWidgets,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -97,30 +105,32 @@ class CardSummary extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const Row(
+            Row(
               children: [
                 Text(
                   'Saldo parcial',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: UtilsColors.corTextoEmDestaqueNosWidgets,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
                   '___________________',
                   style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w500),
+                    color: UtilsColors.corTextoEmDestaqueNosWidgets,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
-                  'R\$XXXX,XX',
+                  'R\$${(recebimentos - despesas).toStringAsFixed(2)}',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: UtilsColors.corTextoEmDestaqueNosWidgets,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

@@ -14,11 +14,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UtilsColors.corFundo,
+      backgroundColor: UtilsColors.corFundoTela,
       appBar: AppBar(
         title: const Text('Homepage'),
         centerTitle: true,
-        backgroundColor: UtilsColors.verdePrimario,
+        backgroundColor: UtilsColors.corAppBar,
       ),
       body: const SingleChildScrollView(
         child: Padding(

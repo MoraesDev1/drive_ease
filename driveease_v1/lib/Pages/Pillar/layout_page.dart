@@ -50,9 +50,9 @@ class _LayoutPageState extends State<LayoutPage> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: UtilsColors.verdePrimario,
-          unselectedItemColor: Colors.white,
-          selectedItemColor: UtilsColors.corSecundaria,
+          backgroundColor: UtilsColors.corBottomNavigationBar,
+          unselectedItemColor: UtilsColors.corNaoSelecionado,
+          selectedItemColor: UtilsColors.corDestaqueOn,
           currentIndex: selectedIcon,
           onTap: (value) {
             pageController.animateToPage(
