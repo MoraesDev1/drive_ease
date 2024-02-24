@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 enum MyItemServico { itemEdit, itemDelete, itemTap, itemLongPress }
 
+// ignore: must_be_immutable
 class CardServico extends StatelessWidget {
   CardServico({super.key, required this.servico, required this.onMenuClick});
 
