@@ -23,7 +23,7 @@ class CardNavToPage extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          onPressed: () => Navigator.of(context).pushReplacement(
+          onPressed: () => Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => page,
             ),
