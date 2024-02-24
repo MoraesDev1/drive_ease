@@ -24,6 +24,7 @@ const List<String> tipoDeServico = <String>[
 class _EditServicoPageState extends State<EditServicoPage> {
   ServicoDaoDb servicoDaoDb = ServicoDaoDb();
   String? tipoSelecionado;
+  late DateTime dataSelecionada;
   final _controllerDataDoServico = TextEditingController();
   final _controllerQuilometragem = TextEditingController();
   final _controllerDescricao = TextEditingController();
@@ -38,6 +39,7 @@ class _EditServicoPageState extends State<EditServicoPage> {
     _controllerQuilometragem.text = widget.servico.km.toString();
     _controllerDescricao.text = widget.servico.descricao;
     _controllerCusto.text = widget.servico.valor.toString();
+    _formataData();
   }
 
   String? _validaCusto(String? value) {
@@ -63,20 +65,27 @@ class _EditServicoPageState extends State<EditServicoPage> {
     return null;
   }
 
-  _substiuiCorrida() {
+  _substiuiServico() {
     String custoFormatado = _controllerCusto.text.replaceAll(',', '.');
     double? custoDouble = double.parse(custoFormatado);
     double? quilometragemDouble = double.parse(_controllerQuilometragem.text);
     Servico servicoAlterado = Servico(
       id: widget.servico.id,
       tipoDoServico: tipoSelecionado!,
-      data: _controllerDataDoServico.text,
+      data: dataSelecionada.toString(),
       km: quilometragemDouble,
       descricao: _controllerDescricao.text,
       valor: custoDouble,
     );
 
     _atualizaNoBanco(servicoAlterado);
+  }
+
+  _formataData() {
+    DateTime dataEmDateTime = DateTime.parse(widget.servico.data);
+    String formattedDate =
+        DateFormat('dd/MM/yyyy HH:mm:ss').format(dataEmDateTime);
+    _controllerDataDoServico.text = formattedDate;
   }
 
   _atualizaNoBanco(Servico servicoAlterado) {
@@ -109,7 +118,7 @@ class _EditServicoPageState extends State<EditServicoPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
-                  _substiuiCorrida();
+                  _substiuiServico();
                 },
                 child: const Text('Salvar')),
           ],
@@ -152,6 +161,7 @@ class _EditServicoPageState extends State<EditServicoPage> {
                   selectedTime.hour,
                   selectedTime.minute,
                 );
+                dataSelecionada = selectedDateTime;
                 String dataFormatada =
                     DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDateTime);
                 setState(() {
@@ -221,7 +231,7 @@ class _EditServicoPageState extends State<EditServicoPage> {
                           color: Colors.black,
                         ),
                         label: Text(
-                          'Data Inicial',
+                          'Data',
                           style: TextStyle(color: Colors.black),
                         ),
                         border: OutlineInputBorder(),

@@ -20,15 +20,15 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: UtilsColors.verdePrimario,
       ),
-      body: SingleChildScrollView(
-        child: const Padding(
+      body: const SingleChildScrollView(
+        child: Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SummarySection(),
               SizedBox(height: 10),
-              GoalsSection()
+              GoalsSection(),
             ],
           ),
         ),

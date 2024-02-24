@@ -14,6 +14,8 @@ class EditCorridaPage extends StatefulWidget {
 
 class _EditCorridaPageState extends State<EditCorridaPage> {
   CorridaDaoDb corridaDaoDb = CorridaDaoDb();
+  DateTime? dataInicialSelecionada;
+  DateTime? dataFinalSelecionada;
   final _controllerDataInicial = TextEditingController();
   final _controllerQuilometrageminicial = TextEditingController();
   final _controllerDataFinal = TextEditingController();
@@ -29,6 +31,20 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
     _controllerDataFinal.text = widget.corrida.dataHoraStop!;
     _controllerQuilometragemFinal.text = widget.corrida.stopKm.toString();
     _controllerGanhos.text = widget.corrida.ganhos.toString();
+    _formataData();
+  }
+
+  _formataData() {
+    DateTime dataInicialEmDateTime =
+        DateTime.parse(widget.corrida.dataHoraStart);
+    String formattedInitialDate =
+        DateFormat('dd/MM/yyyy HH:mm:ss').format(dataInicialEmDateTime);
+    _controllerDataInicial.text = formattedInitialDate;
+
+    DateTime dataFinalEmDateTime = DateTime.parse(widget.corrida.dataHoraStop!);
+    String formattedFinalDate =
+        DateFormat('dd/MM/yyyy HH:mm:ss').format(dataFinalEmDateTime);
+    _controllerDataFinal.text = formattedFinalDate;
   }
 
   String? _validaGanhos(String? value) {
@@ -72,15 +88,27 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
   _substiuiCorrida() {
     String ganhosFormatada = _controllerGanhos.text.replaceAll(',', '.');
     double? ganhosDouble = double.parse(ganhosFormatada);
-
     double? startKmDouble = double.parse(_controllerQuilometrageminicial.text);
     double? stopKmDouble = double.parse(_controllerQuilometragemFinal.text);
+    String dataInicialSelecionadaString = '';
+    String dataFinalSelecionadaString = '';
+    if (dataInicialSelecionada == null) {
+      dataInicialSelecionadaString = widget.corrida.dataHoraStart;
+    } else {
+      dataInicialSelecionadaString = dataInicialSelecionada.toString();
+    }
+
+    if (dataFinalSelecionada == null) {
+      dataFinalSelecionadaString = widget.corrida.dataHoraStop!;
+    } else {
+      dataFinalSelecionadaString = dataFinalSelecionada.toString();
+    }
 
     Corrida corridaAlterada = Corrida.stop(
       id: widget.corrida.id,
-      dataHoraStart: _controllerDataInicial.text,
+      dataHoraStart: dataInicialSelecionadaString,
       startKm: startKmDouble,
-      dataHoraStop: _controllerDataFinal.text,
+      dataHoraStop: dataFinalSelecionadaString,
       stopKm: stopKmDouble,
       ganhos: ganhosDouble,
     );
@@ -152,7 +180,9 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                   selectedTime.hour,
                   selectedTime.minute,
                 );
-                String dataFormatada = selectedDateTime.toString();
+                dataInicialSelecionada = selectedDateTime;
+                String dataFormatada =
+                    DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDateTime);
                 setState(() {
                   _controllerDataInicial.text = dataFormatada;
                 });
@@ -186,6 +216,7 @@ class _EditCorridaPageState extends State<EditCorridaPage> {
                   selectedTime.hour,
                   selectedTime.minute,
                 );
+                dataFinalSelecionada = selectedDateTime;
                 String dataFormatada =
                     DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDateTime);
                 setState(() {
