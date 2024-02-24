@@ -12,6 +12,7 @@ class CardServico extends StatelessWidget {
   final Servico servico;
   late String data;
   late String hora;
+  late String iconPath;
 
   _formataData() {
     DateTime dataEmDateTime = DateTime.parse(servico.data);
@@ -19,6 +20,26 @@ class CardServico extends StatelessWidget {
     String formattedHour = DateFormat('HH:mm:ss').format(dataEmDateTime);
     data = formattedDate;
     hora = formattedHour;
+  }
+
+  _defineIcone() {
+    switch (servico.tipoDoServico) {
+      case 'Troca de Óleo':
+        iconPath = 'Assets/oil-change.png';
+        break;
+      case 'Abastecimento':
+        iconPath = 'Assets/gas-station.png';
+        break;
+      case 'Troca de Pneus':
+        iconPath = 'Assets/tires-change.png';
+        break;
+      case 'Manutenção de Rotina':
+        iconPath = 'Assets/car-repair.png';
+        break;
+      case 'Lavagem/Limpeza':
+        iconPath = 'Assets/car-wash.png';
+        break;
+    }
   }
 
   _getPopupMenuItem() {
@@ -46,17 +67,10 @@ class CardServico extends StatelessWidget {
     );
   }
 
-  Map<int, AssetImage> icones = {
-    0: const AssetImage('Assets/oil-change.png'),
-    1: const AssetImage('Assets/car-repair.png'),
-    2: const AssetImage('Assets/gas-station.png'),
-    3: const AssetImage('Assets/tires-change.png'),
-    4: const AssetImage('Assets/car-wash.png'),
-  };
-
   @override
   Widget build(BuildContext context) {
     _formataData();
+    _defineIcone();
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
@@ -68,17 +82,26 @@ class CardServico extends StatelessWidget {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Icon(),
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: Image.asset(
+                  iconPath,
+                ),
+              ),
               Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text('Data: $data \nHora: $hora',
+                  Text('Data: $data',
                       style: const TextStyle(color: Colors.white)),
-                  Text('Km: ${servico.km}',
+                  Text('Hora: $hora',
                       style: const TextStyle(color: Colors.white)),
                 ],
               ),
               Column(
                 children: [
+                  Text('Km: ${servico.km}',
+                      style: const TextStyle(color: Colors.white)),
                   Text('Valor: ${servico.valor}',
                       style: const TextStyle(color: Colors.white)),
                 ],

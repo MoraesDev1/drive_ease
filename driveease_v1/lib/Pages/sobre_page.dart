@@ -1,3 +1,4 @@
+import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_devs.dart';
 import 'package:flutter/material.dart';
 
@@ -6,16 +7,20 @@ class SobrePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sobre'),
+        backgroundColor: UtilsColors.verdePrimario,
+        title: const Text('Sobre Nós'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      body: const Padding(
+        padding: EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               'Informações do Aplicativo',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 10),
             Card(
@@ -28,28 +33,31 @@ class SobrePage extends StatelessWidget {
             SizedBox(height: 20),
             Text(
               'Desenvolvedores',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 10),
             CardDevs(
               name: 'Carlos Matheus',
               description: 'Desenvolvedor Flutter',
-              assetPath: 'assets/developer1.jpg',
+              assetPath: 'Assets/carlos.png',
             ),
             CardDevs(
-              name: 'Carlos Matheus',
+              name: 'Gustavo Herber',
               description: 'Desenvolvedor Flutter',
-              assetPath: 'assets/developer1.jpg',
+              assetPath: 'Assets/gustavo.png',
             ),
             CardDevs(
-              name: 'Carlos Matheus',
+              name: 'Gabriel Moraes',
               description: 'Desenvolvedor Flutter',
-              assetPath: 'assets/developer1.jpg',
+              assetPath: 'Assets/gabriel.png',
             ),
             CardDevs(
-              name: 'Carlos Matheus',
+              name: 'Ednei Costa',
               description: 'Desenvolvedor Flutter',
-              assetPath: 'assets/developer1.jpg',
+              assetPath: 'Assets/ednei.png',
             ),
           ],
         ),
