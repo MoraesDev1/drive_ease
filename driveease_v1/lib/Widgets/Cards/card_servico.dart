@@ -92,7 +92,6 @@ class CardServico extends StatelessWidget {
                   ),
                 ),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -107,12 +106,17 @@ class CardServico extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
-                    Text('Data: $data',
-                        style: const TextStyle(color: Colors.white)),
-                    Text('Valor: R\$${servico.valor.toStringAsFixed(2)}',
-                        style: const TextStyle(color: Colors.white)),
-                    const SizedBox(height: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 8),
+                        Text('Data: $data',
+                            style: const TextStyle(color: Colors.white)),
+                        Text('Valor: R\$${servico.valor.toStringAsFixed(2)}',
+                            style: const TextStyle(color: Colors.white)),
+                        const SizedBox(height: 8),
+                      ],
+                    )
                   ],
                 ),
                 _getPopupMenuItem(),

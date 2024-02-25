@@ -1,4 +1,5 @@
 import 'package:driveease_v1/Utils/colors_utils.dart';
+import 'package:driveease_v1/Widgets/Button/new_action_button_widget.dart';
 import 'package:driveease_v1/Widgets/Section/goals_section.dart';
 import 'package:driveease_v1/Widgets/Section/summary_section.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: MenuNovaAcao(),
       backgroundColor: UtilsColors.corFundoTela,
       appBar: AppBar(
         title: const Text('Homepage'),
