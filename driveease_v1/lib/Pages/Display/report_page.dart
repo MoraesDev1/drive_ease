@@ -5,6 +5,7 @@ import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Utils/date_utils.dart';
+import 'package:driveease_v1/Widgets/Graphics/report_graphic_mes_widget.dart';
 import 'package:driveease_v1/Widgets/Graphics/report_graphic_semana_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,9 @@ class _ReportPageState extends State<ReportPage> {
     ano = anoAtual;
     dia = diaAtual;
     carregaListas();
+    listCorridaMes = filtrarCorridaMes(DateTime.now());
     listCorridaSemana = filtrarCorridaSemana(DateTime.now());
+    listServicoSemana = filtrarServicoSemana(DateTime.now());
   }
 
   carregaListas() async {
@@ -48,20 +51,20 @@ class _ReportPageState extends State<ReportPage> {
     mediator.listaDeServicos = await _servicoDaoDb.listar();
   }
 
-  List<dynamic> filtrarSemana(DateTime selectedDate) {
-    //   String dataFormatada =
-    //       DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDate);
-    //   DateTime dataConvertida = DateTime.parse(dataFormatada);
-    final firstDayOfWeek =
-        selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
-    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 6));
+  // List<dynamic> filtrarSemana(DateTime selectedDate) {
+  //   //   String dataFormatada =
+  //   //       DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDate);
+  //   //   DateTime dataConvertida = DateTime.parse(dataFormatada);
+  //   final firstDayOfWeek =
+  //       selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
+  //   final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 6));
 
-    return mediator.listaDeCorridas.where((corrida) {
-      DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
-      return itemDate.isAfter(firstDayOfWeek) &&
-          itemDate.isBefore(lastDayOfWeek);
-    }).toList();
-  }
+  //   return mediator.listaDeCorridas.where((corrida) {
+  //     DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
+  //     return itemDate.isAfter(firstDayOfWeek) &&
+  //         itemDate.isBefore(lastDayOfWeek);
+  //   }).toList();
+  // }
 
   List<Corrida> filtrarCorridaMes(DateTime selectedDate) {
     return mediator.listaDeCorridas.where((corrida) {
@@ -456,6 +459,10 @@ class _ReportPageState extends State<ReportPage> {
                           },
                           icon: const Icon(Icons.arrow_forward_ios),
                         ),
+                        // BarChartMes(
+                        //   listCorridaMes: listCorridaMes,
+                        //   listServicoMes: listServicoMes,
+                        // )
                       ],
                     ),
                   ),
