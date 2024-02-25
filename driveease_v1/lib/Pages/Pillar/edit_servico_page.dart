@@ -24,7 +24,7 @@ const List<String> tipoDeServico = <String>[
 class _EditServicoPageState extends State<EditServicoPage> {
   ServicoDaoDb servicoDaoDb = ServicoDaoDb();
   String? tipoSelecionado;
-  late DateTime dataSelecionada;
+  DateTime? dataSelecionada;
   final _controllerDataDoServico = TextEditingController();
   final _controllerQuilometragem = TextEditingController();
   final _controllerDescricao = TextEditingController();
@@ -63,22 +63,6 @@ class _EditServicoPageState extends State<EditServicoPage> {
       return 'Preenchimento incorreto!\nA forma correta é 000000.0';
     }
     return null;
-  }
-
-  _substiuiServico() {
-    String custoFormatado = _controllerCusto.text.replaceAll(',', '.');
-    double? custoDouble = double.parse(custoFormatado);
-    double? quilometragemDouble = double.parse(_controllerQuilometragem.text);
-    Servico servicoAlterado = Servico(
-      id: widget.servico.id,
-      tipoDoServico: tipoSelecionado!,
-      data: dataSelecionada.toString(),
-      km: quilometragemDouble,
-      descricao: _controllerDescricao.text,
-      valor: custoDouble,
-    );
-
-    _atualizaNoBanco(servicoAlterado);
   }
 
   _formataData() {
@@ -173,6 +157,28 @@ class _EditServicoPageState extends State<EditServicoPage> {
         }
       },
     );
+  }
+
+  _substiuiServico() {
+    String custoFormatado = _controllerCusto.text.replaceAll(',', '.');
+    double? custoDouble = double.parse(custoFormatado);
+    double? quilometragemDouble = double.parse(_controllerQuilometragem.text);
+    String dataSelecionadaString = '';
+    if (dataSelecionada == null) {
+      dataSelecionadaString = widget.servico.data;
+    } else {
+      dataSelecionadaString = dataSelecionada.toString();
+    }
+    Servico servicoAlterado = Servico(
+      id: widget.servico.id,
+      tipoDoServico: tipoSelecionado!,
+      data: dataSelecionadaString,
+      km: quilometragemDouble,
+      descricao: _controllerDescricao.text,
+      valor: custoDouble,
+    );
+
+    _atualizaNoBanco(servicoAlterado);
   }
 
   @override
