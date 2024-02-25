@@ -21,7 +21,7 @@ class _LoadingPageState extends State<LoadingPage> {
       await Future.delayed(const Duration(seconds: 2));
       if (!context.mounted) return;
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const LayoutPage()));
+          context, MaterialPageRoute(builder: (context) => LayoutPage()));
     });
   }
 

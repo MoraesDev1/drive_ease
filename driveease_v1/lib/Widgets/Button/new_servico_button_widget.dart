@@ -95,7 +95,9 @@ class _NewServicoButtonState extends State<NewServicoButton> {
 
   _insereServicoNoBanco(Servico servico) async {
     Servico servicoInserido = await servicoDaoDb.inserir(servico);
-    mediator.listaDeServicos.add(servicoInserido);
+    setState(() {
+      mediator.listaDeServicos.add(servicoInserido);
+    });
   }
 
   @override
