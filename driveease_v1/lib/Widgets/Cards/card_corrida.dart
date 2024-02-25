@@ -46,47 +46,58 @@ class CardCorrida extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: UtilsColors.corCardServicoECorrida,
+    _formataData();
+    return Container(
+      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
+      height: 90,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: UtilsColors.corCardServicoECorrida,
+      ),
+      child: ListTile(
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Image.asset(
+                    'Assets/chequered-flag.png',
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Data: $data',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      'Percorrido: ${(corrida.stopKm! - corrida.startKm).toStringAsFixed(1)}Km',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      'Recebido: ${corrida.ganhos!.toStringAsFixed(2)}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+                _getPopupMenuItem(),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
         ),
-        child: ListTile(
-          title: Row(
-            children: [
-              Column(
-                children: [
-                  Text(
-                    'Start: ${corrida.dataHoraStart}',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    'Km Inicio: ${corrida.startKm.toString()}',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    'Stop: ${corrida.dataHoraStop}',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    'Km Fim: ${corrida.stopKm.toString()}',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              _getPopupMenuItem(),
-            ],
-          ),
-          onTap: () {
-            onMenuClick(MyItemCorrida.itemTap);
-          },
-          onLongPress: () {
-            onMenuClick(MyItemCorrida.itemLongPress);
-          },
-        ),
+        onTap: () {
+          onMenuClick(MyItemCorrida.itemTap);
+        },
+        onLongPress: () {
+          onMenuClick(MyItemCorrida.itemLongPress);
+        },
       ),
     );
   }

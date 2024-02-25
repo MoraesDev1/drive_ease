@@ -79,41 +79,45 @@ class CardServico extends StatelessWidget {
         color: UtilsColors.corCardServicoECorrida,
       ),
       child: ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        title: Column(
           children: [
-            SizedBox(
-              height: 50,
-              width: 50,
-              child: Image.asset(
-                iconPath,
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Image.asset(
+                    iconPath,
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      servico.tipoDoServico,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          servico.tipoDoServico,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 8),
+                    Text('Data: $data',
+                        style: const TextStyle(color: Colors.white)),
+                    Text('Valor: R\$${servico.valor.toStringAsFixed(2)}',
+                        style: const TextStyle(color: Colors.white)),
+                    const SizedBox(height: 8),
                   ],
                 ),
-                const SizedBox(height: 8),
-                Text('Data: $data',
-                    style: const TextStyle(color: Colors.white)),
-                Text('Valor: R\$${servico.valor.toStringAsFixed(2)}',
-                    style: const TextStyle(color: Colors.white)),
-                const SizedBox(height: 8),
+                _getPopupMenuItem(),
               ],
             ),
-            _getPopupMenuItem(),
           ],
         ),
         onTap: () {
