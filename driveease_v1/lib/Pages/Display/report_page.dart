@@ -41,8 +41,8 @@ class _ReportPageState extends State<ReportPage> {
     ano = anoAtual;
     dia = diaAtual;
     carregaListas();
-    listCorridaSemana = filtrarCorridaSemana(DateTime(ano, mes, dia));
-    listServicoSemana = filtrarServicoSemana(DateTime(ano, mes, dia));
+    listCorridaSemana = filtrarCorridaSemana();
+    listServicoSemana = filtrarServicoSemana();
     listCorridaMes = filtrarCorridaMes(DateTime(ano, mes));
     listServicoMes = filtrarServicoMes(DateTime(ano, mes));
   }
@@ -51,21 +51,6 @@ class _ReportPageState extends State<ReportPage> {
     mediator.listaDeCorridas = await _corridaDaoDb.listar();
     mediator.listaDeServicos = await _servicoDaoDb.listar();
   }
-
-  // List<dynamic> filtrarSemana(DateTime selectedDate) {
-  //   //   String dataFormatada =
-  //   //       DateFormat('dd/MM/yyyy HH:mm:ss').format(selectedDate);
-  //   //   DateTime dataConvertida = DateTime.parse(dataFormatada);
-  //   final firstDayOfWeek =
-  //       selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
-  //   final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 6));
-
-  //   return mediator.listaDeCorridas.where((corrida) {
-  //     DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
-  //     return itemDate.isAfter(firstDayOfWeek) &&
-  //         itemDate.isBefore(lastDayOfWeek);
-  //   }).toList();
-  // }
 
   List<Corrida> filtrarCorridaMes(DateTime selectedDate) {
     return mediator.listaDeCorridas.where((corrida) {
@@ -83,7 +68,8 @@ class _ReportPageState extends State<ReportPage> {
     }).toList();
   }
 
-  List<Corrida> filtrarCorridaSemana(DateTime selectedDate) {
+  List<Corrida> filtrarCorridaSemana() {
+    DateTime selectedDate = DateTime(ano, mes, dia);
     final firstDayOfWeek =
         selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
     final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
@@ -94,7 +80,8 @@ class _ReportPageState extends State<ReportPage> {
     }).toList();
   }
 
-  List<Servico> filtrarServicoSemana(DateTime selectedDate) {
+  List<Servico> filtrarServicoSemana() {
+    DateTime selectedDate = DateTime(ano, mes, dia);
     final firstDayOfWeek =
         selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
     final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
@@ -295,13 +282,40 @@ class _ReportPageState extends State<ReportPage> {
                           icon: const Icon(Icons.arrow_back_ios),
                           onPressed: () {
                             setState(() {
-                              if (mes > 1 && mes <= 12) {
+                              if (dia > 1 && dia <= 31) {
+                                dia = --dia;
+                              } else if (mes > 1 && mes <= 12) {
+                                dia = 31;
                                 mes = --mes;
                               } else if (ano > 2010 && ano < 2040) {
                                 mes = 12;
                                 ano = --ano;
                               }
                             });
+                          },
+                        ),
+                        DropdownButton<int>(
+                          underline: const SizedBox(
+                            height: 0,
+                            width: 0,
+                          ),
+                          icon: const SizedBox(
+                            height: 0,
+                            width: 0,
+                          ),
+                          value: dia,
+                          items: UtilsDates.diasDoMes.map((dia) {
+                            return DropdownMenuItem<int>(
+                              value: dia,
+                              child: Text(dia.toString()),
+                            );
+                          }).toList(),
+                          onChanged: (int? novoDia) {
+                            if (novoDia != null) {
+                              setState(() {
+                                dia = novoDia;
+                              });
+                            }
                           },
                         ),
                         DropdownButton<String>(
@@ -358,7 +372,10 @@ class _ReportPageState extends State<ReportPage> {
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              if (mes > 0 && mes < 12) {
+                              if (dia > 0 && dia < 31) {
+                                dia = ++dia;
+                              } else if (mes > 0 && mes < 12) {
+                                dia = 1;
                                 mes = ++mes;
                               } else if (ano > 2009 && ano < 2040) {
                                 mes = 1;

@@ -142,7 +142,17 @@ INSERT INTO servico (tipo, data, km, descricao, valor) VALUES
     ('Troca de Pneus', '2024-02-24', 6650.1, 'Troca de todos os pneus', 300.0),
     ('Lavagem/Limpeza', '2024-02-24', 7000.0, 'Lavagem completa', 50.0),
     ('Manutenção de Rotina', '2024-02-24', 7400.5, 'Reparo no sistema de suspensão', 120.0),
-    ('Manutenção de Rotina', '2024-02-24', 7800.0, 'Revisão completa do veículo', 150.0);
+    ('Manutenção de Rotina', '2024-02-24', 7800.0, 'Revisão completa do veículo', 150.0),
+    ('Manutenção de Rotina', '2024-02-18', 8000.5, 'Revisão completa do veículo', 150.0),
+    ('Troca de Pneus', '2024-02-19', 8450.1, 'Troca de todos os pneus', 300.0),
+    ('Lavagem/Limpeza', '2024-02-20', 8800.5, 'Lavagem completa', 50.0),
+    ('Manutenção de Rotina', '2024-02-21', 9200.1, 'Reparo no sistema de direção', 120.0),
+    ('Troca de Óleo', '2024-02-22', 9500.2, 'Troca de óleo e filtro', 80.0),
+    ('Manutenção de Rotina', '2024-02-22', 9800.5, 'Revisão completa do veículo', 150.0),
+    ('Troca de Pneus', '2024-02-23', 10250.1, 'Troca de todos os pneus', 300.0),
+    ('Lavagem/Limpeza', '2024-02-23', 10600.0, 'Lavagem completa', 50.0),
+    ('Manutenção de Rotina', '2024-02-25', 11000.5, 'Reparo no sistema de transmissão', 120.0),
+    ('Troca de Óleo', '2024-02-26', 11400.2, 'Troca de óleo e filtro', 80.0);
 ''',
     ],
   };
