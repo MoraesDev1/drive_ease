@@ -43,12 +43,9 @@ class BarChartSemana extends StatelessWidget {
       totaisPorDia.add(soma);
       key++;
     });
-    print('Resultado: $somasDiarias');
-
-    lucro = totaisPorDia.fold(despesa, (valorAtual, proximoValor) {
+    lucro = totaisPorDia.fold(lucro, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
-    print('lucro $lucro');
     return totaisPorDia;
   }
 
@@ -70,13 +67,11 @@ class BarChartSemana extends StatelessWidget {
       mapCorridaFiltrada[dia] = soma!;
       mapDiasDaSemanaCorrida[key] = dia;
       key++;
-      totaisPorDia.add(soma!);
+      totaisPorDia.add(soma);
     });
-    print('MAPA $mapCorridaFiltrada');
     recebimento = totaisPorDia.fold(recebimento, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
-    print('HEY $recebimento');
     return totaisPorDia;
   }
 
@@ -98,14 +93,11 @@ class BarChartSemana extends StatelessWidget {
       mapServicoFiltrada[dia] = soma!;
       mapDiasDaSemanaServico[key] = dia;
       key++;
-      totaisPorDia.add(soma!);
+      totaisPorDia.add(soma);
     });
     despesa = totaisPorDia.fold(despesa, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
-    print('despesas $despesa');
-
-    calculaLucroSemana();
     return totaisPorDia;
   }
 
@@ -158,7 +150,9 @@ class BarChartSemana extends StatelessWidget {
                                 BarChartRodData(
                                     width: 45,
                                     toY: entry.value,
-                                    color: Colors.green,
+                                    color: entry.value < 0
+                                        ? Colors.orange[300]
+                                        : Colors.green[400],
                                     borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(2),
                                         topLeft: Radius.circular(2))),

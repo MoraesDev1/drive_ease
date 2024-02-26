@@ -41,9 +41,10 @@ class _ReportPageState extends State<ReportPage> {
     ano = anoAtual;
     dia = diaAtual;
     carregaListas();
-    listCorridaMes = filtrarCorridaMes(DateTime.now());
-    listCorridaSemana = filtrarCorridaSemana(DateTime.now());
-    listServicoSemana = filtrarServicoSemana(DateTime.now());
+    listCorridaSemana = filtrarCorridaSemana(DateTime(ano, mes, dia));
+    listServicoSemana = filtrarServicoSemana(DateTime(ano, mes, dia));
+    listCorridaMes = filtrarCorridaMes(DateTime(ano, mes));
+    listServicoMes = filtrarServicoMes(DateTime(ano, mes));
   }
 
   carregaListas() async {
@@ -274,7 +275,11 @@ class _ReportPageState extends State<ReportPage> {
                       ],
                     ),
                   ),
-                )
+                ),
+                BarChartSemana(
+                  listCorridaSemana: listCorridaSemana,
+                  listServicoSemana: listServicoSemana,
+                ),
               ],
             ),
             Column(
@@ -459,14 +464,14 @@ class _ReportPageState extends State<ReportPage> {
                           },
                           icon: const Icon(Icons.arrow_forward_ios),
                         ),
-                        // BarChartMes(
-                        //   listCorridaMes: listCorridaMes,
-                        //   listServicoMes: listServicoMes,
-                        // )
                       ],
                     ),
                   ),
-                )
+                ),
+                // BarChartMes(
+                //   listCorridaMes: listCorridaMes,
+                //   listServicoMes: listServicoMes,
+                // )
               ],
             ),
           ],
