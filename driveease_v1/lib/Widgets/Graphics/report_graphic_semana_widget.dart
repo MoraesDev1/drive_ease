@@ -103,6 +103,9 @@ class BarChartSemana extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _ganhosSemana = calculaGanhosSemana();
+    var _lucroSemana = calculaLucroSemana();
+    var _despesasSemana = calculaDespesasSemana();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -141,7 +144,7 @@ class BarChartSemana extends StatelessWidget {
                     borderData: FlBorderData(show: false),
                     alignment: BarChartAlignment.spaceAround,
                     maxY: lucro,
-                    barGroups: calculaLucroSemana()
+                    barGroups: _lucroSemana
                         .asMap()
                         .entries
                         .map((entry) => BarChartGroupData(
@@ -199,7 +202,7 @@ class BarChartSemana extends StatelessWidget {
                     borderData: FlBorderData(show: false),
                     alignment: BarChartAlignment.spaceAround,
                     maxY: recebimento,
-                    barGroups: calculaGanhosSemana()
+                    barGroups: _ganhosSemana
                         .asMap()
                         .entries
                         .map((entry) => BarChartGroupData(
@@ -256,7 +259,7 @@ class BarChartSemana extends StatelessWidget {
                     borderData: FlBorderData(show: false),
                     alignment: BarChartAlignment.spaceAround,
                     maxY: despesa,
-                    barGroups: calculaDespesasSemana()
+                    barGroups: _despesasSemana
                         .asMap()
                         .entries
                         .map((entry) => BarChartGroupData(

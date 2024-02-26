@@ -41,18 +41,20 @@ class _ReportPageState extends State<ReportPage> {
     ano = anoAtual;
     dia = diaAtual;
     carregaListas();
-    listCorridaSemana = filtrarCorridaSemana();
-    listServicoSemana = filtrarServicoSemana();
-    listCorridaMes = filtrarCorridaMes(DateTime(ano, mes));
-    listServicoMes = filtrarServicoMes(DateTime(ano, mes));
   }
 
   carregaListas() async {
     mediator.listaDeCorridas = await _corridaDaoDb.listar();
     mediator.listaDeServicos = await _servicoDaoDb.listar();
+    listCorridaSemana = filtrarCorridaSemana();
+    listServicoSemana = filtrarServicoSemana();
+    listCorridaMes = filtrarCorridaMes();
+    listServicoMes = filtrarServicoMes();
+    setState(() {});
   }
 
-  List<Corrida> filtrarCorridaMes(DateTime selectedDate) {
+  List<Corrida> filtrarCorridaMes() {
+    DateTime selectedDate = DateTime(ano, mes);
     return mediator.listaDeCorridas.where((corrida) {
       DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
       return itemDate.month == selectedDate.month &&
@@ -60,7 +62,8 @@ class _ReportPageState extends State<ReportPage> {
     }).toList();
   }
 
-  List<Servico> filtrarServicoMes(DateTime selectedDate) {
+  List<Servico> filtrarServicoMes() {
+    DateTime selectedDate = DateTime(ano, mes);
     return mediator.listaDeServicos.where((servico) {
       DateTime itemDate = DateTime.parse(servico.data);
       return itemDate.month == selectedDate.month &&
@@ -73,11 +76,13 @@ class _ReportPageState extends State<ReportPage> {
     final firstDayOfWeek =
         selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
     final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
-    return mediator.listaDeCorridas.where((corrida) {
+    var res = mediator.listaDeCorridas.where((corrida) {
       DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
       return itemDate.isAfter(firstDayOfWeek) &&
           itemDate.isBefore(lastDayOfWeek);
     }).toList();
+    print(res);
+    return res;
   }
 
   List<Servico> filtrarServicoSemana() {
@@ -155,17 +160,16 @@ class _ReportPageState extends State<ReportPage> {
                         IconButton(
                           icon: const Icon(Icons.arrow_back_ios),
                           onPressed: () {
-                            setState(() {
-                              if (dia > 1 && dia <= 31) {
-                                dia = --dia;
-                              } else if (mes > 1 && mes <= 12) {
-                                dia = 31;
-                                mes = --mes;
-                              } else if (ano > 2010 && ano < 2040) {
-                                mes = 12;
-                                ano = --ano;
-                              }
-                            });
+                            if (dia > 1 && dia <= 31) {
+                              dia = --dia;
+                            } else if (mes > 1 && mes <= 12) {
+                              dia = 31;
+                              mes = --mes;
+                            } else if (ano > 2010 && ano < 2040) {
+                              mes = 12;
+                              ano = --ano;
+                            }
+                            carregaListas();
                           },
                         ),
                         DropdownButton<int>(
@@ -186,9 +190,8 @@ class _ReportPageState extends State<ReportPage> {
                           }).toList(),
                           onChanged: (int? novoDia) {
                             if (novoDia != null) {
-                              setState(() {
-                                dia = novoDia;
-                              });
+                              dia = novoDia;
+                              carregaListas();
                             }
                           },
                         ),
@@ -237,25 +240,23 @@ class _ReportPageState extends State<ReportPage> {
                           }).toList(),
                           onChanged: (int? novoAno) {
                             if (novoAno != null) {
-                              setState(() {
-                                ano = novoAno;
-                              });
+                              ano = novoAno;
+                              carregaListas();
                             }
                           },
                         ),
                         IconButton(
                           onPressed: () {
-                            setState(() {
-                              if (dia > 0 && dia < 31) {
-                                dia = ++dia;
-                              } else if (mes > 0 && mes < 12) {
-                                dia = 1;
-                                mes = ++mes;
-                              } else if (ano > 2009 && ano < 2040) {
-                                mes = 1;
-                                ano = ++ano;
-                              }
-                            });
+                            if (dia > 0 && dia < 31) {
+                              dia = ++dia;
+                            } else if (mes > 0 && mes < 12) {
+                              dia = 1;
+                              mes = ++mes;
+                            } else if (ano > 2009 && ano < 2040) {
+                              mes = 1;
+                              ano = ++ano;
+                            }
+                            carregaListas();
                           },
                           icon: const Icon(Icons.arrow_forward_ios),
                         ),
@@ -281,17 +282,16 @@ class _ReportPageState extends State<ReportPage> {
                         IconButton(
                           icon: const Icon(Icons.arrow_back_ios),
                           onPressed: () {
-                            setState(() {
-                              if (dia > 1 && dia <= 31) {
-                                dia = --dia;
-                              } else if (mes > 1 && mes <= 12) {
-                                dia = 31;
-                                mes = --mes;
-                              } else if (ano > 2010 && ano < 2040) {
-                                mes = 12;
-                                ano = --ano;
-                              }
-                            });
+                            if (dia > 1 && dia <= 31) {
+                              dia = --dia;
+                            } else if (mes > 1 && mes <= 12) {
+                              dia = 31;
+                              mes = --mes;
+                            } else if (ano > 2010 && ano < 2040) {
+                              mes = 12;
+                              ano = --ano;
+                            }
+                            carregaListas();
                           },
                         ),
                         DropdownButton<int>(
@@ -312,9 +312,8 @@ class _ReportPageState extends State<ReportPage> {
                           }).toList(),
                           onChanged: (int? novoDia) {
                             if (novoDia != null) {
-                              setState(() {
-                                dia = novoDia;
-                              });
+                              dia = novoDia;
+                              carregaListas();
                             }
                           },
                         ),
@@ -363,25 +362,23 @@ class _ReportPageState extends State<ReportPage> {
                           }).toList(),
                           onChanged: (int? novoAno) {
                             if (novoAno != null) {
-                              setState(() {
-                                ano = novoAno;
-                              });
+                              ano = novoAno;
+                              carregaListas();
                             }
                           },
                         ),
                         IconButton(
                           onPressed: () {
-                            setState(() {
-                              if (dia > 0 && dia < 31) {
-                                dia = ++dia;
-                              } else if (mes > 0 && mes < 12) {
-                                dia = 1;
-                                mes = ++mes;
-                              } else if (ano > 2009 && ano < 2040) {
-                                mes = 1;
-                                ano = ++ano;
-                              }
-                            });
+                            if (dia > 0 && dia < 31) {
+                              dia = ++dia;
+                            } else if (mes > 0 && mes < 12) {
+                              dia = 1;
+                              mes = ++mes;
+                            } else if (ano > 2009 && ano < 2040) {
+                              mes = 1;
+                              ano = ++ano;
+                            }
+                            carregaListas();
                           },
                           icon: const Icon(Icons.arrow_forward_ios),
                         ),
@@ -407,14 +404,13 @@ class _ReportPageState extends State<ReportPage> {
                         IconButton(
                           icon: const Icon(Icons.arrow_back_ios),
                           onPressed: () {
-                            setState(() {
-                              if (mes > 1 && mes <= 12) {
-                                mes = --mes;
-                              } else if (ano > 2010 && ano < 2040) {
-                                mes = 12;
-                                ano = --ano;
-                              }
-                            });
+                            if (mes > 1 && mes <= 12) {
+                              mes = --mes;
+                            } else if (ano > 2010 && ano < 2040) {
+                              mes = 12;
+                              ano = --ano;
+                            }
+                            carregaListas();
                           },
                         ),
                         DropdownButton<String>(
@@ -435,12 +431,10 @@ class _ReportPageState extends State<ReportPage> {
                           }).toList(),
                           onChanged: (String? novoMes) {
                             if (novoMes != null) {
-                              setState(() {
-                                mes = UtilsDates.mesesDoAno.entries
-                                    .firstWhere(
-                                        (entry) => entry.value == novoMes)
-                                    .key;
-                              });
+                              mes = UtilsDates.mesesDoAno.entries
+                                  .firstWhere((entry) => entry.value == novoMes)
+                                  .key;
+                              carregaListas();
                             }
                           },
                         ),
@@ -462,22 +456,20 @@ class _ReportPageState extends State<ReportPage> {
                           }).toList(),
                           onChanged: (int? novoAno) {
                             if (novoAno != null) {
-                              setState(() {
-                                ano = novoAno;
-                              });
+                              ano = novoAno;
+                              carregaListas();
                             }
                           },
                         ),
                         IconButton(
                           onPressed: () {
-                            setState(() {
-                              if (mes > 0 && mes < 12) {
-                                mes = ++mes;
-                              } else if (ano > 2009 && ano < 2040) {
-                                mes = 1;
-                                ano = ++ano;
-                              }
-                            });
+                            if (mes > 0 && mes < 12) {
+                              mes = ++mes;
+                            } else if (ano > 2009 && ano < 2040) {
+                              mes = 1;
+                              ano = ++ano;
+                            }
+                            carregaListas();
                           },
                           icon: const Icon(Icons.arrow_forward_ios),
                         ),
