@@ -26,4 +26,22 @@ class Mediator {
     await db.delete('start');
     listaCorridaStart.clear();
   }
+
+  ordenaLista() {
+    listaDeCorridas.sort(
+      (a, b) {
+        DateTime primeiraData = DateTime.parse(a.dataHoraStart);
+        DateTime segundaData = DateTime.parse(b.dataHoraStart);
+        return segundaData.compareTo(primeiraData);
+      },
+    );
+
+    listaDeServicos.sort(
+      (a, b) {
+        DateTime primeiraData = DateTime.parse(a.data);
+        DateTime segundaData = DateTime.parse(b.data);
+        return segundaData.compareTo(primeiraData);
+      },
+    );
+  }
 }
