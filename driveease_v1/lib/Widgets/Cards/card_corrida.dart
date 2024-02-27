@@ -21,7 +21,7 @@ class CardCorrida extends StatelessWidget {
 
   _getPopupMenuItem() {
     return PopupMenuButton<MyItemCorrida>(
-      iconColor: Colors.white,
+      iconColor: Colors.black,
       onSelected: (MyItemCorrida value) {
         onMenuClick(value);
       },
@@ -74,15 +74,15 @@ class CardCorrida extends StatelessWidget {
                   children: [
                     Text(
                       'Data: $data',
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                     ),
                     Text(
                       'Percorrido: ${(corrida.stopKm! - corrida.startKm).toStringAsFixed(1)}Km',
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                     ),
                     Text(
                       'Recebido: ${corrida.ganhos!.toStringAsFixed(2)}',
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                     ),
                   ],
                 ),

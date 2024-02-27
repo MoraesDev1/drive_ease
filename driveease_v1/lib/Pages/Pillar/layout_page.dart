@@ -45,7 +45,7 @@ class _LayoutPageState extends State<LayoutPage> {
           onTap: (value) {
             pageController.animateToPage(
               value,
-              duration: const Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 800),
               curve: Curves.easeOut,
             );
             selectedIcon = value;

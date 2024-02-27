@@ -43,7 +43,7 @@ class CardServico extends StatelessWidget {
 
   _getPopupMenuItem() {
     return PopupMenuButton<MyItemServico>(
-      iconColor: Colors.white,
+      iconColor: Colors.black,
       onSelected: (MyItemServico value) {
         onMenuClick(value);
       },
@@ -101,7 +101,7 @@ class CardServico extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -111,9 +111,9 @@ class CardServico extends StatelessWidget {
                       children: [
                         const SizedBox(height: 8),
                         Text('Data: $data',
-                            style: const TextStyle(color: Colors.white)),
+                            style: const TextStyle(color: Colors.black)),
                         Text('Valor: R\$${servico.valor.toStringAsFixed(2)}',
-                            style: const TextStyle(color: Colors.white)),
+                            style: const TextStyle(color: Colors.black)),
                         const SizedBox(height: 8),
                       ],
                     )

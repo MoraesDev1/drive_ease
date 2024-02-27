@@ -11,7 +11,7 @@ class UtilsColors {
   static Color corAppBar = Colors.blueGrey.shade900;
   static Color corTabBar = Colors.blueGrey.shade700;
   static Color corBottomNavigationBar = Colors.blueGrey.shade900;
-  static Color corCardServicoECorrida = Colors.blueGrey.shade400;
+  static Color corCardServicoECorrida = Colors.white;
   static Color corFloatingActionButton = Colors.blueGrey.shade900;
   static Color corNaoSelecionado = Colors.white;
   static Color corFundoPadraoWidgets = Colors.white;

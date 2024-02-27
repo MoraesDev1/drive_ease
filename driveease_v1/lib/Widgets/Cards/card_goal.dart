@@ -24,7 +24,7 @@ class CardGoal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: UtilsColors.corFundoPadraoWidgets,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: corDoIndicadorDeProgresso,
