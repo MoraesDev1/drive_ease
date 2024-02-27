@@ -28,15 +28,23 @@ class BarChartSemana extends StatelessWidget {
   List<double> calculaLucroSemana() {
     List<double> totaisPorDia = [];
     Map<String, double> somasDiarias = {};
-    mapCorridaFiltrada.forEach((data, valor1) {
-      if (mapServicoFiltrada.containsKey(data)) {
-        double valor2 = mapServicoFiltrada[data]!;
-        double resultado = valor1 - valor2;
-        somasDiarias[data] = resultado;
-      } else {
-        somasDiarias[data] = valor1;
-      }
-    });
+    if (mapCorridaFiltrada.isEmpty) {
+      mapServicoFiltrada.forEach((key, value) {
+        double resultado = value * (-1);
+        somasDiarias[key] = resultado;
+      });
+    } else {
+      mapCorridaFiltrada.forEach((data, valor1) {
+        if (mapServicoFiltrada.containsKey(data)) {
+          double valor2 = mapServicoFiltrada[data]!;
+          double resultado = valor1 - valor2;
+          somasDiarias[data] = resultado;
+        } else {
+          somasDiarias[data] = valor1;
+        }
+      });
+    }
+    print('somasDiarias; $somasDiarias');
     int key = 0;
     somasDiarias.forEach((dia, soma) {
       mapDiasDaSemanaLucro[key] = dia;
@@ -95,6 +103,7 @@ class BarChartSemana extends StatelessWidget {
       key++;
       totaisPorDia.add(soma);
     });
+    print('HEY: $mapServicoFiltrada');
     despesa = totaisPorDia.fold(despesa, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
@@ -104,8 +113,8 @@ class BarChartSemana extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _ganhosSemana = calculaGanhosSemana();
-    var _lucroSemana = calculaLucroSemana();
     var _despesasSemana = calculaDespesasSemana();
+    var _lucroSemana = calculaLucroSemana();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

@@ -116,7 +116,7 @@ class _ReportPageState extends State<ReportPage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
-      length: 3,
+      length: 2,
       child: Scaffold(
         backgroundColor: UtilsColors.corFundoTela,
         appBar: AppBar(
@@ -133,9 +133,6 @@ class _ReportPageState extends State<ReportPage> {
                 unselectedLabelColor: UtilsColors.corNaoSelecionado,
                 tabs: const <Widget>[
                   Tab(
-                    child: Text('Diario'),
-                  ),
-                  Tab(
                     child: Text('Semanal'),
                   ),
                   Tab(
@@ -148,128 +145,6 @@ class _ReportPageState extends State<ReportPage> {
         ),
         body: TabBarView(
           children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Container(
-                    color: UtilsColors.corFundoPadraoWidgets,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back_ios),
-                          onPressed: () {
-                            if (dia > 1 && dia <= 31) {
-                              dia = --dia;
-                            } else if (mes > 1 && mes <= 12) {
-                              dia = 31;
-                              mes = --mes;
-                            } else if (ano > 2010 && ano < 2040) {
-                              mes = 12;
-                              ano = --ano;
-                            }
-                            carregaListas();
-                          },
-                        ),
-                        DropdownButton<int>(
-                          underline: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          icon: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          value: dia,
-                          items: UtilsDates.diasDoMes.map((dia) {
-                            return DropdownMenuItem<int>(
-                              value: dia,
-                              child: Text(dia.toString()),
-                            );
-                          }).toList(),
-                          onChanged: (int? novoDia) {
-                            if (novoDia != null) {
-                              dia = novoDia;
-                              carregaListas();
-                            }
-                          },
-                        ),
-                        DropdownButton<String>(
-                          underline: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          icon: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          value: UtilsDates.mesesDoAno[mes],
-                          items: UtilsDates.mesesDoAno.entries.map((entry) {
-                            return DropdownMenuItem<String>(
-                              value: entry.value,
-                              child: Text(entry.value),
-                            );
-                          }).toList(),
-                          onChanged: (String? novoMes) {
-                            if (novoMes != null) {
-                              setState(() {
-                                mes = UtilsDates.mesesDoAno.entries
-                                    .firstWhere(
-                                        (entry) => entry.value == novoMes)
-                                    .key;
-                              });
-                            }
-                          },
-                        ),
-                        DropdownButton<int>(
-                          underline: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          icon: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          value: ano,
-                          items: UtilsDates.listaDeAnos.map((ano) {
-                            return DropdownMenuItem<int>(
-                              value: ano,
-                              child: Text(ano.toString()),
-                            );
-                          }).toList(),
-                          onChanged: (int? novoAno) {
-                            if (novoAno != null) {
-                              ano = novoAno;
-                              carregaListas();
-                            }
-                          },
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            if (dia > 0 && dia < 31) {
-                              dia = ++dia;
-                            } else if (mes > 0 && mes < 12) {
-                              dia = 1;
-                              mes = ++mes;
-                            } else if (ano > 2009 && ano < 2040) {
-                              mes = 1;
-                              ano = ++ano;
-                            }
-                            carregaListas();
-                          },
-                          icon: const Icon(Icons.arrow_forward_ios),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                BarChartSemana(
-                  listCorridaSemana: listCorridaSemana,
-                  listServicoSemana: listServicoSemana,
-                ),
-              ],
-            ),
             Column(
               children: [
                 Padding(
