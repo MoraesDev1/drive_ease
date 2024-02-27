@@ -5,7 +5,7 @@ import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Utils/date_utils.dart';
-import 'package:driveease_v1/Widgets/Graphics/report_graphic_mes_widget.dart';
+// import 'package:driveease_v1/Widgets/Graphics/report_graphic_mes_widget.dart';
 import 'package:driveease_v1/Widgets/Graphics/report_graphic_semana_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +17,6 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  List<Corrida> listCorridaDia = [];
-  List<Servico> listServicoDia = [];
   List<Corrida> listCorridaSemana = [];
   List<Servico> listServicoSemana = [];
   List<Corrida> listCorridaMes = [];
@@ -97,20 +95,6 @@ class _ReportPageState extends State<ReportPage> {
     }).toList();
   }
 
-  List<Corrida> filtrarCorridaDia(DateTime selectedDate) {
-    return mediator.listaDeCorridas.where((corrida) {
-      DateTime itemDate = DateTime.parse(corrida.dataHoraStart);
-      return itemDate.day == selectedDate.day;
-    }).toList();
-  }
-
-  List<Servico> filtrarServicoDia(DateTime selectedDate) {
-    return mediator.listaDeServicos.where((servico) {
-      DateTime itemDate = DateTime.parse(servico.data);
-      return itemDate.day == selectedDate.day;
-    }).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -144,218 +128,230 @@ class _ReportPageState extends State<ReportPage> {
         ),
         body: TabBarView(
           children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Container(
-                    color: UtilsColors.corFundoPadraoWidgets,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back_ios),
-                          onPressed: () {
-                            if (dia > 1 && dia <= 31) {
-                              dia = --dia;
-                            } else if (mes > 1 && mes <= 12) {
-                              dia = 31;
-                              mes = --mes;
-                            } else if (ano > 2010 && ano < 2040) {
-                              mes = 12;
-                              ano = --ano;
-                            }
-                            carregaListas();
-                          },
-                        ),
-                        DropdownButton<int>(
-                          underline: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          icon: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          value: dia,
-                          items: UtilsDates.diasDoMes.map((dia) {
-                            return DropdownMenuItem<int>(
-                              value: dia,
-                              child: Text(dia.toString()),
-                            );
-                          }).toList(),
-                          onChanged: (int? novoDia) {
-                            if (novoDia != null) {
-                              dia = novoDia;
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      left: 8,
+                      right: 8,
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: UtilsColors.corFundoPadraoWidgets,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back_ios),
+                            onPressed: () {
+                              if (dia > 1 && dia <= 31) {
+                                dia = --dia;
+                              } else if (mes > 1 && mes <= 12) {
+                                dia = 31;
+                                mes = --mes;
+                              } else if (ano > 2010 && ano < 2040) {
+                                mes = 12;
+                                ano = --ano;
+                              }
                               carregaListas();
-                            }
-                          },
-                        ),
-                        DropdownButton<String>(
-                          underline: const SizedBox(
-                            height: 0,
-                            width: 0,
+                            },
                           ),
-                          icon: const SizedBox(
-                            height: 0,
-                            width: 0,
+                          DropdownButton<int>(
+                            underline: const SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                            icon: const SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                            value: dia,
+                            items: UtilsDates.diasDoMes.map((dia) {
+                              return DropdownMenuItem<int>(
+                                value: dia,
+                                child: Text(dia.toString()),
+                              );
+                            }).toList(),
+                            onChanged: (int? novoDia) {
+                              if (novoDia != null) {
+                                dia = novoDia;
+                                carregaListas();
+                              }
+                            },
                           ),
-                          value: UtilsDates.mesesDoAno[mes],
-                          items: UtilsDates.mesesDoAno.entries.map((entry) {
-                            return DropdownMenuItem<String>(
-                              value: entry.value,
-                              child: Text(entry.value),
-                            );
-                          }).toList(),
-                          onChanged: (String? novoMes) {
-                            if (novoMes != null) {
-                              setState(() {
+                          DropdownButton<String>(
+                            underline: const SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                            icon: const SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                            value: UtilsDates.mesesDoAno[mes],
+                            items: UtilsDates.mesesDoAno.entries.map((entry) {
+                              return DropdownMenuItem<String>(
+                                value: entry.value,
+                                child: Text(entry.value),
+                              );
+                            }).toList(),
+                            onChanged: (String? novoMes) {
+                              if (novoMes != null) {
+                                setState(() {
+                                  mes = UtilsDates.mesesDoAno.entries
+                                      .firstWhere(
+                                          (entry) => entry.value == novoMes)
+                                      .key;
+                                });
+                              }
+                            },
+                          ),
+                          DropdownButton<int>(
+                            underline: const SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                            icon: const SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                            value: ano,
+                            items: UtilsDates.listaDeAnos.map((ano) {
+                              return DropdownMenuItem<int>(
+                                value: ano,
+                                child: Text(ano.toString()),
+                              );
+                            }).toList(),
+                            onChanged: (int? novoAno) {
+                              if (novoAno != null) {
+                                ano = novoAno;
+                                carregaListas();
+                              }
+                            },
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              if (dia > 0 && dia < 31) {
+                                dia = ++dia;
+                              } else if (mes > 0 && mes < 12) {
+                                dia = 1;
+                                mes = ++mes;
+                              } else if (ano > 2009 && ano < 2040) {
+                                mes = 1;
+                                ano = ++ano;
+                              }
+                              carregaListas();
+                            },
+                            icon: const Icon(Icons.arrow_forward_ios),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  BarChartSemana(
+                    listCorridaSemana: listCorridaSemana,
+                    listServicoSemana: listServicoSemana,
+                  )
+                ],
+              ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Container(
+                      color: UtilsColors.corFundoPadraoWidgets,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back_ios),
+                            onPressed: () {
+                              if (mes > 1 && mes <= 12) {
+                                mes = --mes;
+                              } else if (ano > 2010 && ano < 2040) {
+                                mes = 12;
+                                ano = --ano;
+                              }
+                              carregaListas();
+                            },
+                          ),
+                          DropdownButton<String>(
+                            underline: const SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                            icon: const SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                            value: UtilsDates.mesesDoAno[mes],
+                            items: UtilsDates.mesesDoAno.entries.map((entry) {
+                              return DropdownMenuItem<String>(
+                                value: entry.value,
+                                child: Text(entry.value),
+                              );
+                            }).toList(),
+                            onChanged: (String? novoMes) {
+                              if (novoMes != null) {
                                 mes = UtilsDates.mesesDoAno.entries
                                     .firstWhere(
                                         (entry) => entry.value == novoMes)
                                     .key;
-                              });
-                            }
-                          },
-                        ),
-                        DropdownButton<int>(
-                          underline: const SizedBox(
-                            height: 0,
-                            width: 0,
+                                carregaListas();
+                              }
+                            },
                           ),
-                          icon: const SizedBox(
-                            height: 0,
-                            width: 0,
+                          DropdownButton<int>(
+                            underline: const SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                            icon: const SizedBox(
+                              height: 0,
+                              width: 0,
+                            ),
+                            value: ano,
+                            items: UtilsDates.listaDeAnos.map((ano) {
+                              return DropdownMenuItem<int>(
+                                value: ano,
+                                child: Text(ano.toString()),
+                              );
+                            }).toList(),
+                            onChanged: (int? novoAno) {
+                              if (novoAno != null) {
+                                ano = novoAno;
+                                carregaListas();
+                              }
+                            },
                           ),
-                          value: ano,
-                          items: UtilsDates.listaDeAnos.map((ano) {
-                            return DropdownMenuItem<int>(
-                              value: ano,
-                              child: Text(ano.toString()),
-                            );
-                          }).toList(),
-                          onChanged: (int? novoAno) {
-                            if (novoAno != null) {
-                              ano = novoAno;
+                          IconButton(
+                            onPressed: () {
+                              if (mes > 0 && mes < 12) {
+                                mes = ++mes;
+                              } else if (ano > 2009 && ano < 2040) {
+                                mes = 1;
+                                ano = ++ano;
+                              }
                               carregaListas();
-                            }
-                          },
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            if (dia > 0 && dia < 31) {
-                              dia = ++dia;
-                            } else if (mes > 0 && mes < 12) {
-                              dia = 1;
-                              mes = ++mes;
-                            } else if (ano > 2009 && ano < 2040) {
-                              mes = 1;
-                              ano = ++ano;
-                            }
-                            carregaListas();
-                          },
-                          icon: const Icon(Icons.arrow_forward_ios),
-                        ),
-                      ],
+                            },
+                            icon: const Icon(Icons.arrow_forward_ios),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                BarChartSemana(
-                  listCorridaSemana: listCorridaSemana,
-                  listServicoSemana: listServicoSemana,
-                )
-              ],
-            ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Container(
-                    color: UtilsColors.corFundoPadraoWidgets,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back_ios),
-                          onPressed: () {
-                            if (mes > 1 && mes <= 12) {
-                              mes = --mes;
-                            } else if (ano > 2010 && ano < 2040) {
-                              mes = 12;
-                              ano = --ano;
-                            }
-                            carregaListas();
-                          },
-                        ),
-                        DropdownButton<String>(
-                          underline: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          icon: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          value: UtilsDates.mesesDoAno[mes],
-                          items: UtilsDates.mesesDoAno.entries.map((entry) {
-                            return DropdownMenuItem<String>(
-                              value: entry.value,
-                              child: Text(entry.value),
-                            );
-                          }).toList(),
-                          onChanged: (String? novoMes) {
-                            if (novoMes != null) {
-                              mes = UtilsDates.mesesDoAno.entries
-                                  .firstWhere((entry) => entry.value == novoMes)
-                                  .key;
-                              carregaListas();
-                            }
-                          },
-                        ),
-                        DropdownButton<int>(
-                          underline: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          icon: const SizedBox(
-                            height: 0,
-                            width: 0,
-                          ),
-                          value: ano,
-                          items: UtilsDates.listaDeAnos.map((ano) {
-                            return DropdownMenuItem<int>(
-                              value: ano,
-                              child: Text(ano.toString()),
-                            );
-                          }).toList(),
-                          onChanged: (int? novoAno) {
-                            if (novoAno != null) {
-                              ano = novoAno;
-                              carregaListas();
-                            }
-                          },
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            if (mes > 0 && mes < 12) {
-                              mes = ++mes;
-                            } else if (ano > 2009 && ano < 2040) {
-                              mes = 1;
-                              ano = ++ano;
-                            }
-                            carregaListas();
-                          },
-                          icon: const Icon(Icons.arrow_forward_ios),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                // BarChartMes(
-                //   listCorridaMes: listCorridaMes,
-                //   listServicoMes: listServicoMes,
-                // )
-              ],
+                  // BarChartMes(
+                  //   listCorridaMes: listCorridaMes,
+                  //   listServicoMes: listServicoMes,
+                  // )
+                ],
+              ),
             ),
           ],
         ),

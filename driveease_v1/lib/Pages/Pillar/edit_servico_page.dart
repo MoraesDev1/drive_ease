@@ -14,10 +14,9 @@ class EditServicoPage extends StatefulWidget {
 
 const List<String> tipoDeServico = <String>[
   'Troca de Óleo',
-  'Manutenção',
   'Abastecimento',
   'Troca de Pneus',
-  'Manutenção de Rotina',
+  'Revisão',
   'Lavagem/Limpeza',
 ];
 

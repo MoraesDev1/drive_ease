@@ -171,19 +171,16 @@ INSERT INTO servico (tipo, data, km, descricao, valor) VALUES
     ('Revisão', '2024-02-05', 2100.5, 'Revisão completa do veículo', 150.0),
     ('Troca de Pneus', '2024-02-10', 2550.1, 'Troca de todos os pneus', 300.0),
     ('Lavagem/Limpeza', '2024-02-15', 2900.5, 'Lavagem completa', 50.0),
-<<<<<<< HEAD
-    ('Manutenção de Rotina', '2024-02-18', 8000.5, 'Revisão completa do veículo', 150.0),
+    ('Revisão', '2024-02-18', 8000.5, 'Revisão completa do veículo', 150.0),
     ('Troca de Pneus', '2024-02-19', 8450.1, 'Troca de todos os pneus', 300.0),
     ('Lavagem/Limpeza', '2024-02-20', 8800.5, 'Lavagem completa', 50.0),
-    ('Manutenção de Rotina', '2024-02-20', 3300.1, 'Reparo no sistema de direção', 120.0),
-    ('Manutenção de Rotina', '2024-02-21', 9200.1, 'Reparo no sistema de direção', 120.0),
+    ('Revisão', '2024-02-20', 3300.1, 'Reparo no sistema de direção', 120.0),
+    ('Revisão', '2024-02-21', 9200.1, 'Reparo no sistema de direção', 120.0),
     ('Troca de Óleo', '2024-02-22', 9500.2, 'Troca de óleo e filtro', 80.0),
-    ('Manutenção de Rotina', '2024-02-22', 9800.5, 'Revisão completa do veículo', 150.0),
+    ('Revisão', '2024-02-22', 9800.5, 'Revisão completa do veículo', 150.0),
     ('Troca de Pneus', '2024-02-23', 10250.1, 'Troca de todos os pneus', 300.0),
     ('Lavagem/Limpeza', '2024-02-23', 10600.0, 'Lavagem completa', 50.0),
-=======
     ('Revisão', '2024-02-20', 3300.1, 'Reparo no sistema de direção', 120.0),
->>>>>>> df92c758d8b5d29f42b1080fd34daf9a4ad1436b
     ('Troca de Óleo', '2024-02-24', 3700.2, 'Troca de óleo e filtro', 80.0),
     ('Revisão', '2024-02-24', 4100.5, 'Revisão completa do veículo', 150.0),
     ('Troca de Pneus', '2024-02-24', 4550.1, 'Troca de todos os pneus', 300.0),
@@ -193,17 +190,15 @@ INSERT INTO servico (tipo, data, km, descricao, valor) VALUES
     ('Revisão', '2024-02-24', 6200.5, 'Revisão completa do veículo', 150.0),
     ('Troca de Pneus', '2024-02-24', 6650.1, 'Troca de todos os pneus', 300.0),
     ('Lavagem/Limpeza', '2024-02-24', 7000.0, 'Lavagem completa', 50.0),
-<<<<<<< HEAD
     ('Troca de Óleo', '2024-02-26', 3700.2, 'Troca de óleo e filtro', 80.0),
     ('Lavagem/Limpeza', '2024-02-26', 5000.0, 'Lavagem completa', 50.0),
-    ('Manutenção de Rotina', '2024-02-27', 5400.5, 'Reparo no sistema de transmissão', 120.0),
+    ('Revisão', '2024-02-27', 5400.5, 'Reparo no sistema de transmissão', 120.0),
     ('Lavagem/Limpeza', '2024-02-28', 7000.0, 'Lavagem completa', 50.0),
-    ('Manutenção de Rotina', '2024-02-29', 7400.5, 'Reparo no sistema de suspensão', 120.0),
-    ('Manutenção de Rotina', '2024-02-29', 7800.0, 'Revisão completa do veículo', 150.0),
-    ('Abastecimento', '2024-03-01', 5000.0, 'Abastecimento1', 50.0),
-    ('Abastecimento', '2024-03-02', 5000.0, 'Abastecimento2', 50.0),
-    ('Abastecimento', '2024-03-03', 5000.0, 'Abastecimento3', 50.0);
-=======
+    ('Revisão', '2024-02-29', 7400.5, 'Reparo no sistema de suspensão', 120.0),
+    ('Revisão', '2024-02-29', 7800.0, 'Revisão completa do veículo', 150.0),
+    ('Abastecimento', '2024-03-01', 5000.0, 'Abastecimento 1', 50.0),
+    ('Abastecimento', '2024-03-02', 5000.0, 'Abastecimento 2', 50.0),
+    ('Abastecimento', '2024-03-03', 5000.0, 'Abastecimento 3', 50.0),
     ('Revisão', '2024-02-24', 7400.5, 'Reparo no sistema de suspensão', 120.0),
     ('Revisão', '2024-02-24', 7800.0, 'Revisão completa do veículo', 150.0),
     ('Revisão', '2024-02-18', 8000.5, 'Revisão completa do veículo', 150.0),
@@ -216,7 +211,6 @@ INSERT INTO servico (tipo, data, km, descricao, valor) VALUES
     ('Lavagem/Limpeza', '2024-02-23', 10600.0, 'Lavagem completa', 50.0),
     ('Revisão', '2024-02-25', 11000.5, 'Reparo no sistema de transmissão', 120.0),
     ('Troca de Óleo', '2024-02-26', 11400.2, 'Troca de óleo e filtro', 80.0);
->>>>>>> df92c758d8b5d29f42b1080fd34daf9a4ad1436b
 ''',
     ],
   };

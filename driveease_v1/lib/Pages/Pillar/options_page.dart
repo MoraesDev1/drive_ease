@@ -29,7 +29,7 @@ class OptionsPage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(
               top: paddingDaTela, left: paddingDaTela, right: paddingDaTela),
-          child: Column(
+          child: const Column(
             children: [
               CardAccount(),
               Padding(

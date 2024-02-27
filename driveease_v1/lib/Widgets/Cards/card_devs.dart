@@ -15,14 +15,14 @@ class CardDevs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Card(
         elevation: 15,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              Container(
+              SizedBox(
                 height: 50,
                 width: 50,
                 child: Image.asset(
@@ -33,7 +33,8 @@ class CardDevs extends StatelessWidget {
                 children: [
                   Text(
                     name,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -42,7 +43,7 @@ class CardDevs extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                 ],
               ),
             ],

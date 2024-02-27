@@ -42,12 +42,10 @@ class BarChartMes extends StatelessWidget {
       totaisPorDia.add(soma);
       key++;
     });
-    print('Resultado: $somasDiarias');
 
     _lucro = totaisPorDia.fold(_lucro, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
-    print('lucro $_lucro');
     return totaisPorDia;
   }
 
@@ -70,11 +68,9 @@ class BarChartMes extends StatelessWidget {
       key++;
       totaisPorDia.add(soma);
     });
-    print('MAPA $mapCorridaFiltrada');
     _recebimento = totaisPorDia.fold(_recebimento, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
-    print('HEY $_recebimento');
     return totaisPorDia;
   }
 
@@ -100,7 +96,6 @@ class BarChartMes extends StatelessWidget {
     _despesa = totaisPorDia.fold(_despesa, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
-    print('despesas $_despesa');
 
     calculaLucroMes();
     return totaisPorDia;
@@ -108,7 +103,6 @@ class BarChartMes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('oi');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -294,7 +288,6 @@ Widget diasDaSemanaLucro(double value, TitleMeta meta) {
     fontWeight: FontWeight.bold,
     fontSize: 10,
   );
-  print('Teste : ${BarChartMes.mapSemanasCorrida}');
   Map<int, String> mapFodac = BarChartMes.mapSemanasLucro;
   Widget text;
   switch (value.toInt()) {
