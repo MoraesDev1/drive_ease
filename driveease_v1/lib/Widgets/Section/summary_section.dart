@@ -1,9 +1,36 @@
+import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
+import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
+import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_summary.dart';
 import 'package:flutter/material.dart';
 
-class SummarySection extends StatelessWidget {
+class SummarySection extends StatefulWidget {
   const SummarySection({super.key});
+
+  @override
+  State<SummarySection> createState() => _SummarySectionState();
+}
+
+class _SummarySectionState extends State<SummarySection> {
+  final Mediator mediator = Mediator();
+  final CorridaDaoDb _corridaDaoDb = CorridaDaoDb();
+  final ServicoDaoDb _servicoDaoDb = ServicoDaoDb();
+
+  @override
+  initState() {
+    super.initState();
+    carregaListas().then((e) {
+      mediator.calculaCustoHoje();
+      mediator.calculaRecebimentosHoje();
+    });
+  }
+
+  carregaListas() async {
+    mediator.listaDeCorridas = await _corridaDaoDb.listar();
+    mediator.listaDeServicos = await _servicoDaoDb.listar();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,36 +55,36 @@ class SummarySection extends StatelessWidget {
         const SizedBox(
           height: 8,
         ),
-        const SingleChildScrollView(
+        SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
               CardSummary(
                 titulo: 'Hoje',
-                despesas:
-                    20, //valores devem ser variaveis de acordo com o banco
-                recebimentos:
-                    110.50, //valores devem ser variaveis de acordo com o banco
+                despesas: mediator
+                    .calculaCustoHoje(), //valores devem ser variaveis de acordo com o banco
+                recebimentos: mediator
+                    .calculaRecebimentosHoje(), //valores devem ser variaveis de acordo com o banco
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               CardSummary(
                 titulo: 'Esta Semana',
-                despesas:
-                    110.25, //valores devem ser variaveis de acordo com o banco
-                recebimentos:
-                    546.05, //valores devem ser variaveis de acordo com o banco
+                despesas: mediator
+                    .calculaCustoDestaSemana(), //valores devem ser variaveis de acordo com o banco
+                recebimentos: mediator
+                    .calculaRecebimentosDestaSemana(), //valores devem ser variaveis de acordo com o banco
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               CardSummary(
                 titulo: 'Este Mês',
-                despesas:
-                    635.15, //valores devem ser variaveis de acordo com o banco
-                recebimentos:
-                    3514.40, //valores devem ser variaveis de acordo com o banco
+                despesas: mediator
+                    .calculaCustoDesteMes(), //valores devem ser variaveis de acordo com o banco
+                recebimentos: mediator
+                    .calculaRecebimentosDesteMes(), //valores devem ser variaveis de acordo com o banco
               ),
             ],
           ),

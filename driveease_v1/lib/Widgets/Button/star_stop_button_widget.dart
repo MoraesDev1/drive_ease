@@ -5,8 +5,8 @@ import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 class StartStopButton extends StatefulWidget {
-  const StartStopButton({super.key});
-
+  const StartStopButton({super.key, required this.atualizaHome});
+  final Function atualizaHome;
   @override
   State<StartStopButton> createState() => _StartStopButtonState();
 }
@@ -297,23 +297,29 @@ class _StartStopButtonState extends State<StartStopButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor:
-              start ? UtilsColors.corDestaqueOn : Colors.red.shade500,
-          fixedSize: Size(sizeButton, sizeButton),
-          shape: const CircleBorder(),
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor:
+                  start ? UtilsColors.corDestaqueOn : Colors.red.shade500,
+              fixedSize: Size(sizeButton, sizeButton),
+              shape: const CircleBorder(),
+            ),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => start ? _getInfoStart() : _getInfoStop(),
+              ).then((value) {
+                widget.atualizaHome();
+              });
+            },
+            child: Text(start ? 'Start' : 'Stop'),
+          ),
         ),
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) => start ? _getInfoStart() : _getInfoStop(),
-          );
-        },
-        child: Text(start ? 'Start' : 'Stop'),
-      ),
+      ],
     );
   }
 }

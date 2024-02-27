@@ -5,7 +5,9 @@ import 'package:driveease_v1/Widgets/Button/star_stop_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class MenuNovaAcao extends StatefulWidget {
-  const MenuNovaAcao({super.key});
+  const MenuNovaAcao({super.key, required this.atualizaHome});
+
+  final Function atualizaHome;
 
   @override
   State<MenuNovaAcao> createState() => _MenuNovaAcaoState();
@@ -41,7 +43,8 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => const NewServicoButton(),
+                    builder: (context) =>
+                        NewServicoButton(atualizaHome: widget.atualizaHome),
                   );
                   setState(() {
                     open = !open;
@@ -105,10 +108,10 @@ class _MenuNovaAcaoState extends State<MenuNovaAcao> {
             child: Text(!open ? '+' : 'x'),
           ),
         ),
-        const Positioned(
+        Positioned(
           bottom: -5,
           right: 125,
-          child: StartStopButton(),
+          child: StartStopButton(atualizaHome: widget.atualizaHome),
         ),
       ],
     );

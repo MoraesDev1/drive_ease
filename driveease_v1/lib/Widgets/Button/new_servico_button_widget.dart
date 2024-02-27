@@ -5,8 +5,8 @@ import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
 class NewServicoButton extends StatefulWidget {
-  const NewServicoButton({super.key});
-
+  const NewServicoButton({super.key, required this.atualizaHome});
+  final Function atualizaHome;
   @override
   State<NewServicoButton> createState() => _NewServicoButtonState();
 }
@@ -75,6 +75,7 @@ class _NewServicoButtonState extends State<NewServicoButton> {
         _controllerTipoDeServico.clear();
       });
       Navigator.of(context).pop();
+      widget.atualizaHome();
     }
   }
 
