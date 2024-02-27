@@ -81,7 +81,6 @@ class _ReportPageState extends State<ReportPage> {
       return itemDate.isAfter(firstDayOfWeek) &&
           itemDate.isBefore(lastDayOfWeek);
     }).toList();
-    print(res);
     return res;
   }
 

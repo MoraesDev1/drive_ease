@@ -28,6 +28,7 @@ class BarChartSemana extends StatelessWidget {
   List<double> calculaLucroSemana() {
     List<double> totaisPorDia = [];
     Map<String, double> somasDiarias = {};
+
     mapCorridaFiltrada.forEach((data, valor1) {
       if (mapServicoFiltrada.containsKey(data)) {
         double valor2 = mapServicoFiltrada[data]!;
@@ -95,6 +96,7 @@ class BarChartSemana extends StatelessWidget {
       key++;
       totaisPorDia.add(soma);
     });
+
     despesa = totaisPorDia.fold(despesa, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
@@ -104,8 +106,10 @@ class BarChartSemana extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _ganhosSemana = calculaGanhosSemana();
-    var _lucroSemana = calculaLucroSemana();
     var _despesasSemana = calculaDespesasSemana();
+    var _lucroSemana = calculaLucroSemana();
+    print(
+        'mapServicoFiltrada: $mapServicoFiltrada -- lucro : ${calculaLucroSemana()}');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
