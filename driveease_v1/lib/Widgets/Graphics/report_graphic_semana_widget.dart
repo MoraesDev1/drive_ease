@@ -38,6 +38,23 @@ class BarChartSemana extends StatelessWidget {
         somasDiarias[data] = valor1;
       }
     });
+
+    if (mapCorridaFiltrada.isEmpty) {
+      mapServicoFiltrada.forEach((key, value) {
+        double resultado = value * (-1);
+        somasDiarias[key] = resultado;
+      });
+    } else {
+      mapCorridaFiltrada.forEach((data, valor1) {
+        if (mapServicoFiltrada.containsKey(data)) {
+          double valor2 = mapServicoFiltrada[data]!;
+          double resultado = valor1 - valor2;
+          somasDiarias[data] = resultado;
+        } else {
+          somasDiarias[data] = valor1;
+        }
+      });
+    }
     int key = 0;
     somasDiarias.forEach((dia, soma) {
       mapDiasDaSemanaLucro[key] = dia;
@@ -108,8 +125,6 @@ class BarChartSemana extends StatelessWidget {
     var _ganhosSemana = calculaGanhosSemana();
     var _despesasSemana = calculaDespesasSemana();
     var _lucroSemana = calculaLucroSemana();
-    print(
-        'mapServicoFiltrada: $mapServicoFiltrada -- lucro : ${calculaLucroSemana()}');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

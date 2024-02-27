@@ -15,7 +15,7 @@ const List<String> tipoDeServico = <String>[
   'Troca de Óleo',
   'Abastecimento',
   'Troca de Pneus',
-  'Manutenção de Rotina',
+  'Revisão',
   'Lavagem/Limpeza',
 ];
 

@@ -32,7 +32,7 @@ class CardServico extends StatelessWidget {
       case 'Troca de Pneus':
         iconPath = 'Assets/tires-change.png';
         break;
-      case 'Manutenção de Rotina':
+      case 'Revisão':
         iconPath = 'Assets/car-repair.png';
         break;
       case 'Lavagem/Limpeza':

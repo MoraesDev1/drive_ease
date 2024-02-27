@@ -27,7 +27,9 @@ class _HistoricPageState extends State<HistoricPage> {
     mediator.listaDeCorridas = await _corridaDaoDb.listar();
     mediator.listaDeServicos = await _servicoDaoDb.listar();
     qtdServicoLista = mediator.listaDeServicos.length;
-    setState(() {});
+    setState(() {
+      mediator.ordenaLista();
+    });
   }
 
   @override
@@ -203,9 +205,7 @@ class _HistoricPageState extends State<HistoricPage> {
                 color: UtilsColors.corTabBar,
                 child: TabBar(
                   onTap: (value) {
-                    setState(() {
-                      _carregaListas();
-                    });
+                    _carregaListas();
                   },
                   indicatorColor: UtilsColors.corDestaqueOn,
                   labelColor: UtilsColors.corDestaqueOn,
