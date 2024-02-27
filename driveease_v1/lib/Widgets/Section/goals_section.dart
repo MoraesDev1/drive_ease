@@ -1,9 +1,36 @@
+import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
+import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
+import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_goal.dart';
 import 'package:flutter/material.dart';
 
-class GoalsSection extends StatelessWidget {
+class GoalsSection extends StatefulWidget {
   const GoalsSection({super.key});
+
+  @override
+  State<GoalsSection> createState() => _GoalsSectionState();
+}
+
+class _GoalsSectionState extends State<GoalsSection> {
+  final Mediator mediator = Mediator();
+  final CorridaDaoDb _corridaDaoDb = CorridaDaoDb();
+  final ServicoDaoDb _servicoDaoDb = ServicoDaoDb();
+
+  @override
+  initState() {
+    super.initState();
+    carregaListas().then((e) {
+      mediator.calculaCustoHoje();
+      mediator.calculaRecebimentosHoje();
+    });
+  }
+
+  carregaListas() async {
+    mediator.listaDeCorridas = await _corridaDaoDb.listar();
+    mediator.listaDeServicos = await _servicoDaoDb.listar();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +59,8 @@ class GoalsSection extends StatelessWidget {
           children: [
             CardGoal(
               titulo: 'Hoje',
-              saldo: 90.50, //valores devem ser variaveis de acordo com o banco
+              saldo: mediator.calculaRecebimentosHoje() -
+                  mediator.calculaCustoHoje(),
               meta: 200, //valores devem ser variaveis de acordo com o banco
               corDoIndicadorDeProgresso: Colors.blue,
             ),
@@ -41,7 +69,9 @@ class GoalsSection extends StatelessWidget {
             ),
             CardGoal(
               titulo: 'Esta Semana',
-              saldo: 435.80, //valores devem ser variaveis de acordo com o banco
+              saldo: mediator.calculaRecebimentosDestaSemana() -
+                  mediator
+                      .calculaCustoDestaSemana(), //valores devem ser variaveis de acordo com o banco
               meta: 1000, //valores devem ser variaveis de acordo com o banco
               corDoIndicadorDeProgresso: Colors.purple,
             ),
@@ -50,8 +80,9 @@ class GoalsSection extends StatelessWidget {
             ),
             CardGoal(
               titulo: 'Este Mês',
-              saldo:
-                  2879.25, //valores devem ser variaveis de acordo com o banco
+              saldo: mediator.calculaRecebimentosDesteMes() -
+                  mediator
+                      .calculaCustoDesteMes(), //valores devem ser variaveis de acordo com o banco
               meta: 5000, //valores devem ser variaveis de acordo com o banco
               corDoIndicadorDeProgresso: Colors.teal,
             ),
