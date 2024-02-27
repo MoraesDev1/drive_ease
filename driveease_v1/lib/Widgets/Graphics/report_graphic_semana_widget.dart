@@ -126,11 +126,12 @@ class BarChartSemana extends StatelessWidget {
     var ganhosSemana = calculaGanhosSemana();
     var despesasSemana = calculaDespesasSemana();
     var lucroSemana = calculaLucroSemana();
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             decoration: BoxDecoration(
@@ -149,7 +150,7 @@ class BarChartSemana extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 8,
                 ),
                 SizedBox(
                   height: 120,
@@ -179,20 +180,25 @@ class BarChartSemana extends StatelessWidget {
                       barGroups: lucroSemana
                           .asMap()
                           .entries
-                          .map((entry) => BarChartGroupData(
-                                x: entry.key,
-                                barRods: [
-                                  BarChartRodData(
-                                      width: 45,
-                                      toY: entry.value,
-                                      color: entry.value < 0
-                                          ? Colors.orange[300]
-                                          : Colors.green[400],
-                                      borderRadius: const BorderRadius.only(
-                                          topRight: Radius.circular(2),
-                                          topLeft: Radius.circular(2))),
-                                ],
-                              ))
+                          .map(
+                            (entry) => BarChartGroupData(
+                              x: entry.key,
+                              barRods: [
+                                BarChartRodData(
+                                  width:
+                                      MediaQuery.sizeOf(context).width * 0.12,
+                                  toY: entry.value,
+                                  color: entry.value < 0
+                                      ? Colors.orange[300]
+                                      : Colors.green[400],
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(2),
+                                    topLeft: Radius.circular(2),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
                           .toList(),
                     ),
                   ),
@@ -209,7 +215,7 @@ class BarChartSemana extends StatelessWidget {
               border: Border.all(color: Colors.blue),
               borderRadius: BorderRadius.circular(15),
             ),
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(8),
             child: Column(
               children: [
                 const Text(
@@ -252,12 +258,15 @@ class BarChartSemana extends StatelessWidget {
                                 x: entry.key,
                                 barRods: [
                                   BarChartRodData(
-                                      width: 45,
-                                      toY: entry.value,
-                                      color: Colors.blue[600],
-                                      borderRadius: const BorderRadius.only(
-                                          topRight: Radius.circular(2),
-                                          topLeft: Radius.circular(2))),
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.12,
+                                    toY: entry.value,
+                                    color: Colors.blue[600],
+                                    borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(2),
+                                      topLeft: Radius.circular(2),
+                                    ),
+                                  ),
                                 ],
                               ))
                           .toList(),
@@ -276,7 +285,7 @@ class BarChartSemana extends StatelessWidget {
               border: Border.all(color: Colors.red),
               borderRadius: BorderRadius.circular(15),
             ),
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(8),
             child: Column(
               children: [
                 const Text(
@@ -320,7 +329,8 @@ class BarChartSemana extends StatelessWidget {
                                 x: entry.key,
                                 barRods: [
                                   BarChartRodData(
-                                      width: 45,
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.12,
                                       toY: entry.value,
                                       color: Colors.red[600],
                                       borderRadius: const BorderRadius.only(
