@@ -203,12 +203,11 @@ class _ReportPageState extends State<ReportPage> {
                             }).toList(),
                             onChanged: (String? novoMes) {
                               if (novoMes != null) {
-                                setState(() {
-                                  mes = UtilsDates.mesesDoAno.entries
-                                      .firstWhere(
-                                          (entry) => entry.value == novoMes)
-                                      .key;
-                                });
+                                mes = UtilsDates.mesesDoAno.entries
+                                    .firstWhere(
+                                        (entry) => entry.value == novoMes)
+                                    .key;
+                                carregaListas();
                               }
                             },
                           ),
