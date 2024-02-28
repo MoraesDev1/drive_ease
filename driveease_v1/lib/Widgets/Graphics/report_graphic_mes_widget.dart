@@ -3,7 +3,6 @@ import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class BarChartMes extends StatelessWidget {
@@ -23,41 +22,15 @@ class BarChartMes extends StatelessWidget {
   Map<String, double> mapServicoFiltrada = {};
 
   List<double> calculaLucroMes() {
+    List<double> totaisRecebido = calculaRecebidosMes();
+    List<double> totaisDespesas = calculaDespesasMes();
     List<double> totaisPorDia = [];
-    Map<String, double> somasDiarias = {};
-
-    mapCorridaFiltrada.forEach((data, valor1) {
-      if (mapServicoFiltrada.containsKey(data)) {
-        double valor2 = mapServicoFiltrada[data]!;
-        double resultado = valor1 - valor2;
-        somasDiarias[data] = resultado;
-      } else {
-        somasDiarias[data] = valor1;
-      }
-    });
-
-    if (mapCorridaFiltrada.isEmpty) {
-      mapServicoFiltrada.forEach((key, value) {
-        double resultado = value * (-1);
-        somasDiarias[key] = resultado;
-      });
-    } else {
-      mapCorridaFiltrada.forEach((data, valor1) {
-        if (mapServicoFiltrada.containsKey(data)) {
-          double valor2 = mapServicoFiltrada[data]!;
-          double resultado = valor1 - valor2;
-          somasDiarias[data] = resultado;
-        } else {
-          somasDiarias[data] = valor1;
-        }
-      });
+    double indice = 0;
+    print('''recebidos $totaisRecebido
+    despesas $totaisDespesas              ''');
+    for (var i = 0; i < totaisRecebido.length; i++) {
+      totaisPorDia.add(totaisRecebido[i] - totaisDespesas[i]);
     }
-    int key = 0;
-    somasDiarias.forEach((dia, soma) {
-      mapMesLucro[key] = dia;
-      totaisPorDia.add(soma);
-      key++;
-    });
     _lucro = totaisPorDia.fold(_lucro, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
@@ -74,9 +47,9 @@ class BarChartMes extends StatelessWidget {
     Map<String, double?> somasDiarias = {};
     listCorridaMes.sort((a, b) => DateTime.parse(a.dataHoraStart)
         .compareTo(DateTime.parse(b.dataHoraStart)));
-    for (Servico objeto in listServicoMes) {
-      somasDiarias[objeto.data] =
-          (somasDiarias[objeto.data] ?? 0) + objeto.valor;
+    for (Corrida objeto in listCorridaMes) {
+      somasDiarias[objeto.dataHoraStart] =
+          (somasDiarias[objeto.dataHoraStart] ?? 0) + objeto.ganhos!;
     }
     somasDiarias.forEach((dia, soma) {
       if (soma != null) {
@@ -91,7 +64,7 @@ class BarChartMes extends StatelessWidget {
         } else if (key >= 22 && key <= 28) {
           semQ += soma;
         } else if (key >= 29) {
-          semQ += soma;
+          semC += soma;
         }
       }
     });
@@ -100,6 +73,7 @@ class BarChartMes extends StatelessWidget {
     totaisPorDia.add(semT);
     totaisPorDia.add(semQ);
     totaisPorDia.add(semC);
+
     _recebimento = totaisPorDia.fold(_recebimento, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
@@ -114,29 +88,27 @@ class BarChartMes extends StatelessWidget {
     double semC = 0;
     List<double> totaisPorDia = [];
     Map<String, double?> somasDiarias = {};
-    listCorridaMes.sort((a, b) => DateTime.parse(a.dataHoraStart)
-        .compareTo(DateTime.parse(b.dataHoraStart)));
+    listServicoMes.sort(
+        (a, b) => DateTime.parse(a.data).compareTo(DateTime.parse(b.data)));
 
     for (Servico objeto in listServicoMes) {
       somasDiarias[objeto.data] =
           (somasDiarias[objeto.data] ?? 0) + objeto.valor;
     }
+    print("somasDespesas $somasDiarias");
     somasDiarias.forEach((dia, soma) {
       if (soma != null) {
-        DateTime data = DateTime.parse(dia.replaceAll('/', '-'));
-        if (data.isAfter(DateTime(2024, 02, 01)) &&
-            data.isBefore(DateTime(2024, 02, 08))) {
+        DateTime data = DateTime.parse(dia);
+        int key = data.day;
+        if (key >= 1 && key <= 7) {
           semU += soma;
-        } else if (data.isAfter(DateTime(2024, 02, 07)) &&
-            data.isBefore(DateTime(2024, 02, 15))) {
+        } else if (key >= 8 && key <= 14) {
           semD += soma;
-        } else if (data.isAfter(DateTime(2024, 02, 14)) &&
-            data.isBefore(DateTime(2024, 02, 22))) {
+        } else if (key >= 15 && key <= 21) {
           semT += soma;
-        } else if (data.isAfter(DateTime(2024, 02, 21)) &&
-            data.isBefore(DateTime(2024, 02, 22))) {
+        } else if (key >= 22 && key <= 28) {
           semQ += soma;
-        } else if (data.isAfter(DateTime(2024, 02, 29))) {
+        } else if (key >= 29) {
           semC += soma;
         }
       }
@@ -158,7 +130,6 @@ class BarChartMes extends StatelessWidget {
     var ganhosMes = calculaRecebidosMes();
     var despesasMes = calculaDespesasMes();
     var lucroMes = calculaLucroMes();
-    print('oi');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
