@@ -1,6 +1,7 @@
 import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
+import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -134,25 +135,36 @@ class BarChartMes extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Column(
-            children: [
-              const Text(
-                'Lucro semanal',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                height: 120,
-                child: BarChart(
-                  BarChartData(
-                    titlesData: const FlTitlesData(
+          Container(
+            decoration: BoxDecoration(
+              color: UtilsColors.corFundoPadraoWidgets,
+              border: Border.all(color: Colors.green),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                const Text(
+                  'Lucro',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  height: 120,
+                  child: BarChart(
+                    BarChartData(
+                      titlesData: const FlTitlesData(
                         show: true,
                         leftTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false)),
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
                         rightTitles: AxisTitles(
                           sideTitles: SideTitles(showTitles: false),
                         ),
@@ -160,148 +172,182 @@ class BarChartMes extends StatelessWidget {
                           sideTitles: SideTitles(showTitles: false),
                         ),
                         bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: diasDaSemanaLucro))),
-                    gridData: const FlGridData(show: false),
-                    borderData: FlBorderData(show: false),
-                    alignment: BarChartAlignment.spaceAround,
-                    maxY: _lucro,
-                    barGroups: lucroMes
-                        .asMap()
-                        .entries
-                        .map((entry) => BarChartGroupData(
+                          sideTitles: SideTitles(
+                              showTitles: true,
+                              getTitlesWidget: diasDaSemanaLucro),
+                        ),
+                      ),
+                      gridData: const FlGridData(show: false),
+                      borderData: FlBorderData(show: false),
+                      alignment: BarChartAlignment.spaceAround,
+                      maxY: _lucro,
+                      barGroups: lucroMes
+                          .asMap()
+                          .entries
+                          .map(
+                            (entry) => BarChartGroupData(
                               x: entry.key,
                               barRods: [
                                 BarChartRodData(
-                                    width: 20,
-                                    toY: entry.value,
-                                    color: entry.value < 0
-                                        ? Colors.orange[300]
-                                        : Colors.green[400],
-                                    borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(2),
-                                        topLeft: Radius.circular(2))),
+                                  width:
+                                      MediaQuery.sizeOf(context).width * 0.12,
+                                  toY: entry.value,
+                                  color: entry.value < 0
+                                      ? Colors.orange[300]
+                                      : Colors.green[400],
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(2),
+                                    topLeft: Radius.circular(2),
+                                  ),
+                                ),
                               ],
-                            ))
-                        .toList(),
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(
             height: 8,
           ),
-          Column(
-            children: [
-              const Text(
-                'Recebimento semanal',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                height: 120,
-                child: BarChart(
-                  BarChartData(
-                    titlesData: const FlTitlesData(
-                        show: true,
-                        leftTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
-                        ),
-                        rightTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
-                        ),
-                        topTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
-                        ),
-                        bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: diasDaSemanaCorrida))),
-                    gridData: const FlGridData(show: false),
-                    borderData: FlBorderData(show: false),
-                    alignment: BarChartAlignment.spaceAround,
-                    maxY: _recebimento,
-                    barGroups: ganhosMes
-                        .asMap()
-                        .entries
-                        .map((entry) => BarChartGroupData(
-                              x: entry.key,
-                              barRods: [
-                                BarChartRodData(
-                                    width: 20,
-                                    toY: entry.value,
-                                    color: Colors.blue[400],
-                                    borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(2),
-                                        topLeft: Radius.circular(2))),
-                              ],
-                            ))
-                        .toList(),
+          Container(
+            decoration: BoxDecoration(
+              color: UtilsColors.corFundoPadraoWidgets,
+              border: Border.all(color: Colors.blue),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                const Text(
+                  'Recebimentos',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  height: 120,
+                  child: BarChart(
+                    BarChartData(
+                      titlesData: const FlTitlesData(
+                          show: true,
+                          leftTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          rightTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          topTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget: diasDaSemanaCorrida))),
+                      gridData: const FlGridData(show: false),
+                      borderData: FlBorderData(show: false),
+                      alignment: BarChartAlignment.spaceAround,
+                      maxY: _recebimento,
+                      barGroups: ganhosMes
+                          .asMap()
+                          .entries
+                          .map((entry) => BarChartGroupData(
+                                x: entry.key,
+                                barRods: [
+                                  BarChartRodData(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.12,
+                                    toY: entry.value,
+                                    color: Colors.blue[600],
+                                    borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(2),
+                                      topLeft: Radius.circular(2),
+                                    ),
+                                  ),
+                                ],
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(
             height: 8,
           ),
-          Column(
-            children: [
-              const Text(
-                textAlign: TextAlign.start,
-                'Despesa semanal',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                height: 120,
-                child: BarChart(
-                  BarChartData(
-                    titlesData: const FlTitlesData(
-                        show: true,
-                        leftTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
-                        ),
-                        rightTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
-                        ),
-                        topTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
-                        ),
-                        bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: diasDaSemanaServico))),
-                    gridData: const FlGridData(show: false),
-                    borderData: FlBorderData(show: false),
-                    alignment: BarChartAlignment.spaceAround,
-                    maxY: _despesa,
-                    barGroups: despesasMes
-                        .asMap()
-                        .entries
-                        .map((entry) => BarChartGroupData(
-                              x: entry.key,
-                              barRods: [
-                                BarChartRodData(
-                                    width: 20,
-                                    toY: entry.value,
-                                    color: Colors.red[400],
-                                    borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(2),
-                                        topLeft: Radius.circular(2))),
-                              ],
-                            ))
-                        .toList(),
+          Container(
+            decoration: BoxDecoration(
+              color: UtilsColors.corFundoPadraoWidgets,
+              border: Border.all(color: Colors.red),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                const Text(
+                  textAlign: TextAlign.start,
+                  'Despesas',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  height: 120,
+                  child: BarChart(
+                    BarChartData(
+                      titlesData: const FlTitlesData(
+                          show: true,
+                          leftTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          rightTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          topTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget: diasDaSemanaServico))),
+                      gridData: const FlGridData(show: false),
+                      borderData: FlBorderData(show: false),
+                      alignment: BarChartAlignment.spaceAround,
+                      maxY: _despesa,
+                      barGroups: despesasMes
+                          .asMap()
+                          .entries
+                          .map((entry) => BarChartGroupData(
+                                x: entry.key,
+                                barRods: [
+                                  BarChartRodData(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.12,
+                                      toY: entry.value,
+                                      color: Colors.red[600],
+                                      borderRadius: const BorderRadius.only(
+                                          topRight: Radius.circular(2),
+                                          topLeft: Radius.circular(2))),
+                                ],
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
