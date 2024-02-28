@@ -22,11 +22,13 @@ class CardDevs extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: Image.asset(
-                  'Assets/gustavo.png',
+              ClipOval(
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Image.asset(
+                    assetPath,
+                  ),
                 ),
               ),
               Column(

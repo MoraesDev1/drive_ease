@@ -49,6 +49,9 @@ class _ReportPageState extends State<ReportPage> {
     listServicoSemana = filtrarServicoSemana();
     listCorridaMes = filtrarCorridaMes();
     listServicoMes = filtrarServicoMes();
+    listServicoSemana.forEach((element) {
+      print(element.data);
+    });
     setState(() {});
   }
 
@@ -86,8 +89,8 @@ class _ReportPageState extends State<ReportPage> {
   List<Servico> filtrarServicoSemana() {
     DateTime selectedDate = DateTime(ano, mes, dia);
     final firstDayOfWeek =
-        selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
-    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
+        selectedDate.subtract(Duration(days: selectedDate.weekday));
+    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 8));
 
     var result = mediator.listaDeServicos.where((servico) {
       DateTime itemDate = DateTime.parse(servico.data);
