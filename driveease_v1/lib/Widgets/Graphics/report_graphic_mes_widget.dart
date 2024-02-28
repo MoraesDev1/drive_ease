@@ -10,9 +10,9 @@ class BarChartMes extends StatelessWidget {
   BarChartMes(
       {super.key, required this.listCorridaMes, required this.listServicoMes});
 
-  static Map<int, String> mapSemanasLucro = {};
-  static Map<int, String> mapSemanasCorrida = {};
-  static Map<int, String> mapSemanasServico = {};
+  static Map<int, String> mapMesLucro = {};
+  static Map<int, String> mapMesCorrida = {};
+  static Map<int, String> mapMesServico = {};
   List<Corrida> listCorridaMes = [];
   List<Servico> listServicoMes = [];
   Mediator mediator = Mediator();
@@ -25,8 +25,24 @@ class BarChartMes extends StatelessWidget {
   List<double> calculaLucroMes() {
     List<double> totaisPorDia = [];
     Map<String, double> somasDiarias = {};
-    mapCorridaFiltrada.forEach(
-      (data, valor1) {
+
+    mapCorridaFiltrada.forEach((data, valor1) {
+      if (mapServicoFiltrada.containsKey(data)) {
+        double valor2 = mapServicoFiltrada[data]!;
+        double resultado = valor1 - valor2;
+        somasDiarias[data] = resultado;
+      } else {
+        somasDiarias[data] = valor1;
+      }
+    });
+
+    if (mapCorridaFiltrada.isEmpty) {
+      mapServicoFiltrada.forEach((key, value) {
+        double resultado = value * (-1);
+        somasDiarias[key] = resultado;
+      });
+    } else {
+      mapCorridaFiltrada.forEach((data, valor1) {
         if (mapServicoFiltrada.containsKey(data)) {
           double valor2 = mapServicoFiltrada[data]!;
           double resultado = valor1 - valor2;
@@ -34,15 +50,14 @@ class BarChartMes extends StatelessWidget {
         } else {
           somasDiarias[data] = valor1;
         }
-      },
-    );
+      });
+    }
     int key = 0;
     somasDiarias.forEach((dia, soma) {
-      BarChartMes.mapSemanasLucro[key] = dia;
+      mapMesLucro[key] = dia;
       totaisPorDia.add(soma);
       key++;
     });
-
     _lucro = totaisPorDia.fold(_lucro, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
@@ -50,24 +65,41 @@ class BarChartMes extends StatelessWidget {
   }
 
   List<double> calculaRecebidosMes() {
+    double semU = 0;
+    double semD = 0;
+    double semT = 0;
+    double semQ = 0;
+    double semC = 0;
     List<double> totaisPorDia = [];
     Map<String, double?> somasDiarias = {};
     listCorridaMes.sort((a, b) => DateTime.parse(a.dataHoraStart)
         .compareTo(DateTime.parse(b.dataHoraStart)));
-
-    for (Corrida objeto in listCorridaMes) {
-      DateTime dataObjeto = DateTime.parse(objeto.dataHoraStart);
-      String diaFormatado = DateFormat('dd/MM/yyyy').format(dataObjeto);
-      somasDiarias[diaFormatado] =
-          (somasDiarias[diaFormatado] ?? 0) + objeto.ganhos!;
+    for (Servico objeto in listServicoMes) {
+      somasDiarias[objeto.data] =
+          (somasDiarias[objeto.data] ?? 0) + objeto.valor;
     }
-    int key = 0;
     somasDiarias.forEach((dia, soma) {
-      mapCorridaFiltrada[dia] = soma!;
-      BarChartMes.mapSemanasCorrida[key] = dia;
-      key++;
-      totaisPorDia.add(soma);
+      if (soma != null) {
+        DateTime data = DateTime.parse(dia);
+        int key = data.day;
+        if (key >= 1 && key <= 7) {
+          semU += soma;
+        } else if (key >= 8 && key <= 14) {
+          semD += soma;
+        } else if (key >= 15 && key <= 21) {
+          semT += soma;
+        } else if (key >= 22 && key <= 28) {
+          semQ += soma;
+        } else if (key >= 29) {
+          semQ += soma;
+        }
+      }
     });
+    totaisPorDia.add(semU);
+    totaisPorDia.add(semD);
+    totaisPorDia.add(semT);
+    totaisPorDia.add(semQ);
+    totaisPorDia.add(semC);
     _recebimento = totaisPorDia.fold(_recebimento, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
@@ -75,34 +107,58 @@ class BarChartMes extends StatelessWidget {
   }
 
   List<double> calculaDespesasMes() {
+    double semU = 0;
+    double semD = 0;
+    double semT = 0;
+    double semQ = 0;
+    double semC = 0;
     List<double> totaisPorDia = [];
     Map<String, double?> somasDiarias = {};
     listCorridaMes.sort((a, b) => DateTime.parse(a.dataHoraStart)
         .compareTo(DateTime.parse(b.dataHoraStart)));
 
     for (Servico objeto in listServicoMes) {
-      DateTime dataObjeto = DateTime.parse(objeto.data);
-      String diaFormatado = DateFormat('dd/MM/yyyy').format(dataObjeto);
-      somasDiarias[diaFormatado] =
-          (somasDiarias[diaFormatado] ?? 0) + objeto.valor;
+      somasDiarias[objeto.data] =
+          (somasDiarias[objeto.data] ?? 0) + objeto.valor;
     }
-    int key = 0;
     somasDiarias.forEach((dia, soma) {
-      mapServicoFiltrada[dia] = soma!;
-      BarChartMes.mapSemanasServico[key] = dia;
-      key++;
-      totaisPorDia.add(soma);
+      if (soma != null) {
+        DateTime data = DateTime.parse(dia.replaceAll('/', '-'));
+        if (data.isAfter(DateTime(2024, 02, 01)) &&
+            data.isBefore(DateTime(2024, 02, 08))) {
+          semU += soma;
+        } else if (data.isAfter(DateTime(2024, 02, 07)) &&
+            data.isBefore(DateTime(2024, 02, 15))) {
+          semD += soma;
+        } else if (data.isAfter(DateTime(2024, 02, 14)) &&
+            data.isBefore(DateTime(2024, 02, 22))) {
+          semT += soma;
+        } else if (data.isAfter(DateTime(2024, 02, 21)) &&
+            data.isBefore(DateTime(2024, 02, 22))) {
+          semQ += soma;
+        } else if (data.isAfter(DateTime(2024, 02, 29))) {
+          semC += soma;
+        }
+      }
     });
+    totaisPorDia.add(semU);
+    totaisPorDia.add(semD);
+    totaisPorDia.add(semT);
+    totaisPorDia.add(semQ);
+    totaisPorDia.add(semC);
     _despesa = totaisPorDia.fold(_despesa, (valorAtual, proximoValor) {
       return valorAtual > proximoValor ? valorAtual : proximoValor;
     });
 
-    calculaLucroMes();
     return totaisPorDia;
   }
 
   @override
   Widget build(BuildContext context) {
+    var ganhosMes = calculaRecebidosMes();
+    var despesasMes = calculaDespesasMes();
+    var lucroMes = calculaLucroMes();
+    print('oi');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -140,7 +196,7 @@ class BarChartMes extends StatelessWidget {
                     borderData: FlBorderData(show: false),
                     alignment: BarChartAlignment.spaceAround,
                     maxY: _lucro,
-                    barGroups: calculaLucroMes()
+                    barGroups: lucroMes
                         .asMap()
                         .entries
                         .map((entry) => BarChartGroupData(
@@ -198,7 +254,7 @@ class BarChartMes extends StatelessWidget {
                     borderData: FlBorderData(show: false),
                     alignment: BarChartAlignment.spaceAround,
                     maxY: _recebimento,
-                    barGroups: calculaRecebidosMes()
+                    barGroups: ganhosMes
                         .asMap()
                         .entries
                         .map((entry) => BarChartGroupData(
@@ -255,7 +311,7 @@ class BarChartMes extends StatelessWidget {
                     borderData: FlBorderData(show: false),
                     alignment: BarChartAlignment.spaceAround,
                     maxY: _despesa,
-                    barGroups: calculaDespesasMes()
+                    barGroups: despesasMes
                         .asMap()
                         .entries
                         .map((entry) => BarChartGroupData(
@@ -288,126 +344,35 @@ Widget diasDaSemanaLucro(double value, TitleMeta meta) {
     fontWeight: FontWeight.bold,
     fontSize: 10,
   );
-  Map<int, String> mapFodac = BarChartMes.mapSemanasLucro;
   Widget text;
   switch (value.toInt()) {
     case 0:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[0]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
+      text = const Text(
+        'SEM 1',
         style: style,
       );
       break;
     case 1:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[1]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
+      text = const Text(
+        'SEM 2',
         style: style,
       );
       break;
     case 2:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[2]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
+      text = const Text(
+        'SEM 3',
         style: style,
       );
       break;
     case 3:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[3]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
+      text = const Text(
+        'SEM 4',
         style: style,
       );
       break;
     case 4:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[4]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 5:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[5]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 6:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[6]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 7:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[7]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 8:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[8]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 9:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[9]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 10:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[10]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 11:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[11]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 12:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[12]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 13:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[13]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 14:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[14]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
+      text = const Text(
+        'SEM 5',
         style: style,
       );
       break;
@@ -424,126 +389,36 @@ Widget diasDaSemanaCorrida(double value, TitleMeta meta) {
     fontWeight: FontWeight.bold,
     fontSize: 10,
   );
-  Map<int, String> mapFodac = BarChartMes.mapSemanasCorrida;
   Widget text;
+
   switch (value.toInt()) {
     case 0:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[0]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
+      text = const Text(
+        'SEM 1',
         style: style,
       );
       break;
     case 1:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[1]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
+      text = const Text(
+        'SEM 2',
         style: style,
       );
       break;
     case 2:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[2]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
+      text = const Text(
+        'SEM 3',
         style: style,
       );
       break;
     case 3:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[3]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
+      text = const Text(
+        'SEM 4',
         style: style,
       );
       break;
     case 4:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[4]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 5:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[5]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 6:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[6]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 7:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[7]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 8:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[8]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 9:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[9]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 10:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[10]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 11:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[11]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 12:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[12]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 13:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[13]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
-        style: style,
-      );
-      break;
-    case 14:
-      DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[14]!);
-      String dataFormatada = DateFormat('dd/MM').format(data);
-      text = Text(
-        dataFormatada,
+      text = const Text(
+        'SEM 5',
         style: style,
       );
       break;
@@ -560,16 +435,41 @@ Widget diasDaSemanaServico(double value, TitleMeta meta) {
     fontWeight: FontWeight.bold,
     fontSize: 10,
   );
-  Map<int, String> mapFodac = BarChartMes.mapSemanasServico;
-  Widget? text;
-  for (var i = 0; i == value.toInt(); i++) {
-    DateTime data = DateFormat('dd/MM/yyyy').parse(mapFodac[value.toInt()]!);
-    String dataFormatada = DateFormat('dd/MM').format(data);
-    text = Text(
-      dataFormatada,
-      style: style,
-    );
+  Widget text;
+  switch (value.toInt()) {
+    case 0:
+      text = const Text(
+        'SEM 1',
+        style: style,
+      );
+      break;
+    case 1:
+      text = const Text(
+        'SEM 2',
+        style: style,
+      );
+      break;
+    case 2:
+      text = const Text(
+        'SEM 3',
+        style: style,
+      );
+      break;
+    case 3:
+      text = const Text(
+        'SEM 4',
+        style: style,
+      );
+      break;
+    case 4:
+      text = const Text(
+        'SEM 5',
+        style: style,
+      );
+      break;
+    default:
+      text = const Text('');
+      break;
   }
-
-  return SideTitleWidget(axisSide: meta.axisSide, child: text!);
+  return SideTitleWidget(axisSide: meta.axisSide, child: text);
 }
