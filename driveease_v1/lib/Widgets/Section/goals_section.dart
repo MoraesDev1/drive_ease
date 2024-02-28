@@ -61,7 +61,7 @@ class _GoalsSectionState extends State<GoalsSection> {
               titulo: 'Hoje',
               saldo: mediator.calculaRecebimentosHoje() -
                   mediator.calculaCustoHoje(),
-              meta: 200, //valores devem ser variaveis de acordo com o banco
+              meta: 350, //valores devem ser variaveis de acordo com o banco
               corDoIndicadorDeProgresso: Colors.blue,
             ),
             const SizedBox(
@@ -72,7 +72,7 @@ class _GoalsSectionState extends State<GoalsSection> {
               saldo: mediator.calculaRecebimentosDestaSemana() -
                   mediator
                       .calculaCustoDestaSemana(), //valores devem ser variaveis de acordo com o banco
-              meta: 1000, //valores devem ser variaveis de acordo com o banco
+              meta: 2100, //valores devem ser variaveis de acordo com o banco
               corDoIndicadorDeProgresso: Colors.purple,
             ),
             const SizedBox(
@@ -83,7 +83,7 @@ class _GoalsSectionState extends State<GoalsSection> {
               saldo: mediator.calculaRecebimentosDesteMes() -
                   mediator
                       .calculaCustoDesteMes(), //valores devem ser variaveis de acordo com o banco
-              meta: 5000, //valores devem ser variaveis de acordo com o banco
+              meta: 8400, //valores devem ser variaveis de acordo com o banco
               corDoIndicadorDeProgresso: Colors.teal,
             ),
             const SizedBox(

@@ -189,7 +189,7 @@ class BarChartSemana extends StatelessWidget {
                                       MediaQuery.sizeOf(context).width * 0.12,
                                   toY: entry.value,
                                   color: entry.value < 0
-                                      ? Colors.orange[300]
+                                      ? Colors.red[600]
                                       : Colors.green[400],
                                   borderRadius: const BorderRadius.only(
                                     topRight: Radius.circular(2),
@@ -282,7 +282,7 @@ class BarChartSemana extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: UtilsColors.corFundoPadraoWidgets,
-              border: Border.all(color: Colors.red),
+              border: Border.all(color: Colors.orange),
               borderRadius: BorderRadius.circular(15),
             ),
             padding: const EdgeInsets.all(8),
@@ -332,7 +332,7 @@ class BarChartSemana extends StatelessWidget {
                                       width: MediaQuery.sizeOf(context).width *
                                           0.12,
                                       toY: entry.value,
-                                      color: Colors.red[600],
+                                      color: Colors.orange[300],
                                       borderRadius: const BorderRadius.only(
                                           topRight: Radius.circular(2),
                                           topLeft: Radius.circular(2))),

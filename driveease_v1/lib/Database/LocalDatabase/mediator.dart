@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/metas.dart';
 import 'package:driveease_v1/Model/servico.dart';

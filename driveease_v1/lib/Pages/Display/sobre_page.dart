@@ -29,7 +29,7 @@ class SobrePage extends StatelessWidget {
               elevation: 4,
               child: ListTile(
                 title: Text('Versão: 1.0.0'),
-                subtitle: Text('Desenvolvido por: Equipe XYZ'),
+                subtitle: Text('Desenvolvido por: DriveEase LTDA'),
               ),
             ),
             SizedBox(height: 20),

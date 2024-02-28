@@ -49,9 +49,6 @@ class _ReportPageState extends State<ReportPage> {
     listServicoSemana = filtrarServicoSemana();
     listCorridaMes = filtrarCorridaMes();
     listServicoMes = filtrarServicoMes();
-    listServicoSemana.forEach((element) {
-      print(element.data);
-    });
     setState(() {});
   }
 

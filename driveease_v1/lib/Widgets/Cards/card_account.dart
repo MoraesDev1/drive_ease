@@ -28,7 +28,7 @@ class CardAccount extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '       Nome: ',
+                          'Nome: ',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -45,14 +45,14 @@ class CardAccount extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '   Contato: ',
+                          'Contato: ',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
                           ),
                         ),
                         Text(
-                          '(99) 9 9999-9999',
+                          '(99)99999-9999',
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -69,7 +69,7 @@ class CardAccount extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '99/99/9999          ',
+                          '99/99/9999',
                           style: TextStyle(
                             fontSize: 20,
                           ),

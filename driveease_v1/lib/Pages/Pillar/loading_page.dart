@@ -18,7 +18,7 @@ class _LoadingPageState extends State<LoadingPage> {
     LocalDatabase.initDatabase('driveease_v1.db').then((value) async {
       Mediator().db = value;
       Mediator().buscarCorridaStart();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 3));
       if (!context.mounted) return;
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const LayoutPage()));
@@ -29,14 +29,27 @@ class _LoadingPageState extends State<LoadingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: UtilsColors.corFundoTela,
-      body: Center(
-        child: SizedBox(
-          width: 500,
-          height: 500,
-          child: Image.asset(
-            'Assets/car4.gif',
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.25),
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width,
+            height: MediaQuery.sizeOf(context).height * 0.5,
+            child: Image.asset(
+              'Assets/car4.gif',
+            ),
           ),
-        ),
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.14),
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width * 0.4,
+            height: MediaQuery.sizeOf(context).height * 0.08,
+            child: Image.asset(
+              'Assets/splashscreen.png',
+              color: UtilsColors.corTabBar,
+            ),
+          ),
+        ],
       ),
     );
   }
