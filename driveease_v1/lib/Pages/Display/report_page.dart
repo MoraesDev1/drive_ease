@@ -89,11 +89,12 @@ class _ReportPageState extends State<ReportPage> {
         selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
     final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 7));
 
-    return mediator.listaDeServicos.where((servico) {
+    var result = mediator.listaDeServicos.where((servico) {
       DateTime itemDate = DateTime.parse(servico.data);
       return itemDate.isAfter(firstDayOfWeek) &&
           itemDate.isBefore(lastDayOfWeek);
     }).toList();
+    return result;
   }
 
   @override
