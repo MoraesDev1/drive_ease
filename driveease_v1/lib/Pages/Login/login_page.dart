@@ -1,3 +1,4 @@
+import 'package:driveease_v1/Pages/Login/privacy_page.dart';
 import 'package:driveease_v1/Pages/Pillar/layout_page.dart';
 import 'package:driveease_v1/Pages/Login/signup_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
@@ -7,7 +8,6 @@ class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -22,17 +22,37 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomSheet: Container(
+        color: UtilsColors.corFundoTela,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PrivacyPage(),
+                  ),
+                );
+              },
+              child: const Text('Políticas de Privacidade'),
+            ),
+          ],
+        ),
+      ),
       backgroundColor: UtilsColors.corFundoTela,
       appBar: AppBar(
         backgroundColor: UtilsColors.corFloatingActionButton,
-        title: const Text('Login'),
+        title: const Text('DriveEase'),
+        centerTitle: true,
       ),
       body: Form(
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
                 controller: _usernameController,
@@ -94,18 +114,6 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     textColor: UtilsColors.corFundoTela,
                     child: const Text('Criar cadastro'),
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => PrivacyPolicyPage(),
-                      //   ),
-                      // );
-                    },
-                    textColor: Colors.blue,
-                    child: const Text('Políticas de Privacidade'),
                   ),
                 ],
               ),
