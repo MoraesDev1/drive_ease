@@ -94,7 +94,20 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           );
                         } else {
-                          // Login failed
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  const Text('Usuário ou senha inválidos!'),
+                              duration: const Duration(seconds: 2),
+                              action: SnackBarAction(
+                                label: 'Fechar',
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                },
+                              ),
+                            ),
+                          );
                         }
                       }
                     },
@@ -108,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CadastroPage(),
+                          builder: (context) => const SignupPage(),
                         ),
                       );
                     },

@@ -1,12 +1,14 @@
+import 'package:driveease_v1/Pages/Login/login_page.dart';
+import 'package:driveease_v1/Pages/Login/signup_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gif/gif.dart';
 
 class WelcomePage extends StatefulWidget {
-  WelcomePage({super.key});
+  const WelcomePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _WelcomePageState createState() => _WelcomePageState();
 }
 
@@ -74,7 +76,14 @@ class _WelcomePageState extends State<WelcomePage>
                     ),
                     backgroundColor:
                         WidgetStatePropertyAll(UtilsColors.corFundoTela)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                    (route) => false,
+                  );
+                },
                 child: SizedBox(
                   width: 90,
                   height: 40,
@@ -101,7 +110,14 @@ class _WelcomePageState extends State<WelcomePage>
                     ),
                     backgroundColor: WidgetStatePropertyAll(
                         UtilsColors.corFloatingActionButton)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const SignupPage(),
+                    ),
+                    (route) => false,
+                  );
+                },
                 child: const SizedBox(
                   width: 90,
                   height: 40,

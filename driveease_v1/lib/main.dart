@@ -1,4 +1,3 @@
-import 'package:driveease_v1/Pages/Login/login_page.dart';
 import 'package:driveease_v1/Pages/Login/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,7 +12,7 @@ void main() {
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: const [Locale('pt', 'BR')],
-      home: WelcomePage(),
+      home: const WelcomePage(),
       theme: ThemeData(
         useMaterial3: false,
       ),
