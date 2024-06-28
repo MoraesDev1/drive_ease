@@ -25,25 +25,33 @@ class _WelcomePageState extends State<WelcomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UtilsColors.corFundoTela,
+      backgroundColor: UtilsColors.corFloatingActionButton,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 "Bem-vindo",
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 40),
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 40,
+                  color: UtilsColors.corFundoTela,
+                ),
               )
             ],
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 "Nosso app vai te acompanhar na\n sua jornada rumo ao sucesso!",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w300,
+                  color: UtilsColors.corFundoTela,
+                ),
               )
             ],
           ),
@@ -67,21 +75,19 @@ class _WelcomePageState extends State<WelcomePage>
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
                         side: BorderSide(
-                            strokeAlign: 2,
-                            color: UtilsColors.corFloatingActionButton),
+                            strokeAlign: 2, color: UtilsColors.corFundoTela),
                         borderRadius: const BorderRadius.all(
                           Radius.circular(13),
                         ),
                       ),
                     ),
-                    backgroundColor:
-                        WidgetStatePropertyAll(UtilsColors.corFundoTela)),
+                    backgroundColor: WidgetStatePropertyAll(
+                        UtilsColors.corFloatingActionButton)),
                 onPressed: () {
-                  Navigator.of(context).pushAndRemoveUntil(
+                  Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => const LoginPage(),
                     ),
-                    (route) => false,
                   );
                 },
                 child: SizedBox(
@@ -91,7 +97,7 @@ class _WelcomePageState extends State<WelcomePage>
                     child: Text(
                       "Login",
                       style: TextStyle(
-                          color: UtilsColors.corFloatingActionButton,
+                          color: UtilsColors.corFundoTela,
                           fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -101,28 +107,28 @@ class _WelcomePageState extends State<WelcomePage>
                 style: ButtonStyle(
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
-                        side: BorderSide(
-                            color: UtilsColors.corFloatingActionButton),
+                        side: BorderSide(color: UtilsColors.corFundoTela),
                         borderRadius: const BorderRadius.all(
                           Radius.circular(13),
                         ),
                       ),
                     ),
-                    backgroundColor: WidgetStatePropertyAll(
-                        UtilsColors.corFloatingActionButton)),
+                    backgroundColor:
+                        WidgetStatePropertyAll(UtilsColors.corFundoTela)),
                 onPressed: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => const SignupPage(),
-                    ),
-                    (route) => false,
-                  );
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SignupPage(),
+                  ));
                 },
-                child: const SizedBox(
+                child: SizedBox(
                   width: 90,
                   height: 40,
                   child: Center(
-                    child: Text("Cadastrar"),
+                    child: Text(
+                      "Cadastrar",
+                      style:
+                          TextStyle(color: UtilsColors.corFloatingActionButton),
+                    ),
                   ),
                 ),
               ),
