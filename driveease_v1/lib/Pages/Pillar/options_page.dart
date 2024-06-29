@@ -1,5 +1,7 @@
+import 'package:driveease_v1/Pages/Login/welcome_page.dart';
 import 'package:driveease_v1/Pages/Pillar/layout_page.dart';
 import 'package:driveease_v1/Pages/Display/sobre_page.dart';
+import 'package:driveease_v1/Service/prefs_service.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_account.dart';
 import 'package:driveease_v1/Widgets/Cards/card_nav_to_page.dart';
@@ -17,7 +19,15 @@ class OptionsPage extends StatelessWidget {
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              PrefsService.logout();
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const WelcomePage(),
+                ),
+                (_) => false,
+              );
+            },
             icon: const Icon(Icons.exit_to_app),
           ),
         ],

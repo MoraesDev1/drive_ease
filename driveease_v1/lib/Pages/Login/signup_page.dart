@@ -1,15 +1,15 @@
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
-class CadastroPage extends StatefulWidget {
-  const CadastroPage({super.key});
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _CadastroPageState createState() => _CadastroPageState();
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class _CadastroPageState extends State<CadastroPage> {
+class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
   final _senhaController = TextEditingController();
   final _confirmacaoSenhaController = TextEditingController();
@@ -136,6 +136,6 @@ class _CadastroPageState extends State<CadastroPage> {
 
 void main() {
   runApp(const MaterialApp(
-    home: CadastroPage(),
+    home: SignupPage(),
   ));
 }

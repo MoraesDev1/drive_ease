@@ -19,6 +19,7 @@ dependencies:
   date_field: ^4.0.1
   flutter_animate: ^4.5.0
   gif: ^2.3.0
+  shared_preferences: ^2.2.3
 
 
 dev_dependencies:
