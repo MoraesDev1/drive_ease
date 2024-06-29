@@ -1,6 +1,7 @@
 import 'package:driveease_v1/Pages/Login/privacy_page.dart';
-import 'package:driveease_v1/Pages/Pillar/layout_page.dart';
 import 'package:driveease_v1/Pages/Login/signup_page.dart';
+import 'package:driveease_v1/Pages/Pillar/layout_page.dart';
+import 'package:driveease_v1/Service/prefs_service.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PrivacyPage(),
+                    builder: (context) => const PrivacyPage(),
                   ),
                 );
               },
@@ -87,11 +88,13 @@ class _LoginPageState extends State<LoginPage> {
                       if (_formKey.currentState!.validate()) {
                         if (_usernameController.text == _defaultUsername &&
                             _passwordController.text == _defaultPassword) {
-                          Navigator.pushReplacement(
+                          PrefsService.save(_usernameController.text);
+                          Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const LayoutPage(),
                             ),
+                            (route) => false,
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
