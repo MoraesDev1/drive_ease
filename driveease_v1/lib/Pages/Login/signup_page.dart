@@ -11,8 +11,13 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
-  final _senhaController = TextEditingController();
-  final _confirmacaoSenhaController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _passwordConfirmController = TextEditingController();
+
+  bool showPassword = false;
+  bool showPassword2 = false;
 
   void _showCadastroConfirmadoDialog() {
     showDialog(
@@ -37,22 +42,51 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UtilsColors.corFundoTela,
+      backgroundColor: UtilsColors.corFloatingActionButton,
       appBar: AppBar(
+        shadowColor: Colors.transparent,
         backgroundColor: UtilsColors.corFloatingActionButton,
         title: const Text('Cadastro'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 100),
               TextFormField(
-                decoration: const InputDecoration(
+                controller: _nameController,
+                style: TextStyle(color: UtilsColors.corFundoTela),
+                onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                cursorColor: UtilsColors.corFundoTela,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    borderSide: BorderSide(
+                      color: UtilsColors.corFundoTela,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    borderSide: BorderSide(
+                      color: UtilsColors.corFundoTela,
+                      width: 3,
+                    ),
+                  ),
+                  border: const OutlineInputBorder(),
                   labelText: 'Nome Completo',
-                  prefixIcon: Icon(Icons.person),
+                  labelStyle: TextStyle(color: UtilsColors.corFundoTela),
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: UtilsColors.corFundoTela,
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -61,13 +95,39 @@ class _SignupPageState extends State<SignupPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 40),
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email),
-                ),
+                controller: _emailController,
+                style: TextStyle(color: UtilsColors.corFundoTela),
+                onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                cursorColor: UtilsColors.corFundoTela,
                 keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    borderSide: BorderSide(
+                      color: UtilsColors.corFundoTela,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    borderSide: BorderSide(
+                      color: UtilsColors.corFundoTela,
+                      width: 3,
+                    ),
+                  ),
+                  border: const OutlineInputBorder(),
+                  labelText: 'E-mail',
+                  labelStyle: TextStyle(color: UtilsColors.corFundoTela),
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: UtilsColors.corFundoTela,
+                  ),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira um email válido';
@@ -75,56 +135,149 @@ class _SignupPageState extends State<SignupPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 40),
               TextFormField(
-                decoration: const InputDecoration(
+                controller: _passwordController,
+                style: TextStyle(color: UtilsColors.corFundoTela),
+                onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                cursorColor: UtilsColors.corFundoTela,
+                obscureText: !showPassword,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    borderSide: BorderSide(
+                      color: UtilsColors.corFundoTela,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    borderSide: BorderSide(
+                      color: UtilsColors.corFundoTela,
+                      width: 3,
+                    ),
+                  ),
+                  border: const OutlineInputBorder(),
                   labelText: 'Senha',
-                  prefixIcon: Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    color: UtilsColors.corFundoTela,
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                    icon: showPassword
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off),
+                  ),
+                  labelStyle: TextStyle(color: UtilsColors.corFundoTela),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: UtilsColors.corFundoTela,
+                  ),
                 ),
-                obscureText: true,
-                controller: _senhaController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Por favor, insira uma senha';
+                    return 'Por favor, insira uma senha válida';
+                  } else if (value !=
+                      _passwordConfirmController.value.toString()) {
+                    return 'As senhas não coincidem';
                   }
                   return null;
                 },
               ),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 40),
               TextFormField(
-                decoration: const InputDecoration(
+                controller: _passwordConfirmController,
+                style: TextStyle(color: UtilsColors.corFundoTela),
+                onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                cursorColor: UtilsColors.corFundoTela,
+                obscureText: !showPassword2,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    borderSide: BorderSide(
+                      color: UtilsColors.corFundoTela,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    borderSide: BorderSide(
+                      color: UtilsColors.corFundoTela,
+                      width: 3,
+                    ),
+                  ),
+                  border: const OutlineInputBorder(),
                   labelText: 'Confirmação de Senha',
-                  prefixIcon: Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    color: UtilsColors.corFundoTela,
+                    onPressed: () {
+                      setState(() {
+                        showPassword2 = !showPassword2;
+                      });
+                    },
+                    icon: showPassword2
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off),
+                  ),
+                  labelStyle: TextStyle(color: UtilsColors.corFundoTela),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: UtilsColors.corFundoTela,
+                  ),
                 ),
-                obscureText: true,
-                controller: _confirmacaoSenhaController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Por favor, confirme sua senha';
-                  } else if (value != _senhaController.text) {
-                    return 'As senhas não correspondem';
+                    return 'Por favor, insira uma senha válida';
+                  } else if (value != _passwordController.value.toString()) {
+                    return 'As senhas não coincidem';
                   }
                   return null;
                 },
               ),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 50),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(
-                      UtilsColors.corFloatingActionButton),
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      side: BorderSide(
+                        strokeAlign: 2,
+                        color: UtilsColors.corFloatingActionButton,
+                      ),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(4),
+                      ),
+                    ),
+                  ),
+                  backgroundColor: WidgetStatePropertyAll(
+                    UtilsColors.corFundoTela,
+                  ),
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Se todas as validações passarem, o formulário é válido.
-                    // Implemente aqui a lógica para enviar os dados do formulário.
-                    // Exemplo: enviar os dados para um servidor, salvar localmente, etc.
-                    // Neste ponto, os campos do formulário foram validados.
-
-                    // Exibir alerta de cadastro confirmado
-                    _showCadastroConfirmadoDialog();
+                    //ação a ser tomada quando validações estiverem ok
                   }
                 },
-                child: const Text('Cadastrar'),
+                child: SizedBox(
+                  width: 300,
+                  height: 50,
+                  child: Center(
+                    child: Text(
+                      "Cadastrar",
+                      style: TextStyle(
+                        color: UtilsColors.corFloatingActionButton,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -132,10 +285,4 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
   }
-}
-
-void main() {
-  runApp(const MaterialApp(
-    home: SignupPage(),
-  ));
 }
