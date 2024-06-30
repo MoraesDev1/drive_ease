@@ -8,6 +8,7 @@ import 'package:driveease_v1/Pages/Pillar/edit_servico_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:driveease_v1/Widgets/Cards/card_corrida.dart';
 import 'package:driveease_v1/Widgets/Cards/card_servico.dart';
+import 'package:driveease_v1/Widgets/Scaffold/main_custom_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class HistoricPage extends StatefulWidget {
@@ -189,91 +190,32 @@ class _HistoricPageState extends State<HistoricPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: DefaultTabController(
-        initialIndex: 0,
-        length: 2,
-        child: Scaffold(
-          backgroundColor: UtilsColors.corFundoTela,
-          appBar: AppBar(
-            centerTitle: true,
-            title: const Text('Histórico'),
-            backgroundColor: UtilsColors.corAppBar,
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(kToolbarHeight),
-              child: Container(
-                color: UtilsColors.corTabBar,
-                child: TabBar(
-                  onTap: (value) {
-                    _carregaListas();
-                  },
-                  indicatorColor: UtilsColors.corDestaqueOn,
-                  labelColor: UtilsColors.corDestaqueOn,
-                  unselectedLabelColor: UtilsColors.corNaoSelecionado,
-                  tabs: const <Widget>[
-                    Tab(
-                      child: Text('Corridas'),
-                    ),
-                    Tab(
-                      child: Text('Serviços'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          body: TabBarView(
-            children: <Widget>[
-              Center(
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  itemCount: mediator.listaDeCorridas.length,
-                  itemBuilder: (context, index) {
-                    Corrida corrida = mediator.listaDeCorridas[index];
-                    return CardCorrida(
-                      corrida: corrida,
-                      onMenuClick: (MyItemCorrida item) {
-                        switch (item) {
-                          case MyItemCorrida.itemTap:
-                          case MyItemCorrida.itemEdit:
-                            _clickEditCorrida(corrida);
-                            break;
-                          case MyItemCorrida.itemLongPress:
-                          case MyItemCorrida.itemDelete:
-                            _clickRemoverCorrida(corrida);
-                            break;
-                        }
-                      },
-                    );
-                  },
-                ),
-              ),
-              Center(
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  itemCount: mediator.listaDeServicos.length,
-                  itemBuilder: (context, index) {
-                    Servico servico = mediator.listaDeServicos[index];
-                    return CardServico(
-                      servico: servico,
-                      onMenuClick: (MyItemServico item) {
-                        switch (item) {
-                          case MyItemServico.itemTap:
-                          case MyItemServico.itemEdit:
-                            _clickEditServico(servico);
-                            break;
-                          case MyItemServico.itemLongPress:
-                          case MyItemServico.itemDelete:
-                            _clickRemoverServico(servico);
-                            break;
-                        }
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+    return MainCustomScaffold(
+      textAppBar: 'Histórico',
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: ListView.builder(
+          padding: const EdgeInsets.only(top: 10.0),
+          itemCount: mediator.listaDeServicos.length,
+          itemBuilder: (context, index) {
+            Servico servico = mediator.listaDeServicos[index];
+            return CardServico(
+              servico: servico,
+              onMenuClick: (MyItemServico item) {
+                switch (item) {
+                  case MyItemServico.itemTap:
+                  case MyItemServico.itemEdit:
+                    _clickEditServico(servico);
+                    break;
+                  case MyItemServico.itemLongPress:
+                  case MyItemServico.itemDelete:
+                    _clickRemoverServico(servico);
+                    break;
+                }
+              },
+            );
+          },
         ),
       ),
     );
