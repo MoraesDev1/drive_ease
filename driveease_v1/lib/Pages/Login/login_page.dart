@@ -1,10 +1,7 @@
-import 'package:driveease_v1/Pages/Login/privacy_page.dart';
-import 'package:driveease_v1/Pages/Login/signup_page.dart';
-import 'package:driveease_v1/Pages/Pillar/layout_page.dart';
+import 'package:driveease_v1/Pages/Display/home_page.dart';
 import 'package:driveease_v1/Service/prefs_service.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -169,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const LayoutPage(),
+                                  builder: (context) => const HomePage(),
                                 ),
                                 (route) => false,
                               );

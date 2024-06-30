@@ -1,7 +1,7 @@
 import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
 import 'package:driveease_v1/Database/LocalDatabase/database.dart';
+import 'package:driveease_v1/Pages/Display/home_page.dart';
 import 'package:driveease_v1/Pages/Login/welcome_page.dart';
-import 'package:driveease_v1/Pages/Pillar/layout_page.dart';
 import 'package:driveease_v1/Service/prefs_service.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
 import 'package:flutter/material.dart';
@@ -30,12 +30,12 @@ class _SplashPageState extends State<SplashPage> {
         value[0]!
             ? Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => LayoutPage(),
+                  builder: (context) => const HomePage(),
                 ),
                 (_) => false)
             : Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => WelcomePage(),
+                  builder: (context) => const WelcomePage(),
                 ),
                 (_) => false);
       },
