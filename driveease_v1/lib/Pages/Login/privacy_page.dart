@@ -9,7 +9,7 @@ class PrivacyPage extends StatelessWidget {
       body: Column(
         children: [
           Row(
-            children: [Text("Politica de privacidade")],
+            children: [Text("Politica de privacidade"),],
           )
         ],
       ),
