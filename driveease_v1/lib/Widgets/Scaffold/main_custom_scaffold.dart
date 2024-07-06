@@ -32,9 +32,7 @@ class _MainCustomScaffoldState extends State<MainCustomScaffold> {
         ),
         backgroundColor: UtilsColors.corFundoTela,
         drawer: const CustomDrawer(),
-        body: SingleChildScrollView(
-          child: widget.body,
-        ),
+        body: widget.body,
         floatingActionButton: widget.floatingActionButton,
       ),
     );

@@ -7,17 +7,17 @@ class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
   final String _defaultUsername = 'admin';
   final String _defaultPassword = 'admin';
-  bool showPassword = false;
+  bool _showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _passwordController,
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
                     cursorColor: UtilsColors.corFundoTela,
-                    obscureText: !showPassword,
+                    obscureText: !_showPassword,
                     style: TextStyle(color: UtilsColors.corFundoTela),
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -108,10 +108,10 @@ class _LoginPageState extends State<LoginPage> {
                         color: UtilsColors.corFundoTela,
                         onPressed: () {
                           setState(() {
-                            showPassword = !showPassword;
+                            _showPassword = !_showPassword;
                           });
                         },
-                        icon: showPassword
+                        icon: _showPassword
                             ? const Icon(Icons.visibility)
                             : const Icon(Icons.visibility_off),
                       ),

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsService {
-  static final String _key = 'key';
+  static const String _key = 'key';
 
   static save(String user) async {
     var prefs = await SharedPreferences.getInstance();
