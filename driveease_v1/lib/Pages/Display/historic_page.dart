@@ -1,12 +1,9 @@
 import 'package:driveease_v1/Database/Dao/Impl/corrida_dao_db.dart';
 import 'package:driveease_v1/Database/Dao/Impl/servico_dao_db.dart';
 import 'package:driveease_v1/Database/LocalDatabase/mediator.dart';
-import 'package:driveease_v1/Model/corrida.dart';
 import 'package:driveease_v1/Model/servico.dart';
-import 'package:driveease_v1/Pages/Pillar/edit_corrida_page.dart';
 import 'package:driveease_v1/Pages/Pillar/edit_servico_page.dart';
 import 'package:driveease_v1/Utils/colors_utils.dart';
-import 'package:driveease_v1/Widgets/Cards/card_corrida.dart';
 import 'package:driveease_v1/Widgets/Cards/card_servico.dart';
 import 'package:driveease_v1/Widgets/Scaffold/main_custom_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -41,80 +38,80 @@ class _HistoricPageState extends State<HistoricPage> {
     _carregaListas();
   }
 
-  _clickEditCorrida(Corrida corrida) {
-    Navigator.of(context)
-        .push(
-      MaterialPageRoute(
-        builder: (context) => EditCorridaPage(corrida: corrida),
-      ),
-    )
-        .then((value) {
-      setState(() {
-        _carregaListas();
-      });
-    });
-  }
+  // _clickEditCorrida(Corrida corrida) {
+  //   Navigator.of(context)
+  //       .push(
+  //     MaterialPageRoute(
+  //       builder: (context) => EditCorridaPage(corrida: corrida),
+  //     ),
+  //   )
+  //       .then((value) {
+  //     setState(() {
+  //       _carregaListas();
+  //     });
+  //   });
+  // }
 
-  _removerCorrida(Corrida corrida) {
-    _corridaDaoDb.excluir(corrida).then(
-      (value) {
-        _carregaListas();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Corrida removida!'),
-            backgroundColor: Colors.grey,
-            duration: Duration(seconds: 3),
-          ),
-        );
-      },
-    );
-  }
+  // _removerCorrida(Corrida corrida) {
+  //   _corridaDaoDb.excluir(corrida).then(
+  //     (value) {
+  //       _carregaListas();
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //           content: Text('Corrida removida!'),
+  //           backgroundColor: Colors.grey,
+  //           duration: Duration(seconds: 3),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
-  _clickRemoverCorrida(Corrida corrida) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Remover Corrida'),
-        content: const Text('Tem certeza que deseja remover esta Corrida?'),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: UtilsColors.corFloatingActionButton),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Cancelar',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: UtilsColors.corFloatingActionButton),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _removerCorrida(corrida);
-                },
-                child: const Text(
-                  'Remover',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // _clickRemoverCorrida(Corrida corrida) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text('Remover Corrida'),
+  //       content: const Text('Tem certeza que deseja remover esta Corrida?'),
+  //       actions: [
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //           children: [
+  //             ElevatedButton(
+  //               style: ElevatedButton.styleFrom(
+  //                   backgroundColor: UtilsColors.corFloatingActionButton),
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //               child: const Text(
+  //                 'Cancelar',
+  //                 style: TextStyle(
+  //                   color: Colors.white,
+  //                   fontSize: 15,
+  //                 ),
+  //               ),
+  //             ),
+  //             ElevatedButton(
+  //               style: ElevatedButton.styleFrom(
+  //                   backgroundColor: UtilsColors.corFloatingActionButton),
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //                 _removerCorrida(corrida);
+  //               },
+  //               child: const Text(
+  //                 'Remover',
+  //                 style: TextStyle(
+  //                   color: Colors.white,
+  //                   fontSize: 15,
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _clickEditServico(Servico servico) {
     Navigator.of(context)

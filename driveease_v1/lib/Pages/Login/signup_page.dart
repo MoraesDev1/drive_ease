@@ -19,25 +19,25 @@ class _SignupPageState extends State<SignupPage> {
   bool showPassword = false;
   bool showPassword2 = false;
 
-  void _showCadastroConfirmadoDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Cadastro Confirmado'),
-          content: const Text('Seu cadastro foi realizado com sucesso!'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void _showCadastroConfirmadoDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text('Cadastro Confirmado'),
+  //         content: const Text('Seu cadastro foi realizado com sucesso!'),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: const Text('OK'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:driveease_v1/Pages/Display/gas_station_page.dart';
 import 'package:driveease_v1/Pages/Display/historic_page.dart';
 import 'package:driveease_v1/Pages/Display/home_page.dart';
 import 'package:driveease_v1/Pages/Display/report_page.dart';
@@ -101,7 +102,13 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.local_gas_station),
             title: const Text('Postos'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const GasStationPage(),
+                  ),
+                  (_) => false);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.settings),
