@@ -3,6 +3,9 @@
         android:label="DriveEase"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBwn94P5uC4UmEj-9m70k0sxG0ytEel2YM"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
