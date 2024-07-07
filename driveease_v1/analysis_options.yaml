@@ -1,1 +1,4 @@
+analyzer:
+  errors:
+    avoid_function_literals_in_foreach_calls: ignore
 include: package:flutter_lints/flutter.yaml
